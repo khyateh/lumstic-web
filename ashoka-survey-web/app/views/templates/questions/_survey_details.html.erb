@@ -1,0 +1,27 @@
+<div style="padding:15px;float:left;width:60%;" >
+  <div style="width:100%;position:relative;top:-10px;">
+    <!-- <label><%= t("activerecord.attributes.survey.name") %></label> -->
+    <input style="font-weight:bold;font-size:16px;width:100%;" type="text" name="name" value="{{name}}"/>
+  </div>
+  
+  <!-- <label><%= t("activerecord.attributes.survey.description") %></label> -->
+  <textarea style="height:auto!important;width:100%;color:#c1c1c1;font-size:15px;" rows="2" name="description" id="survey_description" placeholder="Write about your organization here"><%= "{{description}}" %></textarea>
+  
+</div>
+
+<div style="float:right;width:30%;position:relative;padding:0px 15px;">
+
+<div style="text-align:right;position:relative;top:-10px;">
+  <label class="expiresOn" style=""><%= t("activerecord.attributes.survey.expiry_date") %> </label>
+  <input id="expiry_date" type="text" name="expiry_date" value="{{expiry_date}}"></input>
+</div>
+  <div class="questionBox">
+    <header>Questions</header>
+    <table>
+      <tr>
+        <td><span class="clsass_main_questions" >0</span>&nbsp;&nbsp;Main</td>
+        <td><span class="clsass_sub_questions">0</span>&nbsp;&nbsp;Conditional</td>
+      </tr>
+    </table>
+  </div>
+</div>  

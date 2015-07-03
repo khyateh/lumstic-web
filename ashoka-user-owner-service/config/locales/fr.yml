@@ -1,0 +1,180 @@
+fr:
+  language:
+    name: Français
+
+  log_in: Connexion
+  log_out: Déconnexion
+  register: Inscrivez-vous
+  sign_in: "S'identifier"
+  confirm: Etes-vous sûr?
+
+  header:
+    application_title: Service utilisateur
+    home: Maison
+    organizations: Organisations
+    create_a_user: Créer un nouvel utilisateur
+    add_applications: Ajouter une nouvelle application
+    log_in: Connexion
+    log_out: Déconnexion
+    welcome: "%{username}"
+    delete_organization: supprimer Organisation
+    confirm_delete_organization: Êtes-vous sûr de vouloir supprimer votre organisation ?
+    register: Inscrivez-vous
+    list_users: Utilisateurs
+    applications: Applications
+    documents: Documents
+
+    edit_organization: "Fr -Edit Organization"
+    organization: "Organisation"
+
+  documents:
+    create:
+      failed_upload: Votre chargement a échoué.
+      document_uploaded: Envoi réussi de vos documents
+    new:
+      upload_documents_title: Télécharger des documents
+      terms_of_service_title: Conditions d'utilisation
+      privacy_policy_title: Politique de confidentialité
+      upload_terms_of_service_message: Télécharger une termes de document de service
+      upload_privacy_policy_message: Ajouter une politique de confidentialité
+      upload_button_text: Télécharger
+      no_files_added_message: Vous devez ajouter des fichiers
+    index:
+      upload_documents_button: Télécharge une nouvelle Documents
+      documents_title: Documents
+      terms_of_service_title: Conditions d'utilisation
+      privacy_policy_title: Politique de confidentialité
+      terms_of_service_not_uploaded_message: A termes de document de service n'a pas été téléchargé.
+      privacy_policy_not_uploaded_message: Une politique de la vie privée n'a pas été téléchargée.
+
+  static_pages:
+    home:
+      user_owner: Owner utilisateur
+
+  sessions:
+    not_authorized: Vous n'êtes pas autorisé à accéder à cette page
+    new:
+      email: Email
+      password: Mot de passe
+      welcome: "%{username}"
+      reset_password: Mot de passe oublié?
+
+  user_mailer:
+    activation_mail:
+      welcome_message: "Bienvenue au service du propriétaire utilisateur, %{user_name}"
+      activated_message: "Votre organisation, %{organization_name} a été approuvé :)"
+      thanks_for_joining: Merci de nous avoir rejoints et ont un grand jour!
+
+    deactivation_mail:
+      sorry_message: "Désolé,  %{user_name}"
+      deactivated_message: "Votre organisation %{organization_name} a été rejeté :("
+      admin_message: Ceci est un message de l'administrateur
+      thanks_for_trying: Merci d'essayer de nous rejoindre et avoir un grand jour!
+
+    password_reset_mail:
+      subject: "Vous avez été invité à rejoindre %{organization_name}"
+      reset_password_subject: "Courriel de réinitialisation de mot"
+      welcome_message: "Vous avez été invité à rejoindre %{organization_name} S'il vous plaît utiliser le lien ci-dessous pour définir votre mot de passe."
+      password_reset_message: "Nous sommes désolés que vous rencontrez des problèmes avec votre mot de passe. Cliquez sur le lien pour réinitialiser votre mot de passe."
+
+  organizations:
+    new:
+      register_organization: Enregistrez votre Organisation
+      organization_info: Information sur l'organisme
+      user_info: Information de l'Utilisateur
+
+    index:
+      organizations: Organisations
+      no_organizations: In french- There are no organizations
+      list_of_organizations: In french- List of Organizations
+      actions: actes
+      activate: activer
+      all: tous
+      active: actif
+      deactivate: désactiver
+      inactive: inactif
+      deactivate_prompt_message: Inclure un message personnel à l'administrateur de cette organisation ici. Appuyez sur Annuler pour rejeter sans message.
+      create_a_user: Créer un utilisateur
+      view_organization: Voir Organisation
+      add_organization : Ajouter Organisation
+
+    edit:
+      edit_organization: "Rédaction : %{organization_name}"
+      update_organization_button_label: "Enregistrer"
+      cancel_update_organization_button_label: "Annuler"
+      org_info_placeholder: "Écrire au sujet de votre organisation ici"
+
+  users:
+    create:
+      user_created_successfully: Nouvel utilisateur a été créé et vous recevrez un mail concernant le mot de passe
+    users_list:
+      all: Tous
+      active: Actif
+      pending: En Attendant
+      inactive: Inactif
+    update:
+      user_updated: "Utilisateur mis à jour."
+    edit:
+      update_user: Mettre à jour l'utilisateur
+      edit_user: Modifier l'utilisateur
+    new:
+      register_user: Inscription utilisateur
+  password_resets:
+    edit:
+      password: Mot de passe
+      password_confirmation: Confirmation mot de passe
+      set_password: Définir mot de passe
+    success: Mot de passe a été réinitialisé!
+    new:
+      reset_password: Mot de passe oublié?
+      request_password: Demander mot de passe
+      cancel: annuler
+
+  wrong_email_password: Email / mot de passe est incorrect
+  successful_create_message: Votre organisation a été créée.
+  creation_failed: Création Organisation échoué
+  status_changed: "Est %{organization_name} %{status}!"
+  please_login: S'il vous plaît connectez
+  not_authorized: Vous n'êtes pas autorisé à le faire.
+  log_in_successful: Connecté avec succès!
+  users_title: Utilisateurs
+  summary: Le Sommaire
+  all: tous
+  org_language : Langue
+  name: Nom
+  email: Email
+  role: Rôle
+  user_id: ID de l'utilisateur
+  edit: éditer
+  inactive: Inactif
+  pending: En attendant
+  active: actif
+  activate: activer
+  deactivate: désactiver
+  user_updated: Correctement mis à jour utilisateur.
+  usable_app_list: Liste des applications que vous pouvez utiliser
+  forgot_passoword_help: Se il vous plaît entrez l'adresse e-mail enregistrée ci-dessous
+  chnage_language: Changer de langue
+  no_users_in_this_category: Pas d'entrée disponible
+  no_organizations_in_this_category: Pas d'entrée disponible
+  password: Mot de passe
+  confirm_password: Confirmez le mot de passe
+  org_admin_name: Nom de l'organisme administrateur
+  status: Status
+  org_type: Type de org
+  locale: Local
+  surveys: Enquêtes
+  cancel: Annuler
+
+
+  #Model translations
+  activerecord:
+    attributes:
+      organization:
+        name: Nom
+
+      user:
+        name: Nom d'utilisateur
+        email: Email
+        password: Mot de passe
+        password_confirmation: Confirmation de mot de passe

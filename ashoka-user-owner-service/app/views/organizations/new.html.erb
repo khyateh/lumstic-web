@@ -1,0 +1,61 @@
+<div class="container">
+  <div id="register">
+    <header id="backBtnContainer">
+      <h2><a id="backBtn" class="backBtn"></a>
+        <span><%= t ".register_organization" %></span></h2>
+    </header>
+    <div class="createOrganization">
+      <%= semantic_form_for @organization, :html => {:multipart => true} do |f| %>
+        <%= f.inputs :name => t(".organization_info") do %>
+          <!-- <%= f.input :name, :label => Organization.human_attribute_name(:name) %> -->
+          <%= f.input :name, :label => false , :placeholder => I18n.t("name") + "*" %>
+          <!-- <%= f.input :org_type, :label => Organization.human_attribute_name(:org_type),
+        :as => :select, :collection => Organization.types %> -->
+          <%= f.input :org_type, :label => false, :as => :select, :collection => Organization.types  %>
+          <%= f.label "Upload Logo" %>
+          <%= f.file_field :logo, :accept => "image/*" %>
+        <% end %>
+        <hr/>
+        <%= f.semantic_fields_for :users, @user do |user| %>
+          <%= user.inputs :name => t(".user_info") do %>
+            <%= user.input :name , :label => false , :placeholder  => I18n.t("org_admin_name") + "*" %>
+            <%= user.input :email , :label => false , :placeholder  => I18n.t("email") + "*"%>
+            <%= user.input :password,:label => false, :placeholder  => I18n.t("password") + "*" ,:required => true %>
+            <%= user.input :password_confirmation, :label => false,:placeholder  => I18n.t("confirm_password") + "*" , :as => :password, :required => true %>
+          <% end %>
+        <% end %>
+        <hr/>
+        <fieldset>
+          <legend style="margin-bottom:35px;"><%= t(".legal_heading") %></legend>
+          <div class="organization-legal-item mandatory">
+            <%= check_box_tag 'terms_of_service', nil, false, :class => 'organization-legal-item-checkbox regular-checkbox' %>
+            <%= label_tag 'terms_of_service', "", :class => 'organization-legal-item-label' %>
+            <span><%= @organization.label_for_terms_of_service %></span>
+          </div>
+          <div class="organization-legal-item mandatory">
+            <%= check_box_tag 'privacy_policy', nil, false, :class => 'organization-legal-item-checkbox regular-checkbox' %>
+            <%= label_tag 'privacy_policy', "", :class => 'organization-legal-item-label' %>
+            <span><%= @organization.label_for_privacy_policy %></span>
+          </div>
+          <div class="organization-legal-item">
+            <%= f.check_box :allow_sharing, :class => 'organization-legal-item-checkbox regular-checkbox' %>
+            <!--<%= f.label :allow_sharing, "", :class => 'organization-legal-item-label' %>-->
+            <%= label_tag 'organization_allow_sharing', "", :class => 'organization-legal-item-label' %>
+            <div class="clear"></div>
+            <span><%= t(".sharing_agreement") %></span>
+          </div>
+        </fieldset>
+        <div class="organization_register_btn">
+          <%= f.actions do %>
+            <% f.action :submit, :label => t("register"), :as => :button, :button_html => { :disabled => true, :class => "organization-register-button" } %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    new UserOwner.Registration($("#register"));
+  });
+</script>

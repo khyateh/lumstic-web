@@ -1,0 +1,104 @@
+<surveyquestion class="question-row" style="border-bottom:0px;" id="{{id}}">
+  <span class="question-container">
+    <div class="questionWrp"><!-- <div class="collapse_category">&#9660;</div> -->
+      <span>{{question_number}})</span>
+
+      <!-- <label><%= t("surveys.build.multi_record_title") %></label> -->
+      <input type="text" name="content" value="{{content}}"/>
+            <!--<label>{{content}} -->
+      <abbr name="mandatory" title="required" style="display:none">*</abbr>
+      <!-- </label> -->
+    </div>
+    {{#finalized}}
+    <%= render "templates/dummies/finalized_icon" %>
+    {{/finalized}}
+    {{^finalized}}
+    <span class="form-top-right-actions">
+      <a href="javascript:void(0)" class="delete_category">
+        <!-- delete -->
+      </a>
+      <a data-tooltip="Copy"  href="{{duplicate_url}}" class="copy_question" data-method="post"></a>
+      <!-- <a href="javascript:void(0)" class="copy_question_hidden right" >Copy</a> -->
+      <!-- <div  class="ref_img" data-tooltip="Help image" >
+        <%# render "templates/questions/file_upload" %>
+      </div> -->
+      <div class="settingOptionsWrp">
+        <a href="#" class="setting" data-tooltip="Settings"><img src="/assets/settings.svg"></a>
+        <div class="setting-options">
+          <%# render "templates/questions/identifier" %>
+          <%# render "templates/questions/private" %>
+          <div class="checkbox">
+            {{#mandatory}}
+            <input type="checkbox" name="mandatory" value="{{mandatory}}" checked id="mandatory{{id}}" class="regular-checkbox" />
+            {{/mandatory}}
+            {{^mandatory}}
+            <input type="checkbox" name="mandatory" value="{{mandatory}}" id="mandatory{{id}}" class="regular-checkbox"/>
+            {{/mandatory}}
+            <label for="mandatory{{id}}"></label>
+            <span><%= t("activerecord.attributes.question.mandatory") %>
+            </span>
+          </div>
+        </div>
+      </div>
+    </span>
+    {{/finalized}}
+  </span>
+  <div class="children-content">
+    <div class="inline_errors">{{errors}}</div>
+    {{#id}}
+    <!--  -->
+  <div class="addQuestion" style="margin-bottom:0; padding:0px"><!--add question btn-->
+      
+         <div class="question-types">
+              <ul>
+                <li>
+                  <a href="javascript:void(0)" id="SingleLineQuestion">Single Line</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="RadioQuestion">Radio</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="MultilineQuestion">Multiline</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="NumericQuestion">Numeric</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="DateQuestion">Date</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="MultiChoiceQuestion">Multi-choice</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="DropDownQuestion">Drop Down</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="PhotoQuestion">Photo</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="RatingQuestion">Rating</a>
+                </li>
+<!--                  <li>
+                  <a href="javascript:void(0)" id="">Sub-Category</a>
+                </li> -->
+              </ul>
+            </div>
+        <a href="#" class="add-question-btn"></a>
+      <span class="addQuestionText"> 
+Click here to add a subquestion</span>
+    </div>
+    <!--  -->
+    <div style="display:none;" class="inline-add-btn">
+    <%= render 'templates/question_types_dropdown' %>
+    <button class='add_sub_question' href='#'>Add Sub-Question</button>
+  </div> 
+  <div style="display:none;" class="inline-add-btn" >
+    <button class='add_sub_category' href='#'>Add Sub-Category</button>
+  </div> 
+    <!-- <span class="addQuestionText" style="float:right;"> Click here to add question</span> -->
+    {{/id}}
+    {{^id}}
+    <%= render 'templates/loading' %>
+    {{/id}}
+    <%= render "templates/questions/category_finalized_message" %>
+  </div>

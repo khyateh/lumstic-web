@@ -1,0 +1,61 @@
+   
+<div class="main-inner">
+   <div id="parters">
+       <div class="container">
+           <div class="col-md-4 col-sm-6 col-md-offset-2 up">
+				<div class="cntr"><%= image_tag 'corp/ashoka-logo.png' %></div>
+			  <p>Ashoka is the largest network of social<br/>
+				 entrepreneurs worldwide, with nearly<br/>
+					3,000 Ashoka Fellows in 70 countries <br/>
+				putting their system changing ideas <br/>
+				into practice on a global scale.<br/><a href="https://www.ashoka.org/" target="_blank">www.ashoka.org</a>	
+			  </p>
+			</div>
+			
+			<div class="col-md-4 col-sm-6 up up2 br">
+				<div class="cntr"><%= image_tag 'corp/dhwani-logo.png' %></div>
+			  <p>Dhwani Rural Information Systems is a development oriented technology organization with a vision to provide affordable, integrated and smart ICT tools (hacks) for organizations working at BoP level..
+			  </p>
+			</div>
+			
+        </div>
+		
+    </div>
+
+    <!-- Portfolio Grid Section -->
+    <div id="pilot">
+        <div class="container">
+            
+			<p>
+			<%= image_tag "corp/cs.png"%>
+			</p>
+		   
+        </div>
+    </div>
+</div>
+
+	<%#= javascript_include_tag "corp/jquery-2.1.3.js" %>
+	<%#= javascript_include_tag "corp/bootstrap.min.js" %>
+	<script type="text/javascript">
+	  $(function(){
+		$('.navbar-toggle, nav').click(function(){
+        $('.navbar-toggle').toggleClass('navbar-on');
+        $('nav').fadeToggle();
+        $('nav').removeClass('nav-hide');
+		});
+		});
+		
+	</script>
+	<script>
+	$('.menu li a').on('click', function(){
+    $('li a.current').removeClass('current');
+    $(this).addClass('current');
+	});
+	</script>
+	<%#= javascript_include_tag "corp/jquery.easing.min.js" %>
+	<%#= javascript_include_tag "corp/agency.js" %>
+	
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->

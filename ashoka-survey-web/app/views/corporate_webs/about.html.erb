@@ -1,0 +1,303 @@
+<!--?php
+@session_start();
+require_once('includes/function/autoload.php');
+$prdObj = new Product();
+
+//$id= $_GET['id'];
+//$data1=$prdObj->getINFO(PRODUCTS,"`ID`='".$id."'");
+
+$p= $_GET['p'];
+?-->
+
+<div id="dialog_content1" class="dialog_content" style="display:none">
+	<div class="dialogModal_header"></div>
+		<div class="dialogModal_content">
+		<div class="bzm-conten">
+			<form method="post" action="/send_brochure" >
+				<input type="hidden" name="action" value="pdfdownload">
+				<div class="col-md-8 col-md-offset-4 fpd-m">
+                	<span  class="pdf-h1">Request for introductory note on LumStic</span><br>
+					<input type="text" class="pdf-ff" name="enquiry[name]" required id="name" placeholder="FULL NAME"><br>
+				  	<input type="text" class="pdf-ff" name="enquiry[email]" required id="email" placeholder="Email"><br>
+					<div class="enter">
+						<input type="submit" class="enter1" value="Submit" name="Submit">	
+					</div>
+				</div>
+			</form>
+    	</div>
+  	</div>
+</div>
+
+
+
+
+<script>
+$(document).ready(function(){
+$('#apDiv1').fadeIn();
+
+var repeatPopUp = 0;
+
+setInterval(function(){
+
+if(repeatPopUp < 1){
+$('#apDiv1').hide();
+
+repeatPopUp++;
+}
+
+}, 4000);
+
+
+});
+</script>
+
+<!--?
+if(0=='y')
+{
+?-->
+
+  <!--div id="apDiv1">
+								    <div class="dialogModal open" style="top:0px">
+								      <div class="dialogModal_top animated fadeInTopBig" style="right: 17px;">
+								        <div class="dialogModal_header">
+								          <button type="button" class="close" onclick="MM_showHideLayers('dialog_content1','','hide','apDiv1','','hide')">Ã</button>
+							            </div>
+							          </div>
+								      <div class="dialogModal_body animated fadeInTopBig">
+								        <div class="dialogModal_header"></div>
+								        <div class="dialogModal_content">
+								          <div class="bzm-conten">
+								           
+								              
+								              <div class="col-md-8 col-md-offset-4 fpd-m"> <span class="pdf-h1">Thank you for your interest in LumStic. You will shortly receive an email with our Introductory note.</span>
+							                  </div>
+							              
+							              </div>
+							            </div>
+							          </div>
+							        </div>
+							      </div-->
+<!--? } ?-->
+  
+   <div style="clear:both;"></div>
+<div class="main-inner">
+   <div id="services">
+       <div class="container">
+         <div class="col-md-5">
+			  <p>As part of Ashoka's commitment to building 
+				infrastructure for the citizen sector, we are innovating 
+			  solutions that provide opportunities for initiatives in 
+			  social space to leverage "data".<br/><br/>
+			  
+			  Useful metrics will help organizations /Governments 
+			  get insights and help them fund raise, implement 
+			  social impact programs  and measure its impact..<br/><br/>
+			  
+			  Ashoka has envisioned "LumStic", a product suite that 
+			  help organisations/Governments enable positive  
+			  societal change in a methodical way through a "data 
+			  ecosystem"..<br/><br/>
+			  
+			  The need for such a product suite has evolved based 
+			  on Ashoka's deep expertise in the citizen sector. 
+			  </p>
+			</div>
+			
+		 <div class="col-md-7 vdo">
+		
+			
+			<!-- DC Vimeo Embed Start -->
+<iframe src="https://player.vimeo.com/video/69868671" height="300"></iframe>
+<!-- <iframe src="http://player.vimeo.com/video/VIDEO_ID_HERE" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> -->
+<!-- DC Vimeo Embed End -->
+			<div class="ss">
+				<h6>INTRODUCTORY VIDEO</h6>
+				<ul>
+					<li><a href="https://player.vimeo.com/video/69868671/share/facebook" target="_blank"><%= image_tag 'corp/fb.png'%></a></li>
+					<li><a href="https://player.vimeo.com/video/69868671/share/twitter" target="_blank"><%= image_tag 'corp/tw.png'%></a></li>
+					<li><a href="#"><%= image_tag 'corp/yt.png'%></a></li>
+				</ul>
+				
+				<a class="requst" href="#" id="dialogModal_ex1">Request for introductory note on LumStic</a>
+			
+			</div>
+			
+			</div>
+			
+     </div>
+		
+  </div>
+
+    <!-- Portfolio Grid Section -->
+    <div id="portfolio">
+        <div class="container">
+				<ul>
+					<li>Last-mile, authentic &amp; high value data will help model social interventions.</li>
+					<li>Data in the hands of domain experts for context sensitive, apt solutions.</li>
+					<li>Ability to discuss data with social entrepreneurs around the globe to improve the quality and scale of impact.</li>
+					<li>Provision for enabling data quality at source with use of technology.</li>
+					<li>Provisio
+					  
+				    n for enabling authenticity at source through geo-tagging.</li>
+					<li>Supported by open source technology framework that enables transparency and extensibility.</li>
+			   </ul>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div id="about">
+        <div class="container">
+			<p>Quality data & metrics are powerful tools in the hands of a social entrepreneur. It enables them assess social dynamics and model social impact programs.<br/><br/>
+			
+			Agile non-profits need to use insights from their organizational data regularly, and realize the importance of quantitative measurements to 
+			successful fundraising. Analytics is effective in operations, and is becoming a need as an organizational culture. <br/><br/>
+			
+			Social research data enable organizations respond to social and market dynamics. Efficient implementation of development programs are 
+			enabled through actionable data, and helps in continuous improvement.<br/><br/>
+			
+			Availability of open-data motivates volunteers, sparks movements and inspires donors to support a cause. It helps understand if there is 
+			success in the outcome.
+			
+			</p>
+            <%= image_tag 'corp/social.jpg', :class => "img-responsive"%>
+		</div>
+		
+    </div>
+
+    <!-- Team Section -->
+    
+	
+	 <div id="team">
+        <div class="container">
+           <p>There is convergence of regular development data (organized surveys, census etc...) to large volumes of data (Big Data) generated in digital space through tweets, blogs and postts. <br/><br/>
+		   
+		   Given the expansion of digital platforms and the increase in public participation over internet on social issues, there is huge amount of data
+		   that can be harnessed and used for global development and designing interventions <br/><br/>
+		   
+		   Be it national election campaigns, projects by UN agencies, governments or NGOs, organizations are actively seeking data. 
+		   Governments are trying to understand public sentiments and perceptions through the digital space <br/><br/>
+		   
+		   Data from diverse sources such as mobile phones, internet, geo-spatial information through maps are studied together to design social 
+		   interventions.  <br/><br/>
+		   
+		   Many social change movements on anti-corruption, violence against women, natural disasters like flood, tsunami and earth-quake provide 
+		   spikes of useful data to provide disaster relief and short-term interventions
+		   
+		   </p>
+		   
+        </div>
+    </div>
+
+    <!-- Clients Aside -->
+    <div id="contact">
+       <div class="container">
+			<p>Working with data brings about challenges both in terms of structure and quality. Data is often unreliable, inaccurate and not representative. </p>
+		   
+		   <p>Especially with respect to public big data, there is lot of effort spent on wafting through noise. Though machine learning and powerful 
+		   algorithms are helping in prompting anomalies, it is important to start with a good, reliable data set if insights have to be meaningful
+		   CSOs collecting data in traditional methods through paper and manual data entry lose lot of quality during transformation and transport. 
+		   Disparate storage forms and formats make it untenable and unreliable for use. It gets into silos and restricts CSOs in sharing data among 
+		   common interest groups.<br/><br/> 
+		  
+		   It is often difficult to synthesize or find last-mile data that is of high quality.<br/><br/>
+		   Government data, especially in developing nations are often out-dated and incomplete. <br/><br/>
+		   Citizen sector organizations need data that is in-context. Data with reliability and quality that can help in long term value creation<br/><br/>
+		   </p>
+		   
+		  
+      </div>
+    </div>
+    
+    <!-- Contact Section -->
+    <div id="lumstic">
+        <div class="container">
+			<p>Ashoka's LumStic Suite looks to enable organizations use 'Data As Infrastructure' (DAI).<br/><br/>
+			   Social surveys, data collection drives and demand aggregation are fundamental to operations of many citizen sector organizations. 
+			   Now citizen sector organizations can solicit quality and variety of data through crowd sourcing, organized surveys and market research 
+			   using Infiniti infrastructure. <br/><br/>
+			   
+			   Through 'DAI', we aim to help Ashoka fellows and other citizen sector organizations in strategic decision making, and to achieve the right 
+				Insights, Interventions &amp; Impact.
+			</p>
+				<br/> 
+			<ul>
+				<li><%= image_tag 'corp/icon-1a.png'%><h5>DATA</h5></li>
+				<li><%= image_tag 'corp/icon-2a.png'%><h5>INSIGHT</h5></li>
+				<li><%= image_tag 'corp/icon-3a.png'%><h5>INTERVENE</h5></li>
+				<li><%= image_tag 'corp/icon-4a.png'%><h5>IMPACT</h5></li>
+			</ul>
+			<br/> 
+			<p>The LumStic suite is envisioned to have 4 products that flow naturally into one another.
+			Each of these 4 core attributes in the citizen sector have been mapped as products in the LumStic Suite
+			</p><br/> <br/>
+			<%= image_tag 'corp/data.jpg', :class => "img-responsive"%>
+	</div>
+</div>	
+	
+
+
+<%#= javascript_include_tag "corp/jquery-2.1.3.js" %>
+<%#= javascript_include_tag "corp/bootstrap.min.js" %>
+<%#= javascript_include_tag "corp/popModal.js" %>	
+<script>
+	$(function(){
+		$('#dialogModal_ex1').click(function(){
+			$('#dialog_content1').dialogModal({
+				topOffset: 0,
+				onOkBut: function() {},
+				onCancelBut: function() {},
+				onLoad: function(el, current) {},
+				onClose: function() {},
+				onChange: function(el, current) {
+					if(current == 5){
+						el.find('.dialogModal_header span').text('Dialog header 1');
+						$.ajax({url:'ajax.html'}).done(function(content){
+							el.find('.dialogModal_content').html(content);
+						});
+					}
+				}
+			});
+		});	
+	});
+	</script>
+<script>
+	$(function(){
+		$('#dialogModal_ex').click(function(){
+			
+		});
+		
+	});
+	</script>
+<script type="text/javascript">
+	  $(function(){
+		$('.navbar-toggle, nav').click(function(){
+        $('.navbar-toggle').toggleClass('navbar-on');
+        $('nav').fadeToggle();
+        $('nav').removeClass('nav-hide');
+		});
+		});
+	</script>
+
+<%#= javascript_include_tag "corp/jquery.easing.min.js" %>
+<%#= javascript_include_tag "corp/agency.js" %>
+<%#= javascript_include_tag "corp/baze.js" %>
+<script>
+        var elems = $('[data-baze-modal]');
+
+        elems.bazeModal({
+            onOpen: function () {
+                alert('opened');
+            },
+            onClose: function () {
+                alert('closed');
+            }
+        });
+
+        $('#ngehe').bazeModal();
+    </script>
+	
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+	

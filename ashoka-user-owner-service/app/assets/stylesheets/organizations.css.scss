@@ -1,0 +1,359 @@
+.organization-legal-item-label {
+  display: inline;
+  margin-left: 5px;
+}
+.organization-legal-item-label-link {
+  margin-left: 2px;
+  color: $link-color;
+}
+
+.organization-edit-logo-image {
+  /*width: 250px;*/
+}
+
+
+/*NEW STYLE */
+.tabBox {
+	position:  relative;
+	min-height: 200px;	
+	.tabContainer {
+		/*position: absolute;*/
+		display: none;
+		margin: 0px;
+		width: 100%;
+		/*padding-bottom: 15px;*/
+		table {
+		border-collapse: collapse;
+
+		td {
+		border-top: 1px solid #e0e0e0;
+		border-bottom: 1px solid #e0e0e0;
+		padding: 10px 15px;
+			}
+		}
+	}
+	.tabContainer.active{
+		display: block;
+	}
+}
+
+.table_list {
+	input[type="submit"]{
+		background: none;
+		cursor: pointer;
+		color: $gray-body-color;
+		display: inline;
+		text-transform: none;
+		box-shadow:none;
+		padding: 0px;
+	&:hover , &:active {
+		background: none;
+		cursor: pointer;
+		color: $orange-title-color;
+		display: inline;
+		text-transform: none;
+		box-shadow:none;
+
+	};
+	}
+	
+	td {
+		border-top: 1px solid #e0e0e0;
+		border-bottom: 1px solid #e0e0e0;
+		padding: 10px 20px;
+			}
+}
+.table_list {
+	/*tr:first-child{
+		background: #f5f5f5;
+		&:hover{
+			background: #f5f5f5;
+		};
+	}*/
+	thead{
+		background: #f5f5f5;
+		
+		tr{
+			background: #f5f5f5;
+			th{
+				-webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4);
+		   		   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4);
+		                box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4);
+			}
+			.header{background-color: #f5f5f5;}	
+			&:hover{background: #f5f5f5;};		
+		}
+	}
+	tr{
+		&:hover{
+			background:#e5e7e6;
+		};
+	}
+
+	th.rightBorder {background: transparent image-url('right_border.jpg') no-repeat right center;}
+
+	th {
+		text-align: left;
+		padding: 10px 15px;
+		font-weight: 500;
+		font-size: 12px;
+		
+		
+	}
+	
+}
+
+.org_details {
+	clear: both;
+	padding: 15px 36px;
+	ol{padding-left: 3px;}
+
+	.orgLogo{
+		width: 100px;
+		float: left;
+		max-height: 170px;
+		padding: 0 20px;
+		height: 180px;
+		display: table-cell;
+		text-align: center;
+		vertical-align: middle;
+		img{
+			max-width: 90%;
+		}
+		ol{
+			margin: 0px;
+			padding-left: 3px;
+		}
+	}
+
+	.orgLogoWrp{
+		position: relative;
+		width: 130px;
+		float: left;
+		max-height: 180px;
+		padding: 10px 10px 0 10px;
+		height: 180px;
+		display: table-cell;
+		text-align: center;
+		vertical-align: middle;
+		-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+           -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+            -ms-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+                box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3); 
+        a{ display: block; margin-bottom: 37px;}
+
+		img{
+			max-width: 90%;
+			max-height: 150px;
+		}
+
+		.editOptions {
+			/*background: $dark-gray-background;*/
+			margin-top: 0px;
+			width:100%;
+			position: absolute;
+			bottom: 10px;
+			right: 0px;
+			border-top:1px solid #e0e0e0;
+			padding: 3px 0;
+			background: #f5f5f5;
+			position: absolute;
+			bottom: 0px;
+			ul{
+				list-style-type: none;
+				padding: 3px 0;
+				li {
+					display: block;
+					float: left;
+					width: 50%;					
+				}
+				li:first-child{
+					border-right:1px solid #e0e0e0;
+				};
+			}
+			input[type="file"]{
+			width: 30px;
+			height: 30px;
+			opacity: 0;
+			float: right;
+			}
+			.file_upload_btn {
+				background: transparent image-url('edit.svg') no-repeat center center;
+				background-size: 20px;
+				cursor: pointer;
+				width: 30px;
+				float: right;
+				margin-right: 10px;
+				cursor: pointer; 
+				cursor: hand;
+				&:active{
+					background: transparent image-url('editActive.svg') no-repeat center center;
+					background-size: 20px;
+				};
+			}
+			li{margin: 0px;}
+		}
+	}
+
+
+	.org_description {
+		float: left;
+		width: 340px;
+		padding: 0 30px;
+		font-size: 13px;
+
+		input[type="reset"]{
+			margin-left:10px;
+		}
+
+		ol{
+			padding: 0px;
+			li{
+				float: left;
+			}
+		}
+
+		h2 {
+			font-size: 18px;
+			font-weight: 500;
+			padding: 0 0 10px 0;
+			
+			input{
+				font-size: 14px;
+				font-weight: 600;
+				margin-top: 0px;
+			}
+			
+		}
+
+
+}
+
+form .org_description textarea{
+				margin-top: 0px;
+				font-size: 14px;
+				line-height: 18px;
+				min-height: 60px;
+				width: 96%;
+			}
+	}
+
+
+.org_info {
+	width: 260px;
+	float: right;
+	.org_summary {
+		width: 100%;
+	    background: #4dd0e1;
+	    margin-bottom: 10px;
+	    margin-right: 2px;
+	    color: #3e8791;
+	    @include border-radius(2px);
+	    -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+           -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            -ms-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+                box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+	    header{
+	    	color: $white-color;
+	    	padding: 7px 0 7px 20px;
+	    	border-bottom: 1px solid #44b7c6;
+	    }
+	}		
+	.org_statusBox {
+			width: 100%;
+			background: #ccd7d3;
+			color: #727272;
+			@include border-radius(2px);
+	        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+               -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+                -ms-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+                    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+		header{
+	    	color: $white-color;
+	    	padding: 0px;
+	    	border-bottom: 1px solid #b3bdb9;	    	
+	    	table {
+	    		td {padding: 7px 0px 7px 20px;}
+	    	}
+	    }
+	}
+	table{
+		width: 100%;
+		border:0px;
+		td{
+			border:0px;
+			padding: 10px 0 10px 20px;
+			span{
+				font-weight: 500;
+				color: #1a2b32;
+				font-size: 17px;
+			}
+		}
+	}		
+}
+.SpaceWrapper{
+	width: 100%;
+	margin-top: 20px;          
+
+	.spaceBar{
+		background: #dedede;
+		height: 5px;
+		width: 100%;
+		margin: 5px 0;
+		@include border-radius(10px);
+		overflow: hidden;
+		.utilisedSpace {
+			height: 5px;
+			width: 40%;
+			background: #ffb452;
+		}
+	}
+}
+
+.searchBtn {
+	display: none;
+	width: 20px;
+	height: 30px;
+	padding: 0 10px 0 0px;
+	border-right:1px solid #e0e0e0;
+	background: image-url('search.svg') no-repeat center center;
+	background-size: 80%;
+	margin: 5px 20px 5px 0;
+}
+
+.searchBtnWrp {
+	&:hover{
+		background: none;
+	};
+}
+.searchBtn02 {
+	
+	&:hover{
+		background: none;
+	};
+}
+
+.createOrganization {
+	border-bottom: 1px solid #e0e0e0;
+	padding: 20px 0px;	
+	position: relative;
+	hr {border: 1px solid #e0e0e0; 
+		border-bottom: 0px;
+		margin: 30px 0;}
+		label{
+			float: none;
+			margin: 30px 0 15px 0;
+		}
+		label.organization-legal-item-label {float: left; margin: 0px 10px 0 0;}
+		.organization-legal-item {margin-left: 15px; margin-bottom: 15px;}
+	fieldset{
+		padding: 0px 0px 0px 3px;	
+		legend{
+			font-size: 16px;
+			font-weight: 500;
+			margin-bottom: 15px;
+		}
+	}
+
+
+}

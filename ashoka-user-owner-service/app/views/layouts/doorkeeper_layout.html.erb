@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      <%= t('header.application_title') %>
+    </title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="header">
+      <div class="wrapper">
+        <h1 id="logo">
+          <a href="/"><%= t("header.application_title") %></a>
+        </h1>
+        <div class="clear"></div>
+      </div>
+    </div><!--applications header ends -->
+    <div id="page">
+      <%= render "layouts/langPopup" %>
+      <%= render "layouts/flash", :flash => flash if flash.count >= 0 %>
+      <%= yield %>
+      <%= render "layouts/footer" %>
+    </div>
+    <script>
+      $(document).ready(function() {
+        if ($("#flash_container").length ){
+          new UserOwner.FlashHash($("#flash_container"))
+          console.log($("#flash_container").length);
+        }
+
+         if ($("#app_flash_container").length ){
+          new UserOwner.AppFlashHash($("#flash_container"))
+          console.log($("#app_flash_container").length);
+        }
+
+
+        $('.flash').css({'left': ($(window).width() - 400)/2});
+        
+      });
+    </script>
+  </body>
+</html>

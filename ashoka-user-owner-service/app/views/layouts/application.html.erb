@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= t('header.application_title') %></title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div id="page">
+      <%= render "layouts/langPopup" %>
+      <%= render "layouts/header" %>
+      <!--<div id="content" role="content">-->
+      <%= render "layouts/flash", :flash => flash if flash.count >= 0 %>
+      <%= yield %>
+      <!--</div>-->
+      <%= render "layouts/footer" %>
+    </div>
+
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        if ($("#flash_container").length ){
+          new UserOwner.FlashHash($("#flash_container"))
+          console.log($("#flash_container").length);
+        }
+      
+        //blue tabs script start
+        $('.blue_tabs .tab-links a').on('click', function(e)  {
+          var currentAttrValue = $(this).attr('href');      
+          $('.tabContainer').hide();
+          $('.tabContainer' + currentAttrValue).show();      
+          $(this).parent('li').addClass('active').siblings().removeClass('active');      
+          e.preventDefault();
+        });
+        
+      
+        //Current language active
+        var languageName = location.pathname.split("/")[1] ;
+        if( languageName.length > 0 && languageName.length < 3) {
+            $('#current_lang a').text(languageName);
+            $('.langWrp a[data_id^="' + languageName + '"]').addClass('active');
+           }
+           else{
+            $('#current_lang a').text("En");
+            $('a[data_id="en"]').addClass('active');
+        }    
+      
+        $('.login_bg').css({'height': $(window).height() - 146});
+        $('.flash').css({'left': ($(window).width() - 400)/2});
+        $('.pager input[type="text"]').prop('readonly', true);      
+        
+
+        //pagination              
+      $("#table1").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager1'}}})
+      $("#table2").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager2'}}})
+      $("#table3").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager3'}}})
+      $("#table4").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager4'}}})
+      $("#table5").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager5'}}})  
+      });    
+
+      new UserOwner.LanguageSelection($("#language_selection"));
+      new UserOwner.UserOptions($("#welcome")) ;
+      new UserOwner.BackBtn($("#backBtnContainer"));        
+      new UserOwner.disableBtn($(".org_details"));        
+      //new UserOwner.Tabs($("#user_list"));
+
+    
+    </script>        
+  </body>
+</html>

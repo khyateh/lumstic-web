@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="documents">
+    <header>
+      <h2 class="left"><%= t(".documents_title") %></h2>
+      <%= link_to t(".upload_documents_button"), new_document_path , :class => 'Btn colrBtn right' %>
+    </header>
+    <div class="blue_tabs">
+      <ul class="tab-links">
+        <li class="active"><a href="#tab01" id="tab01" class="active"><%= t(".terms_of_service_title") %></a></li>
+        <li><a href="#tab02" id="tab02"><%= t(".privacy_policy_title") %></a></li>
+      </ul>
+    </div>
+    <div class="tabBox">
+      <div class="tabContainer active" id="tab01">
+        <% if @terms_of_service.present? %>
+          <iframe src="<%= @terms_of_service.document_url %>"></iframe>
+        <% else %>
+          <div class="noRecords"><%= t(".terms_of_service_not_uploaded_message") %></div>
+        <% end %>
+      </div>
+      <div class="tabContainer" id="tab02">
+        <h2 class="title"></h2>
+        <% if @privacy_policy.present? %>
+          <iframe src="<%= @privacy_policy.document_url %>"></iframe>
+        <% else %>
+          <div class="noRecords"><%= t(".privacy_policy_not_uploaded_message") %></div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

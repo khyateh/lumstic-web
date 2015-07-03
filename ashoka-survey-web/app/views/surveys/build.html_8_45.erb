@@ -1,0 +1,2198 @@
+<%# @survey.inspect %>
+<div id="loading_overlay" style="outline:2px solid red;">
+    <div class="spinner"></div>
+    <p class="text"><%= t('.saving_your_survey_message') %></p>
+</div>
+<div class="container">
+  <header id="backBtnContainer">
+    <h2 class="left">
+      <a href="#" class="backBtn"></a>
+      <span>
+        <!--<%= t('.list_of_users_heading', :survey_name => @survey.name) %>-->
+        Survey  builder
+        <!-- <span class="subHeading">
+          <%= @survey.name %>
+        </span> -->
+      </span>
+    </h2>
+  </header>
+  
+  <div class="blue_tabs">
+    <ul class="tab-links">
+      <li class="active">
+        <%= link_to  t('edit'), survey_build_path(@survey.id) if can? :build, @survey %>
+        <!-- <a href="#tab01"><%= t "edit" %></a> -->
+      </li>
+      <li><%= link_to t("overview"), survey_dashboard_index_path(@survey.id) if can?(:view_survey_dashboard, @survey) %></li>
+      <li>
+        <%= link_to t("Responses"), survey_responses_path(@survey.id)  if can?(:read, @survey) %>
+        <!-- <a href="#tab03"><%= t "Responses" %></a> -->
+      </li>
+      <li>
+        <!-- <a href="#tab04"><%= t "Reports" %></a> -->
+        <%= link_to t('reports'), report_survey_path(@survey.id) if can?(:report, @survey) && @survey.finalized? %>
+      </li>
+    </ul>
+  </div>
+  <div style="padding:15px;">
+    <a href="#" class="Btn colrBtn right">delete</a>
+    <a href="#" class="Btn colrBtn right inline-btn">publish</a>
+    <!-- <a href="#" class="Btn colrBtn right inline-btn">save</a> -->
+    <input id ="save" type="button" class="right inline-btn" value="Save"></input>
+    <div class="clear"></div>
+  </div>
+  <div class="builder-survey-info">
+    <div class="builder-survey-name-info">
+      <form action="">
+        <input id="organization_name" name="organization[name]" type="text" 
+      value="<%= @survey.name %>"/>
+        <textarea name="organization[about]" placeholder="Write about your organization here" rows="auto"><%= @survey.description %></textarea>
+      </form>
+    </div>
+    <div class="survey_sideInfo">
+      <div class="expiresOn">Expires on - 2014-08-31</div>
+
+      <div class="questionBox">
+        <header>Questions</header>
+        <table>
+          <tr>
+              <td><span>05</span>&nbsp;&nbsp;Main</td>
+              <td><span>10</span>&nbsp;&nbsp;Sub</td>
+            </tr>         
+        </table>
+      </div>
+      <div class="clear"></div>
+      <a href="#" class="collapseAll-btn">Collapse all</a>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <form>
+    <div class="survey-builder">
+      <!--question row-->
+      <div class="clear"></div>
+    </div><!--survey builder ends-->
+    <div class="addQuestion">
+      <!--add question btn-->
+      <div class="question-types">
+        <ul>
+          <li>
+            <input type="radio" name="questionType" id="singleLine" class="regular-radio">
+            <label for="singleLine" class=""></label>
+            <span><a href="javascript:void(0)" id="SingleLineQuestion" class="clsaddquestion">Single Line</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="numeric" class="regular-radio ">
+            <label for="numeric" class=""></label>
+            <span><a href="javascript:void(0)" id="NumericQuestion" class="clsaddquestion">Numeric</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="multiline" class="regular-radio">
+            <label for="multiline" class=""></label>
+            <span><a href="javascript:void(0)" id="MultilineQuestion" class="clsaddquestion">Multiline</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="date" class="regular-radio">
+            <label for="date" class=""></label>
+            <span><a href="javascript:void(0)" id="DateQuestion" class="clsaddquestion">Date</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="multichoice" class="regular-radio">
+            <label for="multichoice" class=""></label>
+            <span><a href="javascript:void(0)" id="MultiChoiceQuestion" class="clsaddquestion">Multichoice</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="category" class="regular-radio">
+            <label for="category" class=""></label>
+            <span><a href="javascript:void(0)" id="CategoryQuestion" class="clsaddquestion">Category</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="rating" class="regular-radio">
+            <label for="rating" class=""></label>
+            <span><a href="javascript:void(0)" id="RatingQuestion" class="clsaddquestion">Rating</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="multiRecord" class="regular-radio">
+            <label for="multiRecord" class=""></label>
+            <span><a href="javascript:void(0)" id="MultiRecordCategory" class="clsaddquestion">Multirecord</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="radio" class="regular-radio">
+            <label for="radio" class=""></label>
+            <span><a href="javascript:void(0)" id="RadioQuestion" class="clsaddquestion">Radio</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="photo" class="regular-radio">
+            <label for="photo" class=""></label>
+            <span><a href="javascript:void(0)" id="PhotoQuestion" class="clsaddquestion">Photo</a></span>
+          </li>
+          <li>
+            <input type="radio" name="questionType" id="drodown" class="regular-radio">
+            <label for="drodown" class=""></label>
+            <span><a href="javascript:void(0)" id="DropDownQuestion" class="clsaddquestion">Dropdown</a></span>
+          </li>
+        </ul>
+        <div class="clear"></div>
+        <button class="addBtn Btn nrmlBtn">Add</button>
+      </div>
+      <a href="#" class="add-question-btn"></a>
+    </div>
+  </form>
+</div>
+
+
+<script language="javascript">
+  $(document).ready(function(){
+
+    var old_text = 'Loading...';
+    $(document).ajaxStart(function() {
+      show_overlay(old_text);
+    });
+    
+    $(document).ajaxStop(function() {
+      hide_overlay();
+    });
+    
+
+    
+    function show_overlay(text){
+      var opts;
+        opts = {
+          lines: 17,
+          length: 9,
+          width: 4,
+          radius: 36,
+          speed: 1.0,
+          trail: 64,
+          top: "5px",
+          left: "25px",
+          color: '#ddd'
+        };
+
+        $('#loading_overlay').css('display', 'block');
+        $('#loading_overlay').children(".spinner").spin(opts);
+
+        if (text) {
+          old_text = $('#loading_overlay').children("p.text").text();
+          $('#loading_overlay').children("p.text").text(text);
+        }
+    }
+
+    function hide_overlay(){
+     $('#loading_overlay').hide();
+     if (old_text) {
+        $('#loading_overlay').children("p.text").text(old_text);
+      }   
+    }
+
+
+
+
+
+    //show rating questions 
+     // $('.ratingNo').live('change', function(event){
+    //    $(event.target).closest('.star').raty({
+    //   readOnly: true,
+    //   number: $(event.target).val()
+    // });
+    // });
+
+    // //show rating questions 
+    // $(document).find('.star').raty({
+    //   readOnly: true,
+    //   number: 5
+    // });
+
+    var QuestionCollectionToSave = [];
+    
+    function switch_case(type_id){
+      switch (type_id){
+        case 'SingleLineQuestion':
+          return '#dummy_single_line_question_template'
+          break;
+        case 'MultilineQuestion':
+          return '#dummy_multiline_question_template'
+          break;
+        case 'NumericQuestion':
+          return '#dummy_numeric_question_template'
+          break;
+        case 'DateQuestion':
+          return '#dummy_date_question_template'
+          break;
+        case 'RadioQuestion':
+          return '#dummy_radio_question_template'
+          break;
+        case 'MultiChoiceQuestion':
+          return '#dummy_multi_choice_question_template'
+          break;
+        case 'DropDownQuestion':
+          return '#dummy_drop_down_question_template'
+          break;
+        case 'PhotoQuestion':
+          return '#dummy_photo_question_template'
+          break;
+        case 'RatingQuestion':
+          return '#dummy_rating_question_template'
+          break;
+        case 'MultiRecordCategory':
+          return '#dummy_multi_record_category_template'
+          break;
+        case null:
+          return '#dummy_category_template'
+          break;
+        default:
+          return '#dummy_category_template'
+      }
+  }
+
+
+    var level = 0;
+    var sub_ques_num =0;
+    var alphabet_level = 0;
+    var QuestionKey_Val = new Array();
+    var alphabets = ['A','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
+    var nesting_alphabet = 0;
+    var nesting_level = 0;
+
+
+    function generate_question_number(QuestionCollection){
+      if (_(QuestionCollection).isEmpty())
+        return 0;
+      else {
+          var cu = QuestionCollection.length;
+         return cu;
+        }
+    }
+
+    function serialize_questions(elements){
+      $.each(elements, function(index, val) {
+        var options = $(val).attr('options');
+        if (typeof options !== typeof undefined && options !== false){
+
+        }
+      });
+    }
+
+    // var str = null;
+
+    function recusrive_loop(options,level_ancestor){
+      //alert("Here");
+      var str_child = '';
+      var alphabet_level_new = 0;
+      $.each(options , function(key , item){
+        OptionCollection.push(item);
+        var template_option = $('#dummy_radio_option_template').html()
+        var str_child3='';
+        //alert(item.content);
+        var cont = item.content;
+        item.question_number = level_ancestor +  "." +  alphabets[++alphabet_level_new];
+        str_child += Mustache.render(template_option, item);
+        //alert("template_question");
+        var elements = $(item).attr('elements');
+        if (typeof elements !== typeof undefined && elements !== false){
+
+          $.each(elements , function(key , item_1){
+
+            // alert("dsfasdf");
+            QuestionCollection.push(item_1);
+            var template_question = $(switch_case(item_1.type)).html()
+            item_1.question_number = item.question_number + "." +  (++sub_ques_num); 
+            str_child += Mustache.render(template_question, item_1);
+            //alert(template_question);
+            
+            console.log("elements");
+            console.log(item_1);
+            //alert(cont + ':'+item_1.content);
+             var options_1 = $(item_1).attr('options');
+
+            if (typeof options_1 !== typeof undefined && options_1 !== false) {
+              console.log("options_1");
+
+              str_child += recusrive_loop(options_1,item_1.question_number);
+              //str_child +='</surveyquestion>';
+            }
+            str_child += '</surveyquestion>';     
+            //str_child3 += '</surveyquestionchild>';
+          });
+          // alert(str_child3);
+          sub_ques_num = 0;
+        }
+        str_child += '</surveyquestionchild>';
+        // alert("OUTSIDE : "+str_child); 
+      });
+
+      return str_child;
+    }
+
+
+    function recusrive_loop_multi(options,level_ancestor){
+      //alert("Here");
+      var str_child = '';
+      var alphabet_level_new = 0;
+      $.each(options , function(key , item){
+        OptionCollection.push(item);
+        var template_option = $('#dummy_multi_choice_option_template').html()
+        var str_child3='';
+        //alert(item.content);
+        var cont = item.content;
+        item.question_number = level_ancestor +  "." +  alphabets[++alphabet_level_new];
+        str_child += Mustache.render(template_option, item);
+        //alert("template_question");
+        var elements = $(item).attr('elements');
+        if (typeof elements !== typeof undefined && elements !== false){
+
+          $.each(elements , function(key , item_1){
+
+            // alert("dsfasdf");
+            QuestionCollection.push(item_1);
+            var template_question = $(switch_case(item_1.type)).html()
+            item_1.question_number = item.question_number + "." +  (++sub_ques_num); 
+            str_child += Mustache.render(template_question, item_1);
+            //alert(template_question);
+            
+            console.log("elements");
+            console.log(item_1);
+            //alert(cont + ':'+item_1.content);
+             var options_1 = $(item_1).attr('options');
+
+            if (typeof options_1 !== typeof undefined && options_1 !== false) {
+              console.log("options_1");
+
+              str_child += recusrive_loop(options_1,item_1.question_number);
+              //str_child +='</surveyquestion>';
+            }
+            str_child += '</surveyquestion>';     
+            //str_child3 += '</surveyquestionchild>';
+          });
+          // alert(str_child3);
+          sub_ques_num = 0;
+        }
+        str_child += '</surveyquestionchild>';
+        // alert("OUTSIDE : "+str_child); 
+      });
+
+      return str_child;
+    }
+
+
+    
+
+
+    function recusrive_loop_drop(options,level_ancestor){
+
+  //alert("Here");
+      var str_child = '';
+      var alphabet_level_new = 0;
+      $.each(options , function(key , item){
+         
+        OptionCollection.push(item);
+        var template_option = $('#dummy_drop_down_option_template').html();
+
+        var str_child3='';
+        //alert(item.content);
+        var cont = item.content;
+        item.question_number = level_ancestor +  "." +  alphabets[++alphabet_level_new];
+        str_child += Mustache.render(template_option, item);
+        //alert("template_question");
+        var elements = $(item).attr('elements');
+        if (typeof elements !== typeof undefined && elements !== false){
+
+          $.each(elements , function(key , item_1){
+
+            // alert("dsfasdf");
+            QuestionCollection.push(item_1);
+            var template_question = $(switch_case(item_1.type)).html()
+            item_1.question_number = item.question_number + "." +  (++sub_ques_num); 
+            str_child += Mustache.render(template_question, item_1);
+            //alert(template_question);
+            
+            console.log("elements");
+            console.log(item_1);
+            //alert(cont + ':'+item_1.content);
+             var options_1 = $(item_1).attr('options');
+
+            if (typeof options_1 !== typeof undefined && options_1 !== false) {
+              console.log("options_1");
+
+              str_child += recusrive_loop(options_1,item_1.question_number);
+              //str_child +='</surveyquestion>';
+            }
+            str_child += '</surveyquestion>';     
+            //str_child3 += '</surveyquestionchild>';
+          });
+          // alert(str_child3);
+          sub_ques_num = 0;
+        }
+        str_child += '</surveyquestionchild>';
+        // alert("OUTSIDE : "+str_child); 
+      });
+      return str_child;
+    }
+
+    function recusrive_loop_category(elements){
+      var str = '';
+      $.each(elements , function(key , item){
+
+        var template_questions_1 = $(switch_case(item.type)).html()
+        item.question_number = level;
+        str += Mustache.render(template_questions_1, item);
+
+        var options = $(item).attr('options');
+        if (typeof options !== typeof undefined && options !== false){
+          $.each(options , function(key , item_1){
+            OptionCollection.push(item_1);
+            var template_question = '';
+            if (item_1.type == 'RadioQuestion') {
+              template_question = $('#dummy_radio_option_template').html()
+            } else if (item_1.type == 'MultiChoiceQuestion'){
+              template_question = $('#dummy_multi_choice_option_template').html()
+            } else if (item_1.type == 'DropDownQuestion'){
+              template_question = $('#dummy_drop_down_option_template').html()
+            }
+            var template_question = $('#dummy_radio_option_template').html()
+            item_1.question_number = level + alphabets[alphabet_level] + (++sub_ques_num); 
+            str += Mustache.render(template_question, item_1);
+            console.log("elements");
+            console.log(item_1);
+             var elements_1 = $(item_1).attr('elements');
+            if (typeof elements_1 !== typeof undefineno-of-charactersd && elements_1 !== false) {
+              console.log("elements_1");
+              str += recusrive_loop_category(elements_1);
+            }
+          });
+        //   sub_ques_num = 0;
+        }
+      });
+
+      return str;
+    }
+    
+
+    // allow_identifier = function() {
+    //   return !(.parent_id) || _this.model.get('has_multi_record_ancestor'));
+    // }
+      function show_options(question){
+        $.each(question.options , function(key , item){
+          console.log(item);
+        });
+      }
+
+      function show_options_questions(option){
+       $.each(option.elements , function(key , item){
+          return JSON.stringify(item);
+        }); 
+      }
+
+
+    find_elements = function(elements , id ){
+      var x = _.find(elements, function(obj){ return obj.id   == id; });
+      // x = _.findWhere(elements, {id:758});
+      // console.log( " HE GHE " );
+      // console.dir (x);
+    }
+
+
+    preload_elements = function(elements) {
+      console.dir(elements);
+      
+    return _(elements).each(function(resultquery) {
+      console.dir(resultquery);
+      resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+      resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+      resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+      
+      console.log (resultquery.type)
+      //alert(" TYPE " + resultquery.type);
+      
+      switch (resultquery.type){
+        case 'SingleLineQuestion':
+          var template = $('#dummy_single_line_question_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          $(".survey-builder").append(str);
+          break;
+        case 'MultilineQuestion':
+          var template = $('#dummy_multiline_question_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          $(".survey-builder").append(str);
+          break;
+        case 'NumericQuestion':
+          var template = $('#dummy_numeric_question_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          $(".survey-builder").append(str);
+          break;
+        case 'DateQuestion':
+          var template = $('#dummy_date_question_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          $(".survey-builder").append(str);
+          break;
+        case 'RadioQuestion':
+          sub_ques_num  = 0;
+          var template = $('#dummy_radio_question_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+          // alert(str);
+
+
+          // console.log("1" + str);
+
+          var options = $(resultquery).attr('options');
+          
+          if (typeof options !== typeof undefined && options !== false) {
+            console.log("options");
+            str += recusrive_loop(options,level); 
+          } 
+          str += "</surveyquestion>";
+          $(".survey-builder").append(str);
+          alphabet_level = 0;
+          break;
+        case 'MultiChoiceQuestion':
+          // var template = $('#dummy_multi_choice_question_template').html()
+          // resultquery.question_number = ++level;
+          // var str = Mustache.render(template, resultquery);
+
+
+          // $(".survey-builder").append(str);
+
+          sub_ques_num  = 0;
+          var template = $('#dummy_multi_choice_question_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          // console.log("1" + str);
+
+          var options = $(resultquery).attr('options');
+          
+          if (typeof options !== typeof undefined && options !== false) {
+            console.log("options");
+            str += recusrive_loop_multi(options,level); 
+          } 
+          str += "</surveyquestion>";
+          $(".survey-builder").append(str);
+          alphabet_level = 0;
+          break;
+        case 'DropDownQuestion':
+          // var template = $('#dummy_drop_down_question_template').html()
+          // resultquery.question_number = ++level;
+          // var str = Mustache.render(template, resultquery);
+          // $(".survey-builder").append(str);
+          // var template = $('#dummy_multi_choice_question_template').html()
+          // resultquery.question_number = ++level;
+          // var str = Mustache.render(template, resultquery);
+
+
+          // $(".survey-builder").append(str);
+
+          sub_ques_num  = 0;
+          var template = $('#dummy_drop_down_question_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          // console.log("1" + str);
+
+          var options = $(resultquery).attr('options');
+          
+          if (typeof options !== typeof undefined && options !== false) {
+            console.log("options");
+            str += recusrive_loop_drop(options,level); 
+          } 
+          str += "</surveyquestion>";
+          $(".survey-builder").append(str);
+          alphabet_level = 0;
+          break;
+        case 'PhotoQuestion':
+          var template = $('#dummy_photo_question_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          $(".survey-builder").append(str);
+          break;
+        case 'RatingQuestion':
+          var template = $('#dummy_rating_question_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          $(".survey-builder").append(str);
+          break;
+        case 'MultiRecordCategory':
+          // var template = $('#dummy_multi_record_category_template').html()
+          // resultquery.question_number = ++level;
+          // var str = Mustache.render(template, resultquery);
+          // $(".survey-builder").append(str);
+          sub_ques_num  = 0;
+          var template = $('#dummy_multi_record_category_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          // console.log("1" + str);
+
+          var elements = $(resultquery).attr('elements');
+          
+          if (typeof elements !== typeof undefined && elements !== false) {
+            console.log("elements CATEGORY");
+            str += recusrive_loop_category(elements); 
+          } 
+          str += " </span></surveyquestion>";
+          $(".survey-builder").append(str);
+          alphabet_level = 0;
+          break;
+        case null:
+        //alert("CATEGORY");
+          // var template = $('#dummy_category_template').html()
+          // resultquery.question_number = ++level;
+          // var str = Mustache.render(template, resultquery);
+          // $(".survey-builder").append(str);
+          sub_ques_num  = 0;
+          var template = $('#dummy_category_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          // console.log("1" + str);
+
+          var elements = $(resultquery).attr('elements');
+          
+          if (typeof elements !== typeof undefined && elements !== false) {
+            console.log("elements CATEGORY");
+            str += recusrive_loop_category(elements); 
+          } 
+          str += "</surveyquestion>";
+          $(".survey-builder").append(str);
+          alphabet_level = 0;
+          break;
+        default:
+          var template = $('#dummy_category_template').html()
+          resultquery.question_number = ++level;
+          var str = Mustache.render(template, resultquery);
+
+
+          $(".survey-builder").append(str);
+      }
+
+      QuestionCollection.push(resultquery);
+      console.log(QuestionCollection);
+
+    });
+};
+            $.get("/api/surveys/"+<%= @survey.id %>, function(resultquery) {
+             // console.log(resultquery.elements);
+
+              preload_elements(resultquery.elements);
+              find_elements(resultquery.elements);
+              serialize_questions(resultquery.elements);
+              QuestionCollectionToSave = QuestionCollection;
+              // QuestionCollection.push(resultquery);
+            console.log(QuestionCollection);
+            var MainQuestion  = 0;
+            var SubQuestion  = 0;
+            // alert(QuestionCollection.length);
+            $.each(QuestionCollection, function(index, val) {
+                 if (val.parent_id == null){
+                    MainQuestion++;
+                 } else if (val.parent_id != null){
+                    SubQuestion++;
+                 }
+            });
+
+            // alert("MainQuestion :" + MainQuestion + ", SubQuestion :" + SubQuestion);
+            }); 
+
+             // $.get("/api/categories/"+<%= @survey.id %>, function(resultquery) {
+             //    console.dir(resultquery);
+             // });
+
+
+
+   
+   var ORDER_NUMBER_STEP = 2;
+   var ORDER_NUMBER_STEP_OPTIONS = 1;
+   var seed_option_number = 0;
+   var QuestionCollection = [];
+   var OptionCollection = [];
+ $(".clsaddquestion").click(function() {
+  var curr = $('#current_order_num').val();
+  var order_number_send = set_order_number_for_question(QuestionCollection);
+ var query = {
+     question: {
+         content: 'Untitled Question',
+         survey_id: <%= @survey.id %> ,
+         mandatory: false,
+         type: $(this).attr('id'),
+         order_number : order_number_send,
+         identifier: false
+     }
+ };
+ resultquery = null;
+
+
+ function set_order_number_for_option(OptionCollection){
+  if (_(OptionCollection).isEmpty())
+    return 0;
+  else {
+     var cu = 0;
+    var it = _.max(OptionCollection,function(max_item){ cu =(max_item.order_number =  max_item.order_number + ORDER_NUMBER_STEP_OPTIONS)
+    }); 
+    // console.log('message');
+    console.log('ORDER NUMBER_OPTION => ' + cu);
+     return cu;
+    }
+  }
+
+
+ function set_order_number_for_question(QuestionCollection){
+  console.log(QuestionCollection);
+  if (_(QuestionCollection).isEmpty())
+    return 0;
+  else {
+     var cu = 0;
+
+    var it = _.max(QuestionCollection,function(max_item){ cu =(max_item.order_number =  max_item.order_number + ORDER_NUMBER_STEP);
+    }); 
+    // console.log('message');
+    console.log('ORDER NUMBER => ' + cu);
+     return cu;
+    }
+  }
+  var multi_cat_type = $(this).attr('id');
+ switch ($(this).attr('id')) {
+     case 'SingleLineQuestion':
+
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             
+             var template = $('#dummy_single_line_question_template').html();
+             console.dir(QuestionCollection);
+             //alert("HERE");
+             //resultquery.question_number = generate_question_number(QuestionCollection);
+             var str = Mustache.render(template, resultquery);
+             console.log(resultquery);
+             // var str = '<div class="question-row '+$(this).attr('id')+'"><div class="question-container"><input type="text" value="1) '+resultquery.content+'*" /></div><div class="question_options">No of characters  <input type="text" value="" /></div></div>';       
+             
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultilineQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+            // resultquery.order_number = set_order_number_for_question();
+            // console.dir(resultquery);
+             var template = $('#dummy_multiline_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             // var str = '<div class="question-row '+$(this).attr('id')+'"><div class="question-container"><input type="text" value="1) '+resultquery.content+'*" /></div><div class="question_options">No of characters  <input type="text" value="" /></div></div>';
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'NumericQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_numeric_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'DateQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_date_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'RadioQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_radio_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultiChoiceQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_multi_choice_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'DropDownQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_drop_down_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'PhotoQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_photo_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'RatingQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_rating_question_template').html();
+             console.log(template);
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultiRecordCategory':
+        //alert("MultiRecordCategory");
+        multi = {
+           category: {
+               content: 'Untitled Multi Record',
+               survey_id: <%= @survey.id %> ,
+               order_number : order_number_send,
+               type:multi_cat_type
+
+           }
+         };
+
+          $.post("/api/categories/", multi, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/categories/" + resultquery.id + '/duplicate';
+             // resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_multi_record_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+       case 'CategoryQuestion':
+       // {"category"=>{"content"=>"Untitled Category", "survey_id"=>110, "order_number"=>66, "type"=>nil}}
+         // query = {
+         //   category: {
+         //       content: 'Untitled Category',
+         //       survey_id: <%= @survey.id %> ,
+         //       type : '',
+         //       order_number : order_number_send
+         //   }
+         // };
+
+         var query = {
+             category: {
+                 content: 'Untitled Category',
+                 survey_id: <%= @survey.id %> ,
+                 order_number : order_number_send
+             }
+         }; 
+         $.post("/api/categories/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/categories/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/categories/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             console.dir(QuestionCollection);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+
+         break;
+     default:
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             $(".survey-builder").append(str);
+             // ordeid++;
+         });
+  }
+
+  reset_builder();
+
+  // QuestionCollection.push(resultquery);
+  // console.log (resultquery.order_number);
+ });
+
+
+function reset_builder(){
+  $.get("/api/surveys/"+<%= @survey.id %>, function(resultquery) {
+      // console.log(resultquery.elements);
+      $(".survey-builder").html("");
+    level = 0;
+    sub_ques_num =0;
+    alphabet_level = 0;
+    QuestionKey_Val = new Array();
+    alphabets = ['A','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
+    nesting_alphabet = 0;
+    nesting_level = 0;
+  ORDER_NUMBER_STEP = 2;
+  ORDER_NUMBER_STEP_OPTIONS = 1;
+  seed_option_number = 0;
+  QuestionCollection = [];
+  OptionCollection = [];
+  query = null;
+  multi = null;
+      preload_elements(resultquery.elements);
+  });
+}
+
+//My task
+$("input[type=checkbox]").live('change',function(){
+  var qustion_id = $(this).closest('surveyquestion').attr('id');
+var flag = $(this).is(':checked');
+var attribute = $(this).attr('name');
+$.each(QuestionCollection,function(key,val){
+ if(qustion_id == val.id){
+  if(attribute == 'mandatory'){
+QuestionCollection[key].mandatory = flag;
+  }else if(attribute == 'identifier'){
+QuestionCollection[key].identifier = flag;
+  }else if(attribute == 'private'){
+QuestionCollection[key].private = flag;
+  }
+  }
+});
+});
+$("input[type=text],input[type=number]").live('keyup mouseout',function(){
+var qustion_id = $(this).closest('surveyquestion').attr('id');
+var val_text = $(this).val();
+var attribute = $(this).attr('name');
+if($(this).hasClass( "option" )){
+  var option_id = $(this).attr('data-id');
+$.each(OptionCollection,function(key,val){
+ if(option_id == val.id){
+    OptionCollection[key].content = val_text;
+  }
+});
+}else{
+$.each(QuestionCollection,function(key,val){
+
+ if(qustion_id == val.id){
+  if(attribute == 'content'){
+QuestionCollection[key].content = val_text;
+  }else if(attribute == 'max_length'){
+QuestionCollection[key].max_length = val_text;
+  }else if(attribute == 'max_value'){
+QuestionCollection[key].max_value = val_text;
+  }else if(attribute == 'min_value'){
+QuestionCollection[key].min_value = val_text;
+  }
+  }
+});
+}
+});
+
+$("input[type=file]").live('click',function(){
+  $(this).value = null;
+});
+
+
+$("input[type=file]").live('change',function(){
+  var qustion_id = $(this).closest('surveyquestion').attr('id');
+  var attribute = $(this).attr('name');
+//  alert(qustion_id);
+  var img_ck = this;
+  var parent_div = $(this).closest('surveyquestion');
+  var img_path = '';
+    $(img_ck).fileupload({
+   dataType: "json",
+   url: "/api/questions/"+qustion_id+"/image_upload",
+   submit: function() {
+     // return loading_overlay.show_overlay(I18n.t("js.uploading_image"));
+     //alert('done');
+   },
+   done: function(e, data) {
+     //alert('done');
+
+     img_path = data.result.image_url;
+      $.each(QuestionCollection,function(key,val){
+      if(qustion_id == val.id){
+      if(attribute == 'image'){
+      QuestionCollection[key].image_upload_url = img_path;
+      $(parent_div).find('img.thumb').attr('src',img_path);
+      }
+      }
+      });
+   }
+  });
+});
+//my task
+//
+// Delete question 
+$(".delete_question").live('click',function(event){
+        // question_to_delete = $(event.target).closest('surveyquestion');
+         $(event.target).closest('surveyquestion').remove();
+        question_id = $(event.target).closest('surveyquestion').attr('id');
+        $.each(QuestionCollection, function(index, val) {
+           if ( val.id == question_id){
+              QuestionCollection.splice(index,1);
+              return  false;
+           }
+        });
+        
+
+        $.ajax({
+            url: "/api/questions/" + question_id,
+            type: "POST",
+            contentType: "application/json",
+              beforeSend: function(xhr)   
+                {
+                  xhr.setRequestHeader("X-Http-Method-Override", "DELETE");
+                },
+                success:function(resultquery){
+                  console.log(resultquery);
+                 
+                }
+          });
+        reset_builder();
+
+});
+// Delete question
+
+
+/// Add multi record sub question 
+
+$("a.add_sub_question_in_cat_multi").live('click',function(event){
+  //alert("HELLO  " + $(this).closest('surveyquestion').attr("id"));
+  var sub_q_type = $(this).siblings('#questions').val();
+  // return false;
+  var subquestion_this = $(this);
+  // var curr = $('#current_order_num').val();
+  var order_number_send = set_order_number_for_question(QuestionCollection);
+  var query = {
+     question: {
+         content: 'Untitled Question',
+         survey_id: <%= @survey.id %> ,
+         type: sub_q_type,
+         order_number : set_order_number_for_question(QuestionCollection),
+         category_id: $(this).closest('surveyquestion').attr("id"),
+         identifier: false
+     }
+  };
+  resultquery = null;
+  function set_order_number_for_question(QuestionCollection){
+    if (_(QuestionCollection).isEmpty())
+      return 0;
+    else {
+      var cu = 0;
+      var it = _.max(QuestionCollection,function(max_item){ cu =(max_item.order_number =  max_item.order_number + ORDER_NUMBER_STEP)
+      // console.log('1');
+    }); 
+    console.log('message');
+     return cu;
+    }
+  }
+
+ switch (sub_q_type) {
+     case 'SingleLineQuestion':
+
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             
+             var template = $('#dummy_single_line_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             console.log(resultquery);
+             // var str = '<div class="question-row '+$(this).attr('id')+'"><div class="question-container"><input type="text" value="1) '+resultquery.content+'*" /></div><div class="question_options">No of characters  <input type="text" value="" /></div></div>';       
+            //  resultquery.order_number = set_order_number_for_question(QuestionCollection);
+              // subquestion_this.closest('surveyquestionchild').css('border', '10px solid red');
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultilineQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+            // resultquery.order_number = set_order_number_for_question();
+            // console.dir(resultquery);
+             var template = $('#dummy_multiline_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             // var str = '<div class="question-row '+$(this).attr('id')+'"><div class="question-container"><input type="text" value="1) '+resultquery.content+'*" /></div><div class="question_options">No of characters  <input type="text" value="" /></div></div>';
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'NumericQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_numeric_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'DateQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_date_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'RadioQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_radio_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultiChoiceQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_multi_choice_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'DropDownQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_drop_down_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'PhotoQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_photo_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'RatingQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_rating_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     // case 'MultiRecordCategory':
+     //    alert("MultiRecordCategory");
+     //    multi = {
+     //       category: {
+     //           content: 'Untitled Multi Record',
+     //           survey_id: <%= @survey.id %> ,
+     //           order_number : order_number_send,
+     //           cater
+     //           type:"MultiRecordCategory"
+
+     //       }
+     //     };
+     //     $.post("/api/categories/", multi, function(resultquery) {
+     //         resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+     //         resultquery.duplicate_url = "/api/categories/" + resultquery.id + '/duplicate';
+     //         // resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+     //         QuestionCollection.push(resultquery);
+     //         // resultquery.order_number = set_order_number_for_question();
+     //         // console.dir(resultquery);
+     //         var template = $('#dummy_multi_record_category_template').html();
+     //         var str = Mustache.render(template, resultquery);
+     //         subquestion_this.closest('surveyquestion').append(str);
+     //         // ordeid++;
+     //     });
+
+     //     break;
+     case 'CategoryQuestion':
+       // {"category"=>{"content"=>"Untitled Category", "survey_id"=>110, "order_number"=>66, "type"=>nil}}
+       alert "calling this"
+         query = {
+           category: {
+               content: 'Untitled Category',
+               survey_id: <%= @survey.id %> ,
+               order_number : order_number_send
+           }
+         };
+         $.post("/api/categories/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/categories/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/categories/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             console.dir(QuestionCollection);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+
+         break;
+     default:
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestion').append(str);
+             // ordeid++;
+         });
+  }
+
+ });
+////  Add multi record sub question  END
+
+// Add Option
+
+
+$("a.add_options_in_bulk").live('click',function(event){
+        // i = 1070;
+        current_question  = 0;
+        question_id = $(event.target).closest('surveyquestion').attr('id');
+        $.each(QuestionCollection, function(index, val) {
+          if ( val.id == question_id){
+            current_question = val;
+            options = $(val).attr('options');  
+            $.each(options, function(index, val_opt) {
+               $.ajax({
+                    async: false,
+                    url: "/api/options/" + val_opt.id,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(val_opt),
+                      beforeSend: function(xhr)   
+                        {
+                          //alert("ID" + val_opt.id);
+                          xhr.setRequestHeader("X-Http-Method-Override", "DELETE");
+                          $("#"+ val_opt.id).remove();
+                        },
+                        success:function(resultquery){
+                          //console.log(resultquery);
+                        }
+                  });
+            });
+            console.dir(options);
+          }
+        });
+        csv = $(this).closest('surveyquestion').find('textarea.add_options_in_bulk').val();
+        console.log(csv);
+        if (csv === "") {
+            return 
+        } else {
+          try {
+              parsed_csv = $.csv.toArray(csv);
+              console.dir(parsed_csv);
+                $.each(parsed_csv, function(item,val){
+                    var query = {
+                    option : {
+                      content:val, 
+                      order_number:item, 
+                      question_id:question_id
+                    }
+                };
+                $.post("/api/options/", query, function(resultquery) {
+                    OptionCollection.push(resultquery);
+                    console.log (resultquery);
+                    current_question.options.push(resultquery);
+                    var template = $('#dummy_radio_option_template').html(); 
+                    var str = Mustache.render(template, resultquery);
+                    $('#' + question_id).closest('surveyquestion').append(str);
+                });
+              });
+              // return parsed_csv;
+            } catch (error) {
+              alert(I18n.t("js.require_csv_format"));
+            }
+            reset_builder();
+        }
+});
+
+//Add Option End
+
+// Add option for sapad re
+$("a.add_options_in_bulk_multi_choice").live('click',function(event){
+        question_id = $(event.target).closest('surveyquestion').attr('id');
+        //alert(question_id);
+        $.each(QuestionCollection, function(index, val) {
+          if ( val.id == question_id){
+            options = $(val).attr('options');  
+            $.each(options, function(index, val_opt) {
+               $.ajax({
+                    async: false,
+                    url: "/api/options/" + val_opt.id,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(val_opt),
+                      beforeSend: function(xhr)   
+                        {
+                          xhr.setRequestHeader("X-Http-Method-Override", "DELETE");
+                        },
+                        success:function(resultquery){
+                          //console.log(resultquery);
+                        }
+                  });
+            });
+            console.dir(options);
+          }
+        });
+        csv = $(this).closest('surveyquestion').find('textarea.add_options_in_bulk').val();
+        console.log(csv);
+        if (csv === "") {
+            return 
+        } else {
+          try {
+              parsed_csv = $.csv.toArray(csv);
+              console.dir(parsed_csv);
+                $.each(parsed_csv, function(item,val){
+                    var query = {
+                    option : {
+                      content:val, 
+                      order_number:item, 
+                      question_id:question_id
+                    }
+                };
+                $.post("/api/options/", query, function(resultquery) {
+                    OptionCollection.push(resultquery);
+                    console.log (resultquery);
+                    var template = $('#dummy_multi_choice_option_template').html(); 
+                    var str = Mustache.render(template, resultquery);
+                    $('#' + question_id).closest('surveyquestion').append(str);
+                });
+              });
+              // return parsed_csv;
+            } catch (error) {
+              alert(I18n.t("js.require_csv_format"));
+            }
+            reset_builder();
+        }
+});
+// Add option for multichoice END
+
+
+/// 
+$("a.add_options_in_bulk_drop_down").live('click',function(event){
+      //alert("AAHE MI PAN");
+        // i = 1000;
+        question_id = $(event.target).closest('surveyquestion').attr('id');
+        $.each(QuestionCollection, function(index, val) {
+          if ( val.id == question_id){
+            options = $(val).attr('options');  
+            $.each(options, function(index, val_opt) {
+               $.ajax({
+                    async: false,
+                    url: "/api/options/" + val_opt.id,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(val_opt),
+                      beforeSend: function(xhr)   
+                        {
+                          xhr.setRequestHeader("X-Http-Method-Override", "DELETE");
+                        },
+                        success:function(resultquery){
+                          //console.log(resultquery);
+                        }
+                  });
+            });
+            console.dir(options);
+          }
+        });
+        csv = $(this).closest('surveyquestion').find('textarea.add_options_in_bulk').val();
+        console.log(csv);
+        if (csv === "") {
+            return 
+        } else {
+          try {
+              parsed_csv = $.csv.toArray(csv);
+              console.dir(parsed_csv);
+              // seed_option_number =0;
+                $.each(parsed_csv, function(item,val){
+                    var query = {
+                    option : {
+                      content:val, 
+                      order_number:item, 
+                      question_id:question_id
+                    }
+                };
+                $.post("/api/options/", query, function(resultquery) {
+                    OptionCollection.push(resultquery);
+                    console.log (resultquery);
+                    var template = $('#dummy_drop_down_option_template').html(); 
+                    var str = Mustache.render(template, resultquery);
+                    $('#' + question_id).closest('surveyquestion').append(str);
+                });
+              });
+              // return parsed_csv;
+            } catch (error) {
+              alert(I18n.t("js.require_csv_format"));
+            }
+            reset_builder();
+        }
+});
+/// 
+/// 
+$("a.add_sub_question_category").live('click',function(event){
+      //alert("MI PAN AAHE  RE");
+        i = 1100;
+        question_id = $(event.target).closest('surveyquestion').attr('id');
+        csv = $(this).closest('surveyquestion').find('textarea.add_options_in_bulk').val();
+        console.log(csv);
+        if (csv === "") {
+            return 
+        } else {
+          try {
+              parsed_csv = $.csv.toArray(csv);
+              console.dir(parsed_csv);
+                $.each(parsed_csv, function(item,val){
+                    var query = {
+                    option : {
+                      content:val, 
+                      order_number:i+=2, 
+                      question_id:question_id
+                    }
+                };
+                $.post("/api/questions/", query, function(resultquery) {
+                    OptionCollection.push(resultquery);
+                    console.log (resultquery);
+                    var template = $('#dummy_drop_down_option_template').html(); 
+                    var str = Mustache.render(template, resultquery);
+                    $('#' + question_id).closest('surveyquestion').append(str);
+                });
+              });
+              // return parsed_csv;
+            } catch (error) {
+              alert(I18n.t("js.require_csv_format"));
+            }
+            reset_builder();
+        }
+});
+
+/// 
+
+//
+//
+// ADD sub question 
+
+$("a.add_sub_question").live('click',function(event){
+
+  //$(this).prev(".question-types").css('display','block');
+  $(this).prev(".question-types").toggleClass('show');
+  var sub_q_type = $(this).siblings('#questions').val();
+  $(".clsaddquestion_sub").live("click",function(event){
+    sub_q_type = $(event.target).attr('id');
+    // alert(sub_q_type);
+    // alert("HELLO  " + $(this).closest('surveyquestionchild').attr("id"));
+  
+  // return false;
+  var subquestion_this = $(this);
+  // var curr = $('#current_order_num').val();
+  var order_number_send = set_order_number_for_question(QuestionCollection);
+  var query = {
+     question: {
+         content: 'Untitled Question',
+         survey_id: <%= @survey.id %> ,
+         type: sub_q_type,
+         order_number : 2008 + 2,
+         parent_id : $(this).closest('surveyquestionchild').attr("id"),
+         identifier: false
+     }
+  };
+  resultquery = null;
+  function set_order_number_for_question(QuestionCollection){
+    if (_(QuestionCollection).isEmpty())
+      return 0;
+    else {
+      var cu = 0;
+      var it = _.max(QuestionCollection,function(max_item){ cu =(max_item.order_number =  max_item.order_number + ORDER_NUMBER_STEP)
+      // console.log('1');
+    }); 
+    console.log('message');
+     return cu;
+    }
+  }
+
+ switch (sub_q_type) {
+     case 'SingleLineQuestion':
+
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             
+             var template = $('#dummy_single_line_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             console.log(resultquery);
+             // var str = '<div class="question-row '+$(this).attr('id')+'"><div class="question-container"><input type="text" value="1) '+resultquery.content+'*" /></div><div class="question_options">No of characters  <input type="text" value="" /></div></div>';       
+            //  resultquery.order_number = set_order_number_for_question(QuestionCollection);
+              // subquestion_this.closest('surveyquestionchild').css('border', '10px solid red');
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultilineQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+            // resultquery.order_number = set_order_number_for_question();
+            // console.dir(resultquery);
+             var template = $('#dummy_multiline_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             // var str = '<div class="question-row '+$(this).attr('id')+'"><div class="question-container"><input type="text" value="1) '+resultquery.content+'*" /></div><div class="question_options">No of characters  <input type="text" value="" /></div></div>';
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'NumericQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_numeric_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'DateQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_date_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'RadioQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_radio_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultiChoiceQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_multi_choice_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'DropDownQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_drop_down_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'PhotoQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_photo_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'RatingQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_rating_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultiRecordCategory':
+        // alert("MultiRecordCategory");
+        multi = {
+           category: {
+               content: 'Untitled Category',
+               survey_id: <%= @survey.id %> ,
+               order_number : order_number_send,
+               type:"MultiRecordCategory"
+
+           }
+         };
+         $.post("/api/categories/", multi, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/categories/" + resultquery.id + '/duplicate';
+             // resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_multi_record_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+       case 'CategoryQuestion':
+       // {"category"=>{"content"=>"Untitled Category", "survey_id"=>110, "order_number"=>66, "type"=>nil}}
+         query = {
+           category: {
+               content: 'Untitled Category',
+               survey_id: <%= @survey.id %> ,
+               order_number : order_number_send
+           }
+         };
+         $.post("/api/categories/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/categories/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/categories/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             console.dir(QuestionCollection);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     default:
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+  }
+  });
+  
+  
+
+ });
+
+$("a.add_sub_question_2").live('click',function(event){
+  //alert("HELLO  " + $(this).closest('surveyquestionchild').attr("id"));
+  var sub_q_type = $(this).siblings('#questions').val();
+  // return false;
+  var subquestion_this = $(this);
+  // var curr = $('#current_order_num').val();
+  var order_number_send = set_order_number_for_question(QuestionCollection);
+  var query = {
+     question: {
+         content: 'Untitled Question',
+         survey_id: <%= @survey.id %> ,
+         type: sub_q_type,
+         order_number : 4100 +  (ORDER_NUMBER_STEP++),
+         category_id: $(this).closest('surveyquestionchild').attr("id"),
+         identifier: false,
+         mandatory: false
+     }
+
+
+
+  };
+  resultquery = null;
+  function set_order_number_for_question(QuestionCollection){
+    if (_(QuestionCollection).isEmpty())
+      return 0;
+    else {
+      var cu = 0;
+      var it = _.max(QuestionCollection,function(max_item){ cu =(max_item.order_number =  max_item.order_number + ORDER_NUMBER_STEP)
+      // console.log('1');
+    }); 
+    console.log('message');
+     return cu;
+    }
+  }
+
+ switch (sub_q_type) {
+     case 'SingleLineQuestion':
+
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             
+             var template = $('#dummy_single_line_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             console.log(resultquery);
+             // var str = '<div class="question-row '+$(this).attr('id')+'"><div class="question-container"><input type="text" value="1) '+resultquery.content+'*" /></div><div class="question_options">No of characters  <input type="text" value="" /></div></div>';       
+            //  resultquery.order_number = set_order_number_for_question(QuestionCollection);
+              // subquestion_this.closest('surveyquestionchild').css('border', '10px solid red');
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultilineQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+            // resultquery.order_number = set_order_number_for_question();
+            // console.dir(resultquery);
+             var template = $('#dummy_multiline_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             // var str = '<div class="question-row '+$(this).attr('id')+'"><div class="question-container"><input type="text" value="1) '+resultquery.content+'*" /></div><div class="question_options">No of characters  <input type="text" value="" /></div></div>';
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'NumericQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_numeric_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'DateQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_date_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'RadioQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_radio_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultiChoiceQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_multi_choice_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'DropDownQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_drop_down_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'PhotoQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_photo_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'RatingQuestion':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_rating_question_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     case 'MultiRecordCategory':
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_multi_record_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+       case 'CategoryQuestion':
+       // {"category"=>{"content"=>"Untitled Category", "survey_id"=>110, "order_number"=>66, "type"=>nil}}
+         query = {
+           category: {
+               content: 'Untitled Category',
+               survey_id: <%= @survey.id %> ,
+               order_number : order_number_send
+           }
+         };
+         $.post("/api/categories/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/categories/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/categories/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             console.dir(QuestionCollection);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+
+         break;
+     default:
+         $.post("/api/questions/", query, function(resultquery) {
+             resultquery.allow_identifier = (!(resultquery.parent_id) || resultquery.has_multi_record_ancestor);
+             resultquery.duplicate_url = "/api/questions/" + resultquery.id + '/duplicate';
+             resultquery.image_upload_url = "/api/questions/" + resultquery.id + '/image_upload';
+             QuestionCollection.push(resultquery);
+             // resultquery.order_number = set_order_number_for_question();
+             // console.dir(resultquery);
+             var template = $('#dummy_category_template').html();
+             var str = Mustache.render(template, resultquery);
+             subquestion_this.closest('surveyquestionchild').append(str);
+             // ordeid++;
+         });
+  }
+  reset_builder();
+
+ });
+// ADd sub question end
+//form accordian  
+
+    // $('.question-container').live('click', function(){
+    //   $(this).next('.children-content').slideToggle(); 
+    // });
+    var animateAll = 0;
+    $('.collapseAll-btn').live('click', function(){
+      $(this).toggleClass('collapsed');      
+      if(animateAll == 0){
+        $('.question-row').stop().animate({height: '32px'});
+        animateAll = 1; 
+      }else{
+        $('.question-row').stop().animate({height: '100%'});
+        animateAll = 0; 
+      }
+      return false;
+
+    });
+
+
+   // var animateNo = 0;
+   //  $('.question-container').live('click', function(){
+
+   //    if(animateNo == 0){
+   //      $(this).parent().stop().animate({height: '32px'});
+   //      animateNo = 1; 
+   //    }else{
+   //      $(this).parent().stop().animate({height: '100%'}); 
+   //      animateNo = 0;
+   //    }
+   //  });
+
+
+    //to show minus button image on add question button
+      $('.add-question-btn').live('click', function(){
+        $(this).toggleClass('minusImg');
+        $(this).prev('.question-types').toggleClass('show');
+        return false;
+      });
+
+      $('.add-option').live('click', function(){
+        $(this).toggleClass('minusImg');        
+        return false;
+      });
+
+      //selected question shadow effect
+      $('.question-row').live('click',function(){
+
+        $('.question-row').css({'box-shadow':'0px 0px 0px #000',
+                '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
+
+        $(this).css({'box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-moz-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)'});
+      });
+
+
+    $('.setting').live('click', function(){
+      // $('.setting-options').removeClass('active');
+      // $('.settingOptionsWrp').removeClass('active');
+
+      $(this).next('.setting-options').toggleClass('active'); 
+      $(this).parents().toggleClass('active');
+      return false;
+    });
+  // ///
+    $("#save").on('click',function(){
+      console.log(QuestionCollectionToSave);
+$.each(QuestionCollectionToSave,function(key,question){
+        $.ajax({
+            url: "/api/questions/" + question.id,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(question),
+              beforeSend: function(xhr)   
+                {
+                  xhr.setRequestHeader("X-Http-Method-Override", "PUT");
+                },
+                success:function(resultquery){
+                  //console.log(resultquery);
+                }
+          });
+});
+      
+$.each(OptionCollection,function(key,option){
+
+        $.ajax({
+            url: "/api/options/" + option.id,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(option),
+              beforeSend: function(xhr)   
+                {
+                  xhr.setRequestHeader("X-Http-Method-Override", "PUT");
+                },
+                success:function(resultquery){
+                  //console.log(resultquery);
+                }
+          });
+
+});
+    });
+  
+    // ///
+ });
+
+</script>
+<%= @survey.build_mustache_templates %>

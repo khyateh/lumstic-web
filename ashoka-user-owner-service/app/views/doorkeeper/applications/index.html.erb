@@ -1,0 +1,38 @@
+<div class="tabBox">
+<div class="container">
+  <div class="span16">
+    <header class="page-header">
+      <h2 class="left">Your applications</h2>
+
+      <%= link_to 'New Application', new_application_path , :class => "Btn colrBtn right" %>
+
+    </header>
+    <!-- <p><%= link_to 'Home', main_app.root_path %></p> -->
+
+<div class="tabContainer active">
+    <table class="table_list">
+      
+        <tr>
+          <th class="rightBorder">Name</th>
+          <th class="rightBorder">Callback url</th>
+          <th class="rightBorder"></th>
+          <th></th>
+        </tr>      
+
+      
+
+        <% @applications.each do |application| %>
+          <tr id="application_<%= application.id %>">
+            <td><%= link_to application.name, application %></td>
+            <td><%= application.redirect_uri %></td>
+            <td><%= link_to '', edit_application_path(application) , class: "user_edit edit" %></td>
+            <td><%= link_to '', application, :confirm => 'Are you sure?', :method => :delete , class: "deleteApp" %></td>
+          </tr>
+        <% end %>
+      
+
+    </table>
+    </div>
+  </div>
+</div>
+</div>

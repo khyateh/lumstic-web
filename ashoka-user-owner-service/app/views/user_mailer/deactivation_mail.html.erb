@@ -1,0 +1,11 @@
+<h1><%= t ".sorry_message", :user_name => @user.name %></h1>
+<p>
+  <%= t ".deactivated_message", :organization_name => @user.organization.name %>
+  <% if @message %>
+    <p>
+      <%= t(".admin_message") %>
+    </p>
+    <blockquote><%= @message %></blockquote>
+  <% end %>
+</p>
+<p> <%= t ".thanks_for_trying" %> </p>

@@ -1,0 +1,25 @@
+<div class="container">
+  <div id="register">
+    <header id="backBtnContainer">
+      <h2><a class="backBtn"></a>
+      <span><%= t"users.new.register_user" %></span></h2>
+    </header>
+    <div class="formWrapper">
+      <%= semantic_form_for @user, :url => organization_users_path do |f| %>
+       
+        <%= f.inputs do %>
+          <%= f.input :name , :label => false , :placeholder => I18n.t("name") %>
+          <%= f.input :email , :label => false , :placeholder => I18n.t("email") %>
+          <%= f.collection_select :role, current_user.available_roles, :to_s, :humanize , {:selected => current_user.available_roles[0] }%>
+        <% end %>
+
+         <div class="users_update_btn">
+          <%= f.actions do %>
+            <% f.action :submit, :label => t("register"), :as => :button %>
+          <% end %>
+        </div>
+        
+      <% end %>
+    </div>
+  </div>
+</div>

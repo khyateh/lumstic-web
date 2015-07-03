@@ -1,0 +1,3 @@
+id |   name    |         created_at         |         updated_at         | status | default_locale | org_type | deleted_at | allow_sharing |        logo        
+---+-----------+----------------------------+----------------------------+--------+----------------+----------+------------+---------------+--------------------
+ 1 | Userworks | 2014-11-28 09:45:24.954696 | 2014-11-28 09:45:24.954696 | active | en             | CSO      |            | t             | userworks_logo.png

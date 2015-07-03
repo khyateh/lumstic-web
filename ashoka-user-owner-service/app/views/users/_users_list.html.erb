@@ -1,0 +1,228 @@
+<div id="user_list">
+  <% unless users.empty? %>
+    <div class="blue_tabs">
+      <ul class="tab-links">
+        <li class="active"><a href="#tab01"><%= t "all" %></a></li>
+        <li><a href="#tab02"><%= t "pending" %></a></li>
+        <li><a href="#tab03"><%= t "inactive" %></a></li>
+        <li><a href="#tab04"><%= t "active" %></a></li>
+      </ul>
+    </div>
+    <div class="tabBox">
+      <div class="tabContainer active" id="tab01">
+      
+        <% if users.count > 0 %>
+
+        <div id="pager1" class="pager">
+          <form>
+            <!-- <img src="../addons/pager/icons/first.png" class="first"/> -->
+            <select class="pagesize">
+              <option selected="selected"  value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option  value="40">40</option>
+            </select>
+            <input type="text" class="pagedisplay"/>
+            
+            <%= image_tag "prev.svg" , class: "prev"  %>
+            <%= image_tag "next.svg" , class: "next"  %>
+            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>
+            <img src="../addons/pager/icons/next.png" class="next"/>
+            <img src="../addons/pager/icons/last.png" class="last"/> -->
+            
+          </form>
+      </div>
+      
+          <table class="table_list tablesorter" id="table1">
+          <thead>                    
+             <tr>
+              <th width="20%" class="rightBorder"><%= t"name" %></th>
+              <th width="45%" class="rightBorder"><%= t"email" %></th>
+              <th width="15%" class="rightBorder"><%= t"role" %></th>
+              <th width="10%" class="rightBorder">&nbsp;</th>
+              <th width="10%"><%= t("edit") %></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% users.each do |user|%>
+              <tr>
+                <td><%= user.name.titleize %></td>
+                <td><%= mail_to user.email %></td>
+                <td><%= user.role.humanize.titleize %></td>
+                <td>
+                  <% if !user.pending? %>
+                    <% if user.active? %>
+                      <% unless user == current_user %>
+                        <%= link_to t(:deactivate.to_s).titleize, organization_user_path(user.organization_id, user.id, :user => { :status => User::Status::INACTIVE }), :method => 'PUT' %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to t(:activate.to_s).titleize, organization_user_path(user.organization_id, user.id, :user => { :status => User::Status::ACTIVE }), :method => 'PUT' %>
+                    <% end %>
+                  </td>
+                <% end %>
+                <td>
+                  <%= link_to " ", edit_organization_user_path(user.organization_id, user.id) , class: "user_edit edit" %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+
+
+
+          
+        <% else  %>
+          <div class="noRecords"><%= t "no_users_in_this_category" %></div>
+        <% end %>
+
+        
+
+      </div>
+      <div class="tabContainer" id="tab02">
+        <% if users.where("status = 'pending'").count > 0 %>
+        <div id="pager2" class="pager">
+            <form>
+              <!-- <img src="../addons/pager/icons/first.png" class="first"/> -->
+              <select class="pagesize">
+              <option selected="selected"  value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option  value="40">40</option>
+            </select>
+            <input type="text" class="pagedisplay"/>
+            <%= image_tag "prev.svg" , class: "prev"  %>
+            <%= image_tag "next.svg" , class: "next"  %>
+            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>            
+            <img src="../addons/pager/icons/next.png" class="next"/>
+              <img src="../addons/pager/icons/last.png" class="last"/> -->              
+            </form>
+          </div>
+
+          <table class="table_list tablesorter" id="table2">
+          <thead>
+            <tr>
+              <th width="30%" class="rightBorder"><%= t"name" %></th>
+              <th width="45%" class="rightBorder"><%= t"email" %></th>
+              <th width="15%" class="rightBorder"><%= t"role" %></th>
+              <th width="10%"><%= t("edit") %></th>
+            </tr>
+            </thead>
+            <% users.where("status = 'pending'").each do |user|%>
+              <tr>
+                <td><%= user.name.titleize %></td>
+                <td><%= mail_to user.email %></td>
+                <td><%= user.role.humanize.titleize %></td>
+                <td><%= link_to " ", edit_organization_user_path(user.organization_id, user.id) , class: "user_edit edit" %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+
+
+
+        <% else  %>
+          <div class="noRecords"><%= t "no_users_in_this_category" %></div>
+        <% end %>
+      </div>
+
+
+      <div class="tabContainer" id="tab03">
+        <% if users.inactive_users.count > 0 %>
+        <div id="pager3" class="pager">
+          <form>
+            <!-- <img src="../addons/pager/icons/first.png" class="first"/> -->
+            <select class="pagesize">
+              <option selected="selected"  value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option  value="40">40</option>
+            </select>
+            <input type="text" class="pagedisplay"/>
+            <%= image_tag "prev.svg" , class: "prev"  %>
+            <%= image_tag "next.svg" , class: "next"  %>
+            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>            
+            <img src="../addons/pager/icons/next.png" class="next"/>
+            <img src="../addons/pager/icons/last.png" class="last"/> -->            
+          </form>
+          </div>
+
+          <table class="table_list tablesorter" id="table3">
+          <thead>
+            <tr>
+              <th width="20%" class="rightBorder"><%= t"name" %></th>
+              <th width="45%" class="rightBorder"><%= t"email" %></th>
+              <th width="15%" class="rightBorder"><%= t"role" %></th>
+              <th width="10%" class="rightBorder">&nbsp;</th>
+              <th width="10%"><%= t("edit") %></th>
+            </tr>
+            </thead>
+            <% users.inactive_users.each do |user|%>
+              <tr>
+                <td><%= user.name.titleize %></td>
+                <td><%= mail_to user.email %></td>
+                <td><%= user.role.humanize.titleize %></td>
+                <td><%= link_to t(:activate.to_s).titleize, organization_user_path(user.organization_id, user.id, :user => { :status => User::Status::ACTIVE }), :method => 'PUT' %></td>
+                <td><%= link_to " ", edit_organization_user_path(user.organization_id, user.id) , class: "user_edit edit" %></td>
+              </tr>
+            <% end %>
+          </table>
+
+
+
+        <% else %>
+          <div class="noRecords"><%= t "no_users_in_this_category" %></div>
+        <% end %>
+      </div>
+      <div class="tabContainer" id="tab04">
+        <% if users.active_users.count > 0 %>
+        <div id="pager4" class="pager">
+          <form>
+            <!-- <img src="../addons/pager/icons/first.png" class="first"/> -->
+            <select class="pagesize">
+              <option selected="selected"  value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option  value="40">40</option>
+            </select>
+            <input type="text" class="pagedisplay"/>
+            <%= image_tag "prev.svg" , class: "prev"  %>
+            <%= image_tag "next.svg" , class: "next"  %>
+            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>            
+            <img src="../addons/pager/icons/next.png" class="next"/>
+            <img src="../addons/pager/icons/last.png" class="last"/> -->            
+          </form>
+          </div>
+          <table class="table_list tablesorter" id="table4">
+          <thead>
+            <tr>
+              <th width="20%" class="rightBorder"><%= t"name" %></th>
+              <th width="45%" class="rightBorder"><%= t"email" %></th>
+              <th width="15%" class="rightBorder"><%= t"role" %></th>
+              <th width="10%" class="rightBorder">&nbsp;</th>
+              <th width="10%"><%= t("edit") %></th>
+            </tr>
+            </thead>
+            <% users.active_users.each do |user|%>
+              <tr>
+                <td><%= user.name.titleize %></td>
+                <td><%= mail_to user.email %></td>
+                <td><%= user.role.humanize.titleize %></td>
+                <td>
+                  <% unless user == current_user %>
+                    <%= link_to t(:deactivate.to_s).titleize, organization_user_path(user.organization_id, user.id, :user => { :status => User::Status::INACTIVE }), :method => 'PUT' %>
+                  <% end %>
+                </td>
+                <td><%= link_to " ", edit_organization_user_path(user.organization_id, user.id) , class: "user_edit edit" %></td>
+              </tr>
+            <% end %>
+          </table>
+
+
+
+        <% else  %>
+          <div class="noRecords"><%= t "no_users_in_this_category" %></div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

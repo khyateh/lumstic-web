@@ -1,0 +1,84 @@
+<div class="container">
+  <header id="backBtnContainer">
+    <h2 class="left"><!-- <a href="#" class="backBtn"></a> -->
+      <span><%= t(".edit_organization" , :organization_name => @organization.name) %></span>
+      </h2>
+    <% if current_user && current_user.organization %>
+      <% if can?(:destroy, current_user.organization) %>
+        <%= link_to t("header.delete_organization"), main_app.organization_path(current_user.organization), :method => :delete, :class => 'Btn colrBtn right', :confirm => t("header.confirm_delete_organization") %>
+      <% end %>
+      <% if can?(:manage, User) %>
+        <%= link_to t("header.create_a_user"), main_app.new_organization_user_path(current_user.organization_id), :class => 'add Btn colrBtn right inline-btn' %>
+      <% end %>
+    <% end %>
+  </header>
+  <div class="org_details">
+    <%= semantic_form_for @organization do |f| %>
+      <%= f.inputs do %>
+        <div class="orgLogoWrp">
+          <% if @organization.logo.present? %>
+            <%= link_to image_tag(@organization.logo_url, :class => "organization-edit-logo-image"), @organization.logo_url %>
+          <% end %>
+          <div class="editOptions">
+            <div class="file_upload_btn">
+              <%= f.input :logo ,:label => false %>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+        <div class="org_description">
+          <h2>
+            <%= f.input :name , :label => false %></h2>
+          <%= f.input :about , :as => :text, :input_html => {:rows => "auto", :cols => 4} , :label => false  , 
+          :placeholder => I18n.t(".organizations.edit.org_info_placeholder") %>
+          <%= f.actions do %>
+            <li>
+              <!-- <%= link_to t("cancel") , "/" , :class => 'Btn colrBtn' %> -->
+              <!--<%= link_to(" " ,:class => 'Btn colrBtn disabled' ) do %>
+                <%= t("cancel") %>
+              <% end %>-->
+
+              
+              <%= f.action :submit, :label => t(".update_organization_button_label") ,:button_html => { :disabled => true} %>
+
+              <%= f.action :reset, :label => t(".cancel_update_organization_button_label") ,:button_html => { :disabled => true} %>
+
+            <% end %>
+          </li>
+        </div>
+        <div class="org_info">
+          <div class="org_summary">
+            <header><%= t "summary"  %></header>
+            <table>
+              <tr>
+                <td><span><%= @users_count.count %></span>&nbsp;&nbsp;<%= t("users_title")  %></td>
+              </tr>
+            </table>
+          </div>
+          <% if can? :manage, Organization %>
+            <div class="org_statusBox">
+              <header>
+                <table>
+                  <tr>
+                    <td><%= t"status" %></td>
+                    <td><%= t"org_type" %></td>
+                    <td><%= t"locale" %></td>
+                  </tr>
+                </table>
+              </header>
+              <table>
+                <tr>
+                  <td><span><%= @organization.status.to_s.titleize %></span></td>
+                  <td><span><%= @organization.org_type.to_s.titleize %></span></td>
+                  <td><span><%= I18n.name_for_locale(@organization.default_locale.to_sym) %></span></td>
+                </tr>
+              </table>
+            </div>
+          <% end %>
+        </div>
+        <div class="clear"></div>
+      <% end %>
+    <% end %>
+  </div>
+  <%= render "users/users_list", :users => @organization.users %>
+</div>

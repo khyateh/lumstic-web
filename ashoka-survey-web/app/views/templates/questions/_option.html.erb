@@ -1,0 +1,165 @@
+<input type="text" value="{{content}}" data-id="{{id}}" class="option"></input>
+<!-- <div class="actions"> -->
+  {{#id}}
+    <%# render 'templates/question_types_dropdown' %>
+    <button style="display:none;" class='add_sub_question button' href='javascript:void(0);'>Add</button>
+    <div class="addQuestion" style="margin-bottom:0; padding:0px"><!--add question btn-->
+      
+         <div class="question-types">
+              <ul>
+                <li>
+                  <a href="javascript:void(0)" id="SingleLineQuestion">Single Line</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="RadioQuestion">Radio</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="MultilineQuestion">Multiline</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="NumericQuestion">Numeric</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="DateQuestion">Date</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="MultiChoiceQuestion">Multi-choice</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="DropDownQuestion">Drop Down</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="PhotoQuestion">Photo</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)" id="RatingQuestion">Rating</a>
+                </li>
+<!--                  <li>
+                  <a href="javascript:void(0)" id="">Sub-Category</a>
+                </li>
+                {{^has_multi_record_ancestor}}
+                <li>
+                  <a href="javascript:void(0)" id="MultiRecordCategory">Sub-MultiRecord</a>
+                </li>
+                {{/has_multi_record_ancestor}} -->
+              </ul>
+            </div>
+        <a href="#" class="add-question-btn"></a>
+      <!-- <span class="addQuestionText"> 
+Click here to add a subquestion</span> -->
+    </div>
+    <!-- <a class='add_sub_question add-option icon-btns' href='javascript:void(0);'></a> -->
+   <!-- <div class="addQuestion add-subQuestion">
+     <div class="question-types">
+       <ul>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="SingleLineQuestion" class="clsaddquestion_sub">Single Line</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="NumericQuestion" class="clsaddquestion_sub">Numeric</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="MultilineQuestion" class="clsaddquestion_sub">Multiline</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="DateQuestion" class="clsaddquestion_sub">Date</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="MultiChoiceQuestion" class="clsaddquestion_sub">Multichoice</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="CategoryQuestion" class="clsaddquestion_sub">Category</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="RatingQuestion" class="clsaddquestion_sub">Rating</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="MultiRecordCategory" class="clsaddquestion_sub">Multirecord</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="RadioQuestion" class="clsaddquestion_sub">Radio</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="PhotoQuestion" class="clsaddquestion_sub">Photo</a></span>
+         </li>
+         <li>
+           
+           <span><a href="javascript:void(0)" id="DropDownQuestion" class="clsaddquestion_sub">Dropdown</a></span>
+         </li>
+       </ul>
+       <div class="clear"></div>
+     </div>
+      
+     <a href="#" class="add-question-btn"></a>
+     <a class='add_sub_question add-option icon-btns' href='javascript:void(0);'></a> 
+      </div> --> 
+  
+
+    <!-- <div class="addQuestion add-subQuestion">
+      <div class="question-types-sub">
+        <ul id="picker_pane">
+          <li>
+            <%= link_to t(".add_single_line_question"), "javascript:void(0)", :id => "add_single_line_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_multiline_question"), "javascript:void(0)", :id => "add_multiline_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_numeric_question"), "javascript:void(0)", :id => "add_numeric_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_date_question"), "javascript:void(0)", :id => "add_date_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_rating_question"), "javascript:void(0)", :id =>"add_rating_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_radio_question"), "javascript:void(0)", :id => "add_radio_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_multi_choice_question"), "javascript:void(0)", :id => "add_multi_choice_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_drop_down_question"), "javascript:void(0)", :id => "add_drop_down_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_photo_question"), "javascript:void(0)", :id => "add_photo_question" %>
+          </li>
+          <li>
+            <%= link_to t(".category"), "javascript:void(0)", :id => "add_category" %>
+          </li>
+          <li>
+            <%= link_to t(".add_multi_record_category"), "javascript:void(0)", :id => "add_multi_record_category" %>
+          </li>
+        </ul>
+      </div>
+      <a href="#" class="add-question-btn"></a>
+    </div> -->
+
+    <a class='delete_option delete-option icon-btns' href='javascript:void(0);'></a>
+    <!-- <button class='delete_option button delete-option icon-btns' href='javascript:void(0);'>Delete Option</button> -->
+    
+    <!-- <button class='add_sub_category button' data-type="" href='javascript:void(0);'>Add Category</button>  -->
+    {{^has_multi_record_ancestor}}
+        <!-- <button class='add_sub_multi_record button' data-type="MultiRecordCategory" href='javascript:void(0);'>Add MR</button> -->
+    {{/has_multi_record_ancestor}}
+    <!-- <button class='delete_option button' href='javascript:void(0);'>Delete</button> -->
+    
+  {{/id}}
+  {{^id}}
+    <%#= render 'templates/loading' %>
+  {{/id}}
+<!-- </div> -->
+<div>{{errors}}</div>
+
+<%= render "templates/questions/option_finalized_message" %>

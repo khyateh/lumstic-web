@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="documents">
+    <header id="backBtnContainer">
+      <h2><a class="backBtn"></a>
+      <span><%= t(".upload_documents_title") %></span>
+      </h2>
+    </header>
+    <div class="formWrapper">
+      <%= form_for(:documents, :url => documents_path, :html => { :class => "upload-form", :multipart => true }) do |f| %>
+       
+        <div class="form-section">
+          <h2><%= t(".terms_of_service_title") %></h2>
+          <%= f.fields_for @terms_of_service do |tos_form| %>
+            <%= tos_form.label t('.upload_terms_of_service_message') %><br/>
+            <%= tos_form.file_field :document, :class => 'upload-field', :accept => "application/pdf" %>
+          <% end %>
+          <div class="clear"></div>
+        </div>
+        <div class="form-section">
+          <h2><%= t(".privacy_policy_title") %></h2>
+          <%= f.fields_for @privacy_policy do |privacy_policy_form| %>
+            <%= privacy_policy_form.label t(".upload_privacy_policy_message") %><br/>
+            <%= privacy_policy_form.file_field :document, :class => 'upload-field', :accept => "application/pdf" %>
+          <% end %>
+          <div class="clear"></div>
+        </div>
+        <p class="upload-error">
+          <%= t('.no_files_added_message') %>
+        </p>
+
+         <div class="documents_update_btn">
+          <%= f.submit t(".upload_button_text"), :class => 'upload-action' %>
+        </div>
+      </div>
+    <% end %>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        new UserOwner.DocumentUploader($(".upload-form"))
+      });
+    </script>
+  </div>
+</div>

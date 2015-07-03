@@ -1,0 +1,27 @@
+<div id="register" class="login_bg">
+  <div class="whiteBox">
+    <header>
+      <h2><%= t ".reset_password" %></h2>
+    </header>
+    <div class="forgot_password_info">
+      <%= t("forgot_passoword_help") %>
+    </div>
+    <%= form_tag password_resets_path, :method => :post do %>
+      <fieldset style="padding: 0px 0px 10px 0px">
+        <ol>
+          <li>
+            <%= text_field_tag :email, params[:email] , placeholder: t("email") + "*" %>
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset class="actions" style="padding: 0px">
+        <ol>
+          <li>
+            <%= submit_tag t ".request_password" %>
+            <%= link_to t(".cancel") , main_app.root_path , class: "Btn nrmlBtn" %>
+          </li>
+        </ol>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

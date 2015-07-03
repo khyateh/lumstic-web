@@ -1,0 +1,21 @@
+<div class="container">
+  
+    <header>
+    <h2>
+    <%= link_to '', applications_path , :class => 'backBtn' %>
+    <span>Edit application</span>
+    </h2>
+
+    </header>
+  
+ 
+    <%= render 'form', :application => @application %>
+ 
+
+  <!-- <div class="span6">
+    <h3>Actions</h3>
+    <p><%= link_to 'Home', main_app.root_path %></p>
+    <p><%= link_to 'Back to application list', applications_path %></p>
+  </div> -->
+
+</div>

@@ -1,0 +1,27 @@
+<div class="container">
+  <div id="register">
+    <header id="backBtnContainer">
+      <h2>
+        <a class="backBtn"></a>
+        <span><%= t"users.edit.edit_user" %></span>
+      </h2>
+    </header>
+    <div class="formWrapper">
+      <%= semantic_form_for @user, :url => organization_user_path(@organization.id, @user.id) do |f| %>
+        
+        <%= f.inputs do %>
+          <%= f.input :name , :label => false %>
+          <%= f.collection_select :role, current_user.available_roles, :to_s, :humanize %>
+
+          
+
+        <% end %>
+        <div class="updateBtnWrapr">
+          <%= f.actions do %>
+            <% f.action :submit, :label => t("users.edit.update_user"), :as => :button %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

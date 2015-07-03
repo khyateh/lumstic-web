@@ -1,0 +1,103 @@
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+nav,
+.navbar-toggle {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+nav {
+  position: fixed;
+  z-index: 10;
+  background-color: rgba(250, 166, 26, 0.9);
+  width: 100%;
+  height: 100%;left:0;
+  text-align: center;
+  display: table;
+  color: white;
+}
+
+.nav-hide { display: none; }
+
+/* nav ul {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 0 !important;
+} */
+.nav ul {
+    margin: 0 auto;
+    padding: 145px 0;
+    text-align: center;
+    width: 210px;
+}
+nav ul li { list-style: none;line-height:65px;font-family: 'light'; }
+
+
+
+nav ul li a {
+  font-size: 26pt;
+  color: inherit;
+  font-family: 'light';
+  text-decoration: none;
+}
+
+.navbar-toggle {
+  top: 27px;
+  width: 50px;
+  height: 45px;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.bar1,.bar4,
+.bar2,
+.bar3 {border-radius:5px;
+  width: 100%;
+  height: 4px;
+  margin-bottom: 4px;
+  background-color: #808285;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-on .bar1,
+.navbar-on .bar2, .navbar-on .bar4,
+.navbar-on .bar3 { background-color: white; }
+.lineg{border-bottom:1px solid #000; margin-bottom:60px;}
+
+@media (min-width:320px) and (max-width:768px){
+.map{margin-bottom:50px; margin-top:70px; width:100%;}
+.img-gap{margin-top:50px;}
+.img-gap1{margin-top:100px;}
+.pp{width:90%; margin:auto; padding-bottom:50px!important;}
+.fix{position:fixed; margin-bottom:100px;}
+.mtop{margin-top:300px;}
+.up {
+    min-height: 449px!important;
+}
+.pdf-h1{font-size:24px;}
+.pdf-ff{ border: 1px solid #ff0000!important;
+    box-shadow: none;
+    color: #333333!important;
+    font-family: "light"!important;
+    font-size: 19px!important;
+    margin-top: 20px!important;
+    padding: 5px 0!important;
+    text-align: center!important;
+    width: 100%;}
+
+}
+.no{margin:0px; padding:0px;}
+.mar{margin-left:14px;}
+.impact-up > li {
+   font-family: 'light';
+   font-weight:bold;
+ }

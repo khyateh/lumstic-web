@@ -1,0 +1,32 @@
+<div class="appformWrapper">
+  <%= form_for(application) do |f| %>
+   <div id="app_flash_container">
+      <% if @application.errors.any? %>  
+      <!-- <div class="alert-message error flash" data-alert> -->      
+        <div class="flash error">      
+          <p>Whoops! Check your form for possible errors</p></div>          
+      <% end %>
+    </div>
+
+   
+    <fieldset class="inputs">
+      <ol  class="formFielList">
+        <li>
+          <h4><%= f.label :name , :class => "clear" %></h4>
+          
+        </li>
+        <li><%= f.text_field :name %><br/><br/><br/></li>
+        <li>
+          <h4><%= f.label :redirect_uri , :class => "clear" %></h4>
+          
+        </li>
+        <li><%= f.text_field :redirect_uri %></li>
+      </ol>
+    </fieldset>
+     <div class="editApp">      
+      <%= f.submit :Submit, :class => "Btn colrBtn" %>
+      <%= link_to "Cancel", applications_path, :class => "Btn nrmlBtn" %>
+    </div>
+
+  <% end %>
+</div>

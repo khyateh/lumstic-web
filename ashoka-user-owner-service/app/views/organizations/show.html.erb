@@ -1,0 +1,48 @@
+<div class="container">
+  <header>
+    <h2 class="left">Organization :
+      <%= @organization.name %></h2>
+    <a href="#" class="Btn colrBtn right"><%= t "Add user" %></a>
+    <a  class="searchBtn right"></a>
+  </header>
+  <% if can? :manage, Organization %>
+    <div class="org_details">
+      <div class="orgLogo">
+        <%= image_tag(@organization.logo_url, :class => "organization-edit-logo-image") %>
+      </div>
+      <div class="org_description">
+        <h2>Userworks</h2>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nibh diam, rhoncus ut suscipit et, consequat pulvinar quam. Morbi ullamcorper, diam ac mattis maximus, sapien felis  turpis, ligula id eros. diam ac mattis maximus, sapien felis facilisis turpis, sed tempus lorem ligula id eros.
+      </div>
+      <div class="org_info">
+        <div class="org_summary">
+          <header>Summary</header>
+          <table>
+            <tr>
+              <td><span>05</span>&nbsp;&nbsp; Surveys</td>
+              <td><span>05</span>&nbsp;&nbsp;Users</td>
+            </tr>
+          </table>
+        </div>
+        <div class="org_statusBox">
+          <header>
+            <table>
+              <tr>
+                <td>status</td>
+                <td>Type</td>
+                <td>Default Local</td>
+              </tr>
+            </table>
+          </header>
+          <table>
+            <tr>
+              <td><span><%= @organization.status %></span></td>
+              <td><span><%= @organization.org_type %></span></td>
+              <td><span><%= I18n.name_for_locale(@organization.default_locale.to_sym) %></span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <%= render "users/users_list", :users => @organization.users %>

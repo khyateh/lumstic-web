@@ -1,0 +1,220 @@
+en:
+  language:
+    name: English
+
+  log_in: Log In
+  log_out: Log Out
+  register: Register
+  sign_in: Log In
+  confirm: Are you sure?
+
+  header:
+    application_title : User Service
+    home: Home
+    organizations: Organizations
+    create_a_user: New User
+    add_applications: New Application
+    log_in: Log In
+    log_out: Log Out
+    register: Register
+    list_users: Users
+    welcome: "%{username}"
+    delete_organization: Delete Organization
+    confirm_delete_organization: Are you sure you want to delete your organization?
+    applications: Applications
+    documents: Documents
+
+    edit_organization: "Edit Organization"
+    organization: "Organization"
+
+  documents:
+    create:
+      failed_upload: Your upload has failed.
+      document_uploaded: Successfully uploaded your documents
+    new:
+      upload_documents_title: "Upload Documents"
+      terms_of_service_title: "Terms of Service"
+      privacy_policy_title: "Privacy Policy"
+      upload_terms_of_service_message: "Upload a terms of service document"
+      upload_privacy_policy_message: "Upload a privacy policy"
+      upload_button_text: "Upload"
+      no_files_added_message: "You need to add some files"
+    index:
+      upload_documents_button: "Upload New Documents"
+      documents_title: "Documents"
+      terms_of_service_title: "Terms of Service"
+      privacy_policy_title: "Privacy Policy"
+      terms_of_service_not_uploaded_message: A terms of service document hasn't been uploaded.
+      privacy_policy_not_uploaded_message: A privacy policy document hasn't been uploaded.
+
+  static_pages:
+    home:
+      user_owner: User Owner
+
+  sessions:
+    not_authorized: You are not authorized to access this page
+    new:
+      email: Email
+      password: Password
+      welcome: "%{username}"
+      reset_password: "Forgot Password?"
+
+  user_mailer:
+    activation_mail:
+      welcome_message: "Welcome to User Owner Service, %{user_name}"
+      activated_message: "Your organization, %{organization_name} has been approved! :)"
+      thanks_for_joining: Thanks for joining us and have a great day!
+
+    deactivation_mail:
+      sorry_message: "Sorry, %{user_name}"
+      deactivated_message: "Your organization %{organization_name} has been rejected! :("
+      admin_message: This is a message from the administrator
+      thanks_for_trying: Thanks for trying to join us and have a great day!
+
+    password_reset_mail:
+      subject: "You have been invited to join %{organization_name}"
+      reset_password_subject: "Password reset mail"
+      welcome_message: "You have been invited to join %{organization_name}. Please use the link below to set your password."
+      password_reset_message: "We are sorry you are having trouble with your password. Click on the link to reset your password."
+
+  organization_mailer:
+    notify_super_admins_of_organization_that_allows_sharing:
+      subject: "%{organization_name} has allowed sharing during registration"
+      salutation: Hello!
+      body: "%{organization_name} has just been registered. The CSO Admin has opted to share its data with the administrators."
+
+    notify_cso_admins_of_change_in_terms_of_service:
+      subject: "Our Terms of Service have changed"
+      salutation: Hello!
+      body_line_1: Our terms of service have changed.
+      body_line_2: Please log in and check the updated version.
+
+    notify_cso_admins_of_change_in_privacy_policy:
+      subject: "Our Privacy Policy has changed"
+      salutation: Hello!
+      body_line_1: Our privacy policy has changed.
+      body_line_2: Please log in and check the updated version.
+
+    notify_deregister_organization_for:
+      subject: "%{organization_name} has de-registered"
+      salutation: Hello!
+      body: "%{organization_name} has de-registered. The survey data will be destroyed after 48 hours."
+
+  organizations:
+    new:
+      register_organization: Register an Organization
+      organization_info: Organization Information
+      user_info: User Information
+      accept_legal_prefix: I accept the
+      terms_of_service: Terms of Service
+      privacy_policy: Privacy Policy
+      legal_heading: Legal
+      sharing_agreement: I agree to have my data shared with the administrators
+
+
+    index:
+      organizations: Organizations
+      no_organizations: There are no Organizations
+      list_of_organizations: List of Organizations
+      actions: Actions
+      activate: Activate
+      all: All
+      active: Active
+      deactivate: Deactivate
+      inactive: Inactive
+      deactivate_prompt_message: Include a personal message to the administrator of this organization here. Press cancel to reject without a message.
+      create_a_user: Create a User
+      view_organization: View Organization
+      add_organization : Register Organization
+
+    destroy:
+      organization_to_be_deleted: Your organization has been deleted. Your survey/response data will be deleted within a week. Please contact the administrator at subbu@ashoka.org to reverse this process.
+
+    edit:
+      edit_organization: "Editing: %{organization_name}"
+      update_organization_button_label: "Save"
+      cancel_update_organization_button_label: "Cancel"
+      org_info_placeholder: "Write about your organization here"
+    update:
+      successful_organization_edit_flash_notice: "Your organization was successfully updated."
+
+  users:
+    create:
+      user_created_successfully: New User has been created and will receive a mail regarding the password
+    users_list:
+      active: Active
+      pending: Pending
+      inactive: Inactive
+    update:
+      user_updated: "Successfully updated user."
+
+    edit:
+      update_user: Update User
+      edit_user: Edit User
+
+    new:
+      register_user: Register User
+
+  password_resets:
+    edit:
+      password: Password
+      password_confirmation: Password confirmation
+      set_password: Set Password
+    success: Password has been reset!
+    new:
+      reset_password: Forgot password?
+      request_password: Request password
+      cancel: Cancel
+
+
+  wrong_email_password: Email/Password is wrong
+  successful_create_message: Your organization has been created.
+  creation_failed: Organization creation failed
+  status_changed: "%{organization_name} is %{status}!"
+  please_login: Please login
+  not_authorized: You are not authorized to do that.
+  log_in_successful: Logged in successfully!
+  users_title: Users
+  summary: Summary
+  all: All
+  org_language: Language
+  name: Name
+  email: Email
+  role: Role
+  user_id: User ID
+  edit: Edit
+  inactive: Inactive
+  pending: Pending
+  active: Active
+  activate: Activate
+  deactivate: Deactivate
+  user_updated: Successfully updated user.
+  usable_app_list: List of applications you can use
+  forgot_passoword_help: Enter your email address registered with us
+  chnage_language: Change Language
+  no_users_in_this_category: No records to show
+  no_organizations_in_this_category : No records to show
+  password: Password
+  confirm_password: Confirm Password
+  org_admin_name: Organization Admin Name
+  status: Status
+  org_type: Org Type
+  locale: Locale
+  surveys: Surveys
+  cancel: Cancel
+  # Model translations
+  activerecord:
+    attributes:
+      organization:
+        name: Name
+
+      user:
+        name: Username
+        email: Email
+        password: Password
+        password_confirmation: Confirm password
+
+  sudo_mode:
+    confirmation:
+      new:
+        warning_message: "Are you sure you want to delete your organization? Deletion of your data will begin in 48 hours."

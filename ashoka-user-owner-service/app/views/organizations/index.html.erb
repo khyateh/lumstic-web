@@ -1,0 +1,204 @@
+<div class="container">
+  <div id="admin">
+    <% unless @organizations.empty? %>
+      <header>
+        <h2 class="left">
+          <%= t ".organizations" %>
+        </h2>
+        <%= link_to t(".add_organization"), new_organization_path , :class => "Btn colrBtn right" %>
+        <a  class="searchBtn right"></a>
+      </header>
+      <div class="blue_tabs">
+        <ul class="tab-links">
+          <li class="active"><a href="#tab01"><%= t "all" %></a></li>
+          <li><a href="#tab02"><%= t ".active" %></a></li>
+          <li><a href="#tab03"><%= t ".inactive" %></a></li>
+        </ul>
+      </div>
+      <div class="tabBox">
+        <div class="tabContainer active" id="tab01">
+          <% if @organizations.active_orgs.count > 0 %>
+            <div id="pager1" class="pager">
+              <form>
+                <!-- <img src="../addons/pager/icons/first.png" class="first"/> -->
+                <select class="pagesize">
+                  <option selected="selected"  value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option  value="40">40</option>
+                </select>
+                <input type="text" class="pagedisplay"/>
+                <%= image_tag "prev.svg" , class: "prev"  %>
+                <%= image_tag "next.svg" , class: "next"  %>
+                <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>
+            <img src="../addons/pager/icons/next.png" class="next"/>
+            <img src="../addons/pager/icons/last.png" class="last"/> -->
+              </form>
+            </div>
+            <table class="table_list tablesorter" id="table1">
+              <thead>
+                <tr>
+                  <th class="rightBorder" width="45%"><%= t "name" %></th>
+                  <th width="25%"><%= t "org_language" %></th>
+                  <th width="15%"></th>
+                  <th width="15%"></th>
+                </tr>
+              </thead>
+              <% @organizations.select{ |org| org}.each do |organization|%>
+                <tr>
+                  <td>
+                    <%= link_to organization.name, organization_path(organization.id) %>
+                  </td>
+                  <td>
+                    <%= I18n.name_for_locale(organization.default_locale.to_sym) %>
+                  </td>
+                  <td>
+                    <%= form_tag organization_deactivate_path(organization.id), :method => :put do %>
+                      <%= hidden_field_tag 'deactivate_message' %>
+                      <%= hidden_field_tag t(".deactivate")%>
+                    <% end %>
+                    <% if !organization.active? %>
+                      <%= button_to t('.activate').humanize.titleize, organization_activate_path(organization.id), :method =>:put, :confirm => t(:confirm) if can? :manage, organization %>
+                    <% else %>
+                      <%= link_to t('.deactivate').humanize.titleize, '#', :class =>'deactivate' if can? :deactivate, Organization %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if organization.active? %>
+                      <%= link_to t('.create_a_user').humanize.titleize, new_organization_user_path(organization.id) if can? :manage, User %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <div class="noRecords"><%= t "no_organizations_in_this_category" %></div>
+            <% end %>
+          </table>
+        </div>
+        <div class="tabContainer" id="tab02">
+          <% if @organizations.active_orgs.count >0 %>
+            <div id="pager2" class="pager">
+              <form>
+                <!-- <img src="../addons/pager/icons/first.png" class="first"/> -->
+                <select class="pagesize">
+                  <option selected="selected"  value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                </select>
+                <input type="text" class="pagedisplay"/>
+                <%= image_tag "prev.svg" , class: "prev"  %>
+                <%= image_tag "next.svg" , class: "next"  %>
+                <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>
+            <img src="../addons/pager/icons/next.png" class="next"/>
+            <img src="../addons/pager/icons/last.png" class="last"/> -->
+              </form>
+            </div>
+            <table class="table_list tablesorter" id="table2">
+              <thead>
+                <tr>
+                  <th width="45%" class="rightBorder"><%= t "name" %></th>
+                  <th width="25%"><%= t "org_language" %></th>
+                  <th width="15%"></th>
+                  <th width="15%"></th>
+                </tr>
+              </thead>
+              <% @organizations.select{ |org| org.status == Organization::Status::ACTIVE}.each do |organization|%>
+                <tr>
+                  <td>
+                    <%= link_to organization.name, organization_path(organization.id) %>
+                  </td>
+                  <td>
+                    <%= I18n.name_for_locale(organization.default_locale.to_sym) %>
+                  </td>
+                  <td>
+                    <%= form_tag organization_deactivate_path(organization.id), :method => :put do %>
+                      <%= hidden_field_tag 'deactivate_message' %>
+                      <%= hidden_field_tag t(".deactivate")%>
+                    <% end %>
+                    <%= link_to t('.deactivate').humanize.titleize, '#', :class =>'deactivate' if can? :deactivate, Organization %>
+                  </td>
+                  <td>
+                    <% if organization.active? %>
+                      <%= link_to t('.create_a_user').humanize.titleize, new_organization_user_path(organization.id) if can? :manage, User %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <div class="noRecords"><%= t "no_organizations_in_this_category" %></div>
+            <% end %>
+          </table>
+        </div>
+        <div class="tabContainer" id="tab03" >
+          <% if @organizations.inactive_orgs.count >0 %>
+            <div id="pager3" class="pager">
+              <form>
+                <!-- <img src="../addons/pager/icons/first.png" class="first"/> -->
+                <select class="pagesize">
+                  <option selected="selected"  value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option  value="40">40</option>
+                </select>
+                <input type="text" class="pagedisplay"/>
+                <%= image_tag "prev.svg" , class: "prev"  %>
+                <%= image_tag "next.svg" , class: "next"  %>
+                <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>
+            <img src="../addons/pager/icons/next.png" class="next"/>
+            <img src="../addons/pager/icons/last.png" class="last"/> -->
+              </form>
+            </div>
+            <table class="table_list tablesorter" id="table3">
+              <thead>
+                <tr>
+                  <th width="45%" class="rightBorder"><%= t "name" %></th>
+                  <th width="25%"><%= t "org_language" %></th>
+                  <th width="15%"></th>
+                  <th width="15%"></th>
+                </tr>
+              </thead>
+              <% @organizations.select{ |org| org.status == Organization::Status::INACTIVE}.each do |organization|%>
+                <tr>
+                  <td>
+                    <%= link_to organization.name, organization_path(organization.id) %>
+                  </td>
+                  <td>
+                    <%= I18n.name_for_locale(organization.default_locale.to_sym) %>
+                  </td>
+                  <td>
+                    <%= button_to t('.activate').humanize.titleize, organization_activate_path(organization.id), :method => :put, :confirm => t(:confirm) if can? :manage, organization %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          <% else %>
+            <div class="noRecords"><%= t "no_organizations_in_this_category" %></div>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <header>
+        <h2 class="left">
+          <%= t ".organizations" %>
+        </h2>
+        <%= link_to t(".add_organization"), new_organization_path , :class => "Btn colrBtn right" %>
+        <a  class="searchBtn right"></a>
+      </header>
+      <p class="noRecords" >
+        <%= t(".no_organizations") if @organizations.empty? %>
+      </p>
+    <% end %>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+    $(".deactivate").click(function(e){
+      var deactivate_message = <%= raw("prompt(\"") + t(".deactivate_prompt_message") + raw("\");")%>
+      if(deactivate_message != null) {
+        $("#deactivate_message").val(deactivate_message);
+        $(e.target).prev('form').submit();
+      }
+    });
+  });
+</script>

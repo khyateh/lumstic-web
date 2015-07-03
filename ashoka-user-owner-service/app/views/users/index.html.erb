@@ -1,0 +1,11 @@
+<div class="container">
+  <header>
+    <h2 class="left">
+      <%= t("users_title") %>
+    </h2>
+    <% if can?(:manage, User) %>
+      <%= link_to t("header.create_a_user"), main_app.new_organization_user_path(current_user.organization_id), :class => 'add Btn colrBtn right' %>
+    <% end %>
+  </header>
+  <%= render "users/users_list", :users => @users %>
+</div>

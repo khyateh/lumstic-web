@@ -1,0 +1,46 @@
+div.documents {
+padding-bottom: 20px;
+  
+.form-section {
+    margin: 10px 5px 25px 0px;
+    padding: 10px 10px 30px 15px;
+    border-bottom: 1px solid #e0e0e0;
+
+    h2 {font-size: 18px;
+      font-weight: 500;
+      padding: 0px 0 20px 0;
+      text-align: left;
+    }
+    label{
+      margin: 0 0 20px 0;
+    }
+    .upload-field {
+      float: left;
+      clear: both;
+    }
+  }
+  .documents_update_btn {padding-left: 15px;}
+
+  .upload-action { margin: 0px 25px 10px 0px;}
+  .upload-error {
+    margin-left: 25px;
+    color: $danger;
+  }
+
+  .display-document {
+    margin: 20px;
+  }
+
+  h2.title {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 30px;
+  }
+
+  iframe {
+    width: 80%;
+    display: block;
+    margin: 20px auto;
+    height: 400px;
+  }
+}

@@ -1,0 +1,18 @@
+<div id="register" class="login_bg">
+  <div class="whiteBox">
+    <header>
+      <h2><%= t "password_resets.edit.set_password" %></h2>
+    </header>
+    <%= semantic_form_for @user, :url => password_reset_path(params[:id]) do |f| %>
+      <fieldset>
+        <ol>
+          <%= f.input :password , :label => false ,:placeholder => I18n.t("password_resets.edit.password") + "*" %>
+          <%= f.input :password_confirmation , :label => false ,:placeholder => I18n.t("password_resets.edit.password_confirmation") + "*" %>
+        </ol>
+      </fieldset>
+      <%= f.actions do %>
+        <% f.action :submit, :label => I18n.t("password_resets.edit.set_password") , :as => :button %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

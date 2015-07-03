@@ -1,0 +1,154 @@
+<div class="container">
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+      var chart, data, params={};
+    
+    
+    function dateReportData(report_data_json) {
+      var report_data = _(JSON.parse(report_data_json)).rest()
+    
+      _(report_data).each(function(dateString){
+        dateString[0] = new Date(dateString[0]);
+      });
+    
+      return report_data;
+    }
+    
+    function drawChart() {
+      <% @survey.ordered_question_tree.each do |question| %>
+        <%
+          # report_data = @survey.report_data_for(question)
+          report_data = @survey.report_data_for_in_range(question , @date_range_start, @date_range_end)
+          next if report_data.empty?
+        %>
+
+        <% if question.is_a? QuestionWithOptions %>
+          data = google.visualization.arrayToDataTable(JSON.parse('<%= report_data %>'))
+          console.dir(data);
+          chart = new google.visualization.PieChart(document.getElementById('chart_div_<%= question.id %>'));
+          params['title'] = "<%= question.decorate.content_with_answer_count %>";
+          chart.draw(data, params);
+        <% elsif question.type == 'DateQuestion' %>
+          data = new google.visualization.DataTable();
+          chart = new google.visualization.ScatterChart(document.getElementById('chart_div_<%= question.id %>'));
+    
+          data.addColumn('date', 'Value');
+          data.addColumn('number', 'Answer / Count');
+    
+          var report_data = dateReportData('<%= report_data %>')
+    
+          data.addRows(report_data)
+          params = {
+            vAxis: {'title': 'Count'},
+            hAxis: {'title': 'Answer'},
+          }
+    
+          params['title'] = "<%= question.decorate.content_with_answer_count %>";
+          chart.draw(data, params);
+        <% elsif question.type == 'NumericQuestion' %>
+          chart = new google.visualization.ScatterChart(document.getElementById('chart_div_<%= question.id %>'));
+          data = google.visualization.arrayToDataTable(JSON.parse('<%= report_data %>'))
+          console.log('<%= question.report_data %>')
+          params = {
+            vAxis: {'title': 'Count', minValue: 0, maxValue: <%= question.answers.count %> },
+            hAxis: {'title': 'Answer', minValue: <%= question.min_value_for_report %> , maxValue: <%= question.max_value_for_report %>},
+          }
+          params['title'] = "<%= question.decorate.content_with_answer_count %>";
+          chart.draw(data, params);
+        <% end %>
+      <% end %>
+    }
+  </script>
+  <header id="backBtnContainer">
+    <h2 class="left">
+      <a href="/surveys" class="backBtn"></a>
+      <span>Survey reports
+        <span class="subHeading">
+            <%= @survey.name %>
+          <!-- Temperature details as per city -->
+        </span>
+      </span>
+    </h2>
+    <%= link_to icon_for('icon-table', t('.download_excel')), 'javascript:void(0);', :class => 'download_excel Btn colrBtn right' if @complete_responses_count > 0 && can?(:generate_excel, @survey) %>
+    <!-- <a href="#" class="Btn colrBtn right">Download excel</a>-->
+  </header>
+  <div class="blue_tabs">
+    <ul class="tab-links">
+      <li >
+        <%= link_to  t('edit'), survey_build_path(@survey.id) if can? :build, @survey %>
+        <!-- <a href="#tab01"><%= t "edit" %></a> -->
+      </li>
+      <li ><%= link_to t("overview"), survey_dashboard_index_path(@survey.id) if can?(:view_survey_dashboard, @survey) %></li>
+      <li >
+        <%= link_to t("Responses"), survey_responses_path(@survey.id)  if can?(:read, @survey) %>
+        <!-- <a href="#tab03"><%= t "Responses" %></a> -->
+      </li>
+      <li class="active">
+        <!-- <a href="#tab04"><%= t "Reports" %></a> -->
+        <%= link_to t('reports'), report_survey_path(@survey.id) if can?(:report, @survey) && @survey.finalized? %>
+      </li>
+    </ul>
+  </div>
+  <%= render "responses/excel_dialog" %>
+  <%= render "responses/excel_password_dialog" %>
+  <div class="reports">
+  <div class="test report_container" style="padding:2em;">
+    <div class="select_report_date_range">
+    From Date: <input type="text" id="report_start_range">
+    To Date: <input type="text" id="report_end_range">
+      <!-- <div class="report_start_range"></div>
+      <div class="report_end_range"></div> -->
+      <span class="go_btn Btn colrBtn" style="margin-left:1em;">Apply</span> 
+      <span id="show_all" class="show_all Btn colrBtn" style="margin-left:1em;">Show All</span> 
+    </div>
+    <%# link_to "Go" , report_survey_path(@survey.id , :from => (Date.today - 14 ), :to => (Date.today - 13 ) )  %>
+    
+  </div>
+  <%# @complete_responses_count %>
+  <% if @complete_responses_count != 0 %>
+    <%#= render "layouts/status_bar", :status => "analyze" %>
+    <% @survey.ordered_question_tree.each do |question| %>
+      <div id="chart_div_<%= question.id %>"></div>
+    <% end %>
+    <div id="location_map">
+      <p><%= t('.location') %></p>
+      <%= gmaps4rails(@markers) %>
+    </div>
+  </div>
+  <% else %>
+    <p class="no-surveys"><%= t('No reports to show') %></p>
+  <% end %>
+  <script>
+    $(document).ready(function() {
+      new SurveyApp.ExcelDownloader($("#excel-dialog"), $(".download_excel"), <%= @survey.id %>)
+      date_format =  'yy-mm-dd' 
+      from_date = $('#report_start_range').datepicker({ dateFormat: date_format });
+      // from_date.hide();
+
+      to_date = $('#report_end_range').datepicker({ dateFormat: date_format });
+      // to_date.hide();
+
+      $('.go_btn').click(function(){
+        window.location = "http://www.lumstic.com/surveys/<%= @survey.id %>/report?from=" + from_date.val() + "&to=" + to_date.val();
+        // alert("HELLO")
+      });
+      $('#show_all').click(function(){
+        window.location = "http://www.lumstic.com/surveys/<%= @survey.id %>/report";
+      });
+
+
+      $('#report_from').on('click', function(event) {
+        event.preventDefault();
+        from_date.show();
+        
+      });
+      $('#report_to').on('click', function(event) {
+        event.preventDefault();
+        to_date.show();
+      });
+
+    });
+  </script>
+</div>

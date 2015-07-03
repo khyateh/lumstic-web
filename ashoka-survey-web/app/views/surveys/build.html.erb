@@ -1,0 +1,229 @@
+<head>
+ <script type = "text/javascript" >
+    history.pushState(null, null, 'build');
+    window.addEventListener('popstate', function(event) {
+    history.pushState(null, null, 'build');
+    });
+  </script>
+</head>
+<%= content_for :body_attributes do %>
+  id="build"<% end %>
+<%# render "layouts/status_bar", :status => "edit" %>
+<div class="container">
+  <header id="backBtnContainer">
+    <h2 class="left">
+      <a href="/surveys" class="backBtn"></a>
+      <span>
+        <!--<%= t('.list_of_users_heading', :survey_name => @survey.name) %>-->
+        Survey  builder
+        <!-- <span class="subHeading">
+          <%= @survey.name %>
+        </span> -->
+      </span>
+    </h2>
+  </header>
+  
+  <div class="blue_tabs">
+    <ul class="tab-links">
+      <li class="active">
+        <%= link_to  t('edit'), survey_build_path(@survey.id) if can? :build, @survey %>
+      </li>
+      <li><%= link_to t("overview"), survey_dashboard_index_path(@survey.id) if can?(:view_survey_dashboard, @survey) %></li>
+      <li>
+        <%= link_to t("Responses"), survey_responses_path(@survey.id)  if can?(:read, @survey) %>
+      </li>
+      <li>
+        <%= link_to t('reports'), report_survey_path(@survey.id) if can?(:report, @survey) && @survey.finalized? %>
+      </li>
+    </ul>
+  </div>
+<div id="survey_builder">
+  <div id="notifications">
+    <p></p>
+    <div id="spinner"></div>
+  </div>
+    <div id="actions" class="form-actions survey_option_btns" style="padding:5px 10px 15px; clear:both; float:right;width:97%;" >
+      <input id ="save" class="right inline-btn" type="button" value="<%= t(".save_survey") %>"></input>
+
+    <%= link_to t(".delete"), survey_path(@survey.id), :method => :delete, :class=>"Btn colrBtn  right inline-btn button delete-survey", :data => { :confirm => t(:confirm) } if can? :destroy, @survey %>
+    <%= button_tag t(".finalize_survey"), :id => 'finalize', :class => "button right inline-btn" if can? :finalize, @survey %>
+    <%= button_to '', survey_finalize_path(@survey.id), :method => :put, :class => 'hidden', :id => 'finalize_hidden' if can? :finalize, @survey %>
+    </div>
+<!--   <div class="questionBox">
+    <header>Questions</header>
+    <table>
+      <tr>
+        <td><span class="clsass_main_questions" >05</span>&nbsp;&nbsp;Main</td>
+        <td><span class="clsass_sub_questions">10</span>&nbsp;&nbsp;Sub</td>
+      </tr>
+    </table>
+  </div> -->
+
+
+    <div id="settings_pane" class="survey_sideInfo" ></div>
+    <div id="dummy_pane">
+      <div id="dummy_survey_details"></div>
+      <div id="dummy_questions" class="survey-builder"></div>
+    </div>
+    <div class="addQuestion"><!--add question btn-->
+      <div class="question-types">
+        <ul id="picker_pane">
+          <li>
+            <%= link_to t(".add_single_line_question"), "javascript:void(0)", :id => "add_single_line_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_multiline_question"), "javascript:void(0)", :id => "add_multiline_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_numeric_question"), "javascript:void(0)", :id => "add_numeric_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_date_question"), "javascript:void(0)", :id => "add_date_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_rating_question"), "javascript:void(0)", :id =>"add_rating_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_radio_question"), "javascript:void(0)", :id => "add_radio_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_multi_choice_question"), "javascript:void(0)", :id => "add_multi_choice_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_drop_down_question"), "javascript:void(0)", :id => "add_drop_down_question" %>
+          </li>
+          <li>
+            <%= link_to t(".add_photo_question"), "javascript:void(0)", :id => "add_photo_question" %>
+          </li>
+          <li>
+            <%= link_to t(".category"), "javascript:void(0)", :id => "add_category" %>
+          </li>
+          <li>
+            <%= link_to t(".add_multi_record_category"), "javascript:void(0)", :id => "add_multi_record_category" %>
+          </li>
+        </ul>
+      </div>
+      <a href="#" class="add-question-btn" id="question-button"></a>
+      <span class="addQuestionText"> Click here to add a question</span>
+    </div>
+    
+</div>
+
+</div>
+<div id="loading_overlay">
+  <div class="spinner"></div>
+  <p class="text"><%= t('.saving_your_survey_message') %></p>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    window.notifications_view = new SurveyBuilder.Views.NotificationsView;
+    window.loading_overlay = new SurveyBuilder.Views.LoadingOverlayView
+    window.loading_overlay.show_overlay("<%= t('.loading_survey') %>");
+    window.survey_builder = new SurveyBuilder.Views.SurveyBuilderView(<%= @survey.id %>, <%= @survey.finalized? %>);
+    window.conditional_ques_count = 0;
+    window.questions_models = [];
+    window.dummy_cat_id = null;
+    setTimeout(function(){
+      $("#flash_messages").empty();
+    }, 3000);
+    setTimeout(function(){
+      $("#notifications .flash").remove();
+    }, 5000);
+    $.datepicker.setDefaults($.datepicker.regional['<%= locale %>']);
+    I18n.locale = "<%= locale %>";
+  });
+</script>
+<!-- Adding code here temperorily -->
+
+<script>
+  $(document).click(function (q){
+        var container = $(".addQuestion");
+        var container02 = $(".settingOptionsWrp");
+        var container03 = $(".question-row");
+        // var container04 = $(".addQuestion.add-subQuestion");
+
+        if (!container.is(q.target) // if the target of the click isn't the container...
+            && container.has(q.target).length === 0) // ... nor a descendant of the container
+        {
+            $('.question-types').removeClass('show');
+        }
+
+        if (!container02.is(q.target) // if the target of the click isn't the container...
+            && container02.has(q.target).length === 0) // ... nor a descendant of the container
+        {
+            $('.setting-options').removeClass('active');
+            $('.settingOptionsWrp').removeClass('active');
+        }
+
+        if (!container03.is(q.target) // if the target of the click isn't the container...
+            && container03.has(q.target).length === 0) // ... nor a descendant of the container
+        {
+            $('.question-row').css({'box-shadow':'0px 0px 0px #000',
+                '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
+        }
+
+        // if (!container04.is(q.target) // if the target of the click isn't the container...
+        //     && container04.has(q.target).length === 0) // ... nor a descendant of the container
+        // {
+        //    $('.question-types').removeClass('show');
+        // }
+
+    });
+
+
+    $('.setting').live('click', function(){
+      $('.setting-options').removeClass('active');
+      $('.settingOptionsWrp').removeClass('active');
+
+      $(this).next('.setting-options').addClass('active'); 
+      $(this).parents().addClass('active');
+      return false;
+    }); 
+
+      $('.form-top-right-actions a,.form-top-right-actions div').live('click',function(event){
+        $('.form-top-right-actions').closest('.dummy_question').css({'box-shadow':'0px 0px 0px #000',
+                '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
+        $('.form-top-right-actions').closest('.dummy_category').css({'box-shadow':'0px 0px 0px #000',
+                '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
+        // $('.form-top-right-actions').hide();
+
+        $(event.target).closest('.question-row').closest('.dummy_question').css({'box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-moz-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)'});
+        $(event.target).closest('.question-row').closest('.dummy_category').css({'box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-moz-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)'});
+
+        // $(event.target).closest('.question-row').find('.form-top-right-actions').show();
+        // $(this).parents('.question-row').css('border', '2px solid red');
+      });
+
+     $('.question-row').live('click',function(event){
+        $('.question-row').closest('.dummy_question').css({'box-shadow':'0px 0px 0px #000',
+                '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
+        $('.question-row').closest('.dummy_category').css({'box-shadow':'0px 0px 0px #000',
+                '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
+        // $('.form-top-right-actions').hide();
+
+        $(event.target).closest('.question-row').closest('.dummy_question').css({'box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-moz-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)'});
+        $(event.target).closest('.question-row').closest('.dummy_category').css({'box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
+                        '-moz-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)'});
+
+        // $(event.target).closest('.question-row').find('.form-top-right-actions').show();
+        // $(this).parents('.question-row').css('border', '2px solid red');
+      });
+
+      // $('#page').live('click',function(event) {
+      //    $('.question-row').find('.dummy_question').css({'box-shadow':'0px 0px 0px #000',
+      //           '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
+      //   $('.question-row').find('.dummy_category').css({'box-shadow':'0px 0px 0px #000',
+      //           '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
+      //   $('.form-top-right-actions').hide();
+      // });
+</script>
+
+
+<%= @survey.build_mustache_templates %>

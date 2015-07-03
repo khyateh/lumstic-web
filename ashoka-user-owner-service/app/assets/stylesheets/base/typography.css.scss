@@ -1,0 +1,71 @@
+html,body,input,select,textarea ,button {font-family:'Roboto', sans-serif;}
+
+html, body{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+h1, h2, h3, h4{margin: 10px 0 0px 0; color: $black; font-weight: 700;}
+
+h2{font-size: 18px;}
+h3{font-size: 16px;}
+h4{font-size: 13px;}
+h2 span, h3 span, h4 span{font-weight: normal; color: $gray; display: block;}
+
+form h2{
+  color: $primary-color;
+  font-weight: 300;
+  font-size: 24px;
+  padding-bottom: 4px;
+}
+
+div[role="complementary"]{
+  h2, h3, h4{color: $gray-dark; margin: 8px 10px 4px 10px;}
+  div{
+    margin: 4px 10px;
+    h2, h3, h4{margin: 4px 0;}
+  }
+  h2{
+    text-transform: uppercase;
+    font-weight: 300;
+  
+
+    a.view-all{
+      float: right;
+      text-transform: none;
+      font-size: 13px;
+      font-weight: 400;
+    }
+  }
+  h3{font-size: 15px;}
+}
+
+a{color: $gray-body-color; text-decoration: none;
+
+&:hover , &:active {color:$orange-title-color;}
+
+}
+h4 {font-family:'Roboto', sans-serif;}
+
+/*new style*/
+header{
+  padding: 10px 15px;
+  border-bottom:1px solid #e0e0e0;
+  h2, h3, h2 span, h3 span{color: $orange-title-color;}
+  h2{font-weight: 500; font-size: 18px; line-height: 25px; color:$orange-title-color; width: 45%;
+    span{
+        display: inline-block;
+        width: 395px;  
+      }  
+    }
+  h4{font-weight: 500;}
+  h4 a{font-weight: 700;}
+
+}
+header:after {content: ".";
+  display:block;
+  clear:both;
+  height:0px;
+  font-size:0px;
+}
