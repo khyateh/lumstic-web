@@ -18,8 +18,6 @@ class SurveyBuilder.Models.SurveyModel extends Backbone.RelationalModel
 
   next_order_number: =>
     return 0 if _(@question_models).isEmpty()
-    # console.log "question_models"
-    # console.dir(@question_models);
     _.max(@question_models, (question_model) =>
       question_model.get "order_number"
     ).get('order_number') + @ORDER_NUMBER_STEP
@@ -43,7 +41,6 @@ class SurveyBuilder.Models.SurveyModel extends Backbone.RelationalModel
     @trigger('change:errors')
 
   save_all_questions: =>
-    # console.log  "save_all_questions"
     for question_model in @question_models
       question_model.save_model()
 

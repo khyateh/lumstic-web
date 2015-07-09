@@ -12,9 +12,6 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
     'click button.add_options_in_bulk': 'add_options_in_bulk'
 
   handle_textbox_keyup_new: (event) =>
-    console.log ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-    console.dir this.model.id
-    console.log ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
     this.model.off('change', this.render)
     input = $(event.target)
     propertyHash = {}
@@ -35,36 +32,18 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
     @model.get('options').on('destroy', @delete_option_view, this)
     @model.on('add:options', @add_new_option, this)
     @model.on('preload_options', @preload_options, this)
-    this.model.on('change', this.render, this)
 
   render: =>
     super
-    console.log "render QuestionWithOptionsView"
     $(@el).children(".dummy_question_content:not(:has(div.children_content))").append('<div class="children_content" style="border: 1px solid #e0e0e0;border-top: 0;margin-top: -10px;"></div>')
     $(@el).children(".dummy_question_content").click (e) =>
       @show_actual(e)
-    # $(@el).children('.dummy_question_content').children(".delete_question").click (e) => 
-    #   alert "FADSAsd"
-    #   @delete(e)
-    # console.dir @options
     $(@el).children(".sub_question_group").html('')
+
     _(@options).each (option) =>
       # console.dir  option
-      # group = $("<div class='sub_question_group'>")
-      # group.sortable({
-      #   items: "> div",
-      #   update: ((event, ui) =>
-      #     window.loading_overlay.show_overlay("Reordering Questions")
-      #     _.delay(=>
-      #       @reorder_questions(event,ui)
-      #     , 10)
-      #   )
-      # })
-      # group.append("<p class='sub_question_group_message'> #{I18n.t('js.questions_for')} #{option.model.get('content')}</p>")
-      # _(option.sub_questions).each (sub_question) =>
-      #   group.append(sub_question.render().el)
-      # $(@el).append(group) unless _(option.sub_questions).isEmpty()
     @render_dropdown()
+
     @limit_edit() if @survey_frozen
     return this
 
@@ -170,7 +149,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
       for content in parsed_csv
         @add_new_option_model(content.trim()) if content && content.trim().length > 0
       window.loading_overlay.hide_overlay()
-    , 10)
+    , 30)
 
   hide : =>
     super
@@ -181,6 +160,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
   limit_edit: =>
     super
     if @model.get("finalized")
-      $(this.el).find("div.add_options_in_bulk").hide()
-      $(this.el).find("textarea.add_options_in_bulk").hide()
       $(this.el).find(".add_option").attr("disabled", false)
+      $(this.el).find(".delete_option").hide()
+      $(this.el).find(".add_options_in_bulk").hide()
+      $(this.el).find(".textarea.add_options_in_bulk").hide()

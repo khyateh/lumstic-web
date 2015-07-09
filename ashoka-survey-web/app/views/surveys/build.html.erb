@@ -122,7 +122,6 @@
     window.survey_builder = new SurveyBuilder.Views.SurveyBuilderView(<%= @survey.id %>, <%= @survey.finalized? %>);
     window.conditional_ques_count = 0;
     window.questions_models = [];
-    window.dummy_cat_id = null;
     setTimeout(function(){
       $("#flash_messages").empty();
     }, 3000);

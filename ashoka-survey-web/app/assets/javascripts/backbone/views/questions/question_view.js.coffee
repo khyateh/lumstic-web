@@ -57,7 +57,6 @@ class SurveyBuilder.Views.Questions.QuestionView extends Backbone.View
   hide : =>
     $(this.el).hide()
 
-
   show: =>
     $(this.el).show()
     first_input = $($(this.el).find('input:text'))[0]

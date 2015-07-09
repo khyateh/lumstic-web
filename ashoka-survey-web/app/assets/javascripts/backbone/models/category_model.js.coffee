@@ -27,7 +27,7 @@ class SurveyBuilder.Models.CategoryModel extends Backbone.RelationalModel
   save_model: =>
     if @is_dirty()
       this.save({}, {error: this.error_callback, success: this.success_callback})
-    sub_question.save_model() for sub_question in window.questions_models
+    sub_question.save_model() for sub_question in this.sub_question_models
 
   has_errors: =>
     false
@@ -52,7 +52,8 @@ class SurveyBuilder.Models.CategoryModel extends Backbone.RelationalModel
     }
     sub_question_model = SurveyBuilder.Views.QuestionFactory.model_for(question)
     window.questions_models.push sub_question_model
-    sub_question_model.on('destroy', this.delete_sub_question, this)
+    @sub_question_models.push sub_question_model
+    sub_question_model.on('destroy', @delete_sub_question, this)
     @set_question_number_for_sub_question(sub_question_model)
     sub_question_model.save_model()
     this.trigger('add:sub_question', sub_question_model)
@@ -61,7 +62,7 @@ class SurveyBuilder.Models.CategoryModel extends Backbone.RelationalModel
     @sub_question_order_counter += @ORDER_NUMBER_STEP
 
   delete_sub_question: (sub_question_model) =>
-    window.questions_models = _(window.questions_models).without(sub_question_model)
+    @sub_question_models = _(@sub_question_models).without(sub_question_model)
 
   preload_sub_elements: =>
     elements = @get('elements')
@@ -70,6 +71,7 @@ class SurveyBuilder.Models.CategoryModel extends Backbone.RelationalModel
       question_model = SurveyBuilder.Views.QuestionFactory.model_for(question)
 
       @sub_question_models.push question_model
+      window.questions_models.push question_model
       question_model.on('destroy', this.delete_sub_question, this)
       @set_question_number_for_sub_question(question_model)
 
@@ -86,7 +88,7 @@ class SurveyBuilder.Models.CategoryModel extends Backbone.RelationalModel
 
   set_question_number_for_sub_question: (sub_question_model) =>
     parent_question_number = this.question_number
-    index = _(window.questions_models).indexOf(sub_question_model) + 1
+    index = _(@sub_question_models).indexOf(sub_question_model) + 1
     sub_question_model.question_number = "#{parent_question_number}.#{index}"
 
   toJSON: =>

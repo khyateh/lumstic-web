@@ -20,8 +20,6 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
 
     this.survey.fetch({
       success: (model) =>
-        console.log "ALL MAJOR MODELS"
-        console.dir model.question_models
         this.preload_elements(model.get('elements'))
         this.dummy_pane.render()
     })
@@ -30,7 +28,6 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
       window.loading_overlay.hide_overlay()
       $(this.el).unbind('ajaxStop.preload')
       this.dummy_pane.sort_question_views_by_order_number()
-      # this.dummy_pane.reorder_questions()
       @limit_edit() if @survey_frozen
     )
 
@@ -40,36 +37,20 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
     parent = data.parent
     model = this.survey.add_new_question_model(type, parent)
     dummy_view = this.dummy_pane.add_element(type, model, parent)
-    # settings_view = this.settings_pane.add_element(type, model)
-    # dummy_view.show_actual()
-    # $(dummy_view.el).append(settings_view.el)
     model.save_model()
 
   new_category: (event, type) =>
     @loading_overlay()
     model = this.survey.add_new_question_model()
     this.dummy_pane.add_element(type, model)
-    # this.settings_pane.add_element(type, model)
     model.save_model()
 
-  # Original Source
-  
   preload_elements: (elements) =>
     _(elements).each (element) =>
       model = this.survey.add_new_question_model(element.type, element)
       model.set('id', element.id) 
       this.dummy_pane.add_element(element.type, model)
-      # this.settings_pane.add_element(element.type, model)
       model.preload_sub_elements()
-
-  # preload_elements: (elements) =>
-  #   _(elements).each (element) =>
-  #     model = this.survey.add_new_question_model(element.type, element)
-  #     model.set('id', element.id)
-  #     dummy_view = this.dummy_pane.add_element(element.type, model)
-  #     # settings_view = this.settings_pane.add_element(element.type, model)
-  #     # $(dummy_view.el).append(settings_view.el)
-  #     model.preload_sub_elements()
 
   loading_overlay: =>
     window.loading_overlay.show_overlay()
@@ -80,7 +61,6 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
 
   handle_dummy_click: =>
     # this.hide_all()
-    # this.switch_tab()
 
   hide_all: (event) =>
     this.dummy_pane.unfocus_all()

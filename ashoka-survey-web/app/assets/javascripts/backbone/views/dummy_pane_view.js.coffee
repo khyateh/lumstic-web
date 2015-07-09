@@ -11,11 +11,9 @@ class SurveyBuilder.Views.DummyPaneView extends Backbone.View
   initialize: (survey_model, @survey_frozen) =>
     @questions = []
     @survey_model = survey_model
-    # @add_survey_details(survey_model)
     @init_sortable()
 
   init_sortable: =>
-    # console.log "init_sortable"
     ($(@el).find(@QUESTIONS_CONTAINER)).sortable({
       start: ((event, ui) =>
           ui.item.startPos = ui.item.index()
@@ -48,10 +46,7 @@ class SurveyBuilder.Views.DummyPaneView extends Backbone.View
     @show_survey_details()
 
   render: =>
-    # alert "render dummy pane"
-    # ($(@el).find(@DETAILS).append(@dummy_survey_details.render().el))
     ($(@el).find(@QUESTIONS_CONTAINER).append(question.render().el)) for question in @questions
-    # return this
 
   unfocus_all: =>
     $(@dummy_survey_details.el).removeClass("active")
@@ -65,7 +60,6 @@ class SurveyBuilder.Views.DummyPaneView extends Backbone.View
     @render()
 
   reorder_questions: (event, ui) =>
-    console.log "reorder_questions"
     @set_order_numbers()
     @reorder_questions_views_by_index(ui)
     @render()
@@ -93,7 +87,6 @@ class SurveyBuilder.Views.DummyPaneView extends Backbone.View
     @render()
 
   set_order_numbers: =>
-    # console.log "set_order_numbers"
     last_order_number = @survey_model.next_order_number()
     for question_view in @questions
       question_view.set_order_number(last_order_number)

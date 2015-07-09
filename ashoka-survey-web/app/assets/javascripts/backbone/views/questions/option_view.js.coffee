@@ -12,7 +12,6 @@ class SurveyBuilder.Views.Questions.OptionView extends Backbone.View
     this.model.on('destroy', this.remove, this)
 
   render: =>
-    # alert "HELLO"
     data = _.extend(this.model.toJSON().option, {errors: this.model.errors})
     data = _.extend(data, { finalized: @model.get('finalized') })
     $(this.el).html(Mustache.render(@template, data))

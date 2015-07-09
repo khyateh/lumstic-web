@@ -20,7 +20,6 @@ class SurveyBuilder.Views.SettingsPaneView extends Backbone.View
     question = new SurveyBuilder.Views.Questions.SurveyDetailsView({ model: survey_model, template: template })
     @questions.push(question)
     $(this.el).append($(question.render().el))
-    # $(question.render().el).hide()
 
   render: =>
     $(this.el).append($(question.render().el)) for question in @questions

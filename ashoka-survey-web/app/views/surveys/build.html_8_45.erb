@@ -1037,7 +1037,7 @@ QuestionCollection[key].private = flag;
   }
 });
 });
-$("input[type=text],input[type=number]").live('keyup mouseout',function(){
+$("input[type=text],input[type=number]").live('keyup mousewheel blur',function(){
 var qustion_id = $(this).closest('surveyquestion').attr('id');
 var val_text = $(this).val();
 var attribute = $(this).attr('name');

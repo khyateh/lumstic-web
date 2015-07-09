@@ -83,5 +83,5 @@ class SurveyBuilder.Views.Questions.QuestionWithOptionsView extends SurveyBuilde
     super
     if @model.get("finalized")
       $(this.el).find("div.add_options_in_bulk").hide()
-      $(this.el).find("textarea.add_options_in_bulk").hide()
       $(this.el).find(".add_option").attr("disabled", false)
+      $(this.el).find(".textarea.add_options_in_bulk").attr("disabled", true)

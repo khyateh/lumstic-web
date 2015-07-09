@@ -24,10 +24,9 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
     @dirty
 
   save_model: =>
-    if (window.dummy_cat_id is 1)
-      this.save({}, {error: this.error_callback, success: this.success_callback}) if @is_dirty()
-      for sub_question_model in @sub_question_models
-        sub_question_model.save_model()
+    this.save({}, {error: this.error_callback, success: this.success_callback}) if @is_dirty()
+    for sub_question_model in @sub_question_models
+      sub_question_model.save_model()
 
   toJSON: =>
     acc = _(@attr_accessible()).reduce((acc,elem) =>
@@ -35,7 +34,6 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
             acc
           , {})
     { option: acc }
-
 
   success_callback: (model, response) =>
     @make_clean()
@@ -53,38 +51,17 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
     question = {
       type: type,
       parent_id: this.id,
-      category_id: this.get('question').get('category_id')
       survey_id: this.get('question').get('survey_id'),
       order_number: @next_sub_question_order_number(),
       parent_question: this.get('question')
     }
-    cat_id = this.get('question').get('category_id')
-    if (cat_id is null)
-      window.dummy_cat_id = 1
-    else
-      window.dummy_cat_id = null 
-    if (cat_id isnt null)
-      sub_question_model = SurveyBuilder.Views.QuestionFactory.model_for(question)
-      window.questions_models.push sub_question_model
-      sub_question_model.on('destroy', this.delete_sub_question_category, this)
-      @set_question_number_for_sub_question_category(sub_question_model)
-      sub_question_model.save_model()
-      this.trigger('add:sub_question', sub_question_model)
-    else
-      sub_question_model = SurveyBuilder.Views.QuestionFactory.model_for(question)
-      @sub_question_models.push sub_question_model
-      sub_question_model.on('destroy', this.delete_sub_question, this)
-      @set_question_number_for_sub_question(sub_question_model)
-      sub_question_model.save_model()
-      this.trigger('add:sub_question', sub_question_model)
-
-  set_question_number_for_sub_question_category: (sub_question_model) =>
-    parent_question = this.get('question')
-    multichoice_parent = parent_question.get('type') == "MultiChoiceQuestion"
-    option_order_number = this.get('order_number') - parent_question.first_order_number()
-    parent_question_number = parent_question.question_number
-    parent_question_number +=  '' + String.fromCharCode(65 + option_order_number) if multichoice_parent
-    sub_question_model.question_number = "#{parent_question_number}.#{window.questions_models.length}"
+    sub_question_model = SurveyBuilder.Views.QuestionFactory.model_for(question)
+    window.questions_models.push sub_question_model
+    @sub_question_models.push sub_question_model
+    sub_question_model.on('destroy', this.delete_sub_question, this)
+    @set_question_number_for_sub_question(sub_question_model)
+    sub_question_model.save_model()
+    this.trigger('add:sub_question', sub_question_model)
 
   set_question_number_for_sub_question: (sub_question_model) =>
     parent_question = this.get('question')
@@ -94,9 +71,6 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
     parent_question_number +=  '' + String.fromCharCode(65 + option_order_number) if multichoice_parent
     sub_question_model.question_number = "#{parent_question_number}.#{@sub_question_models.length}"
 
-  delete_sub_question_category: (sub_question_model) =>
-    window.questions_models = _(window.questions_models).without(sub_question_model)
-    @reorder_sub_questions_models_category()
 
   delete_sub_question: (sub_question_model) =>
     @sub_question_models = _(@sub_question_models).without(sub_question_model)
@@ -125,6 +99,7 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
       question_model = SurveyBuilder.Views.QuestionFactory.model_for(question)
 
       @sub_question_models.push question_model
+      window.questions_models.push question_model
       question_model.on('destroy', this.delete_sub_question, this)
       @set_question_number_for_sub_question(question_model)
 

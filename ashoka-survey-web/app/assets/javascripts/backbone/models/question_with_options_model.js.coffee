@@ -6,7 +6,7 @@ class SurveyBuilder.Models.QuestionWithOptionsModel extends SurveyBuilder.Models
       type: Backbone.HasMany,
       key: 'options'
       includeInJSON: 'id'
-      relatedModel: 'SurveyBuilder.Models.OptionModel','SurveyBuilder.Models.OptionModel'
+      relatedModel: 'SurveyBuilder.Models.OptionModel'
       collectionType: 'SurveyBuilder.Collections.OptionCollection'
       reverseRelation: {
         key: 'question'

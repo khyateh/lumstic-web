@@ -8,16 +8,18 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
   events:
     'keyup input[type=text]': 'handle_textbox_keyup'
     'keyup input[type=number]': 'handle_textbox_keyup'
-    'mouseout input[type=number]': 'handle_element_blur'
+    'mousewheel input[type=number]': 'handle_element_mouseout'
+    'blur input[type=text]': 'handle_survey_events'
+    'blur input[type=number]': 'handle_survey_events'
     'change input[type=checkbox]': 'handle_checkbox_change'
 
   initialize: (@model, @template, @survey_frozen) =>
     @sub_questions = []
     @model.dummy_view = this
     @can_have_sub_questions = true
-    @model.on('change', @render, this)
     @model.on('keyup', @render, this)
     @model.on('mouseout', @render, this)
+    @model.on('blur', @render, this)
     @model.on('change:errors', @render, this)
     @model.on('change:preload_sub_questions', @preload_sub_questions, this)
     @model.on('add:sub_question', @add_sub_question, this)
@@ -32,7 +34,6 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     data.question = _.extend(@model.toJSON().question)
     data.allow_identifier = @allow_identifier()
     $(@el).css({'border':'1px solid orange'})
-    # $(@el).css({'padding':'10px 10px 0px 10px'})
     $(@el).css({'margin':'2px'})
     $(@el).html('<div class="dummy_category_content">' + Mustache.render(@template, data) + '</div>')
     $(@el).addClass("dummy_category")
@@ -40,10 +41,6 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     $(@el).children('.dummy_question_content').children(".top_level_content").html(Mustache.render(@template, data))
     $(@el).addClass("dummy_question")
 
-    # $(@el).children(".dummy_category_content").click (e) =>
-    #   console.log "cat show_actual"
-    #   @show_actual(e)  
- 
     $(@el).children(".dummy_category_content").click (e) =>
       $(@el).css({'box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,'-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,'-moz-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)'})
 
@@ -66,11 +63,6 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
 
     $(@el).find('abbr').show() if @model.get('mandatory')
 
-    text_value = this.$('input[type=text]').val()
-    update_input_value = $('[value="' + text_value + '"]')
-    this.$(update_input_value).focus().val ""  unless text_value is ""
-    this.$(update_input_value).focus().val text_value
-
     group = $("<div class='sub_question_group'>")
     _(@sub_questions).each (sub_question) =>
       group.sortable({
@@ -90,12 +82,11 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     return this
 
   seleted_a_question: (event) =>
-    console.log "seleted_a_question" + event.target.id
     type = event.target.id
     this.model.add_sub_question(type)
 
   you_clicked_me: (event) =>
-    $(event.target).prev('.question-types').toggleClass('show');
+    $(event.target).prev('.question-types').toggleClass('show')
     return false
 
   add_sub_question_model: (event) =>
@@ -106,26 +97,7 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     type = $(event.target).data('type')
     this.model.add_sub_question(type)
 
-  # add_sub_question: (sub_question_model) =>
-  #   sub_question_model.on('destroy', this.delete_sub_question, this)
-  #   type = sub_question_model.get('type')
-  #   question = SurveyBuilder.Views.QuestionFactory.settings_view_for(type, sub_question_model, @survey_frozen)
-  #   this.sub_questions.push question
-  #   $('#settings_pane').append($(question.render().el))
-  #   $(question.render().el).hide()
-
-  # preload_sub_questions: (collection) =>
-  #   _.each(collection, (question) =>
-  #     this.add_sub_question(question)
-  #   )
-
-  # delete_sub_question: (sub_question_model) =>
-  #   view = sub_question_model.actual_view
-  #   @sub_questions = _(@sub_questions).without(view)
-  #   view.remove()  
-
   add_sub_question: (sub_question_model) =>
-    console.log "add_sub_question "
     window.loading_overlay.show_overlay()
     $(this.el).bind('ajaxStop.new_question', =>
       window.loading_overlay.hide_overlay()
@@ -135,8 +107,6 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     type = sub_question_model.get('type')
     question = SurveyBuilder.Views.QuestionFactory.dummy_view_for(type, sub_question_model, @survey_frozen)
     this.sub_questions.push question
-    console.log "window.conditional_ques_count",window.conditional_ques_count
-    console.log "@sub_questions.length" ,this.sub_questions.length
     window.conditional_ques_count++
     $(".clsass_sub_questions").html(window.conditional_ques_count)
     this.trigger('render_added_sub_question')
@@ -157,8 +127,6 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     @trigger('destroy:sub_question')
 
   show_actual: (event) =>
-    # $(@el).trigger("dummy_click")
-    # $(@model.actual_view.el).show()
     $(@el).children('.dummy_category_content').addClass("active")
 
   collapse: (animate=true) =>
@@ -221,5 +189,8 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     super
     if @model.get("finalized")
       $(this.el).find(".delete_category").remove()
-
+      $(this.el).find(".delete_option").hide()
+      $(this.el).find(".add_options_in_bulk").hide()
+      $(this.el).find(".add_option").attr("disabled", false)
+      $(this.el).find(".textarea.add_options_in_bulk").hide()
 
