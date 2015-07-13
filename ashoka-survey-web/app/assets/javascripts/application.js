@@ -43,7 +43,6 @@
 //= require flash_hash
 //= require_tree ./gmaps4rails
 //= require help
-//= require jquery.tablesorter
 //= require language_selection
 //= require pages
 //= require public_link_dialog
@@ -56,7 +55,6 @@
 //= require tabs
 //= require url_shortener
 //= require user_options
-//= require widget-pager
 
 //= require mustache
 

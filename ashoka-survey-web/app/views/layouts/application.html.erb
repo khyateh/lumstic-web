@@ -11,18 +11,13 @@
   </head>
   <body<%= yield :body_attributes %>>
     <div id="page">
-      <%# render "layouts/banner" unless @public_response %>
       <%= render "layouts/header", :status => controller_name unless @public_response  %>
       <%= yield :status_bar unless @public_response %>
-      <!-- <div id="content" role="content"> -->
       <%= render "layouts/flash", :flash => flash %>
-      <!-- <div  role="content" class="container"> -->
       <%= yield %>
-      <!-- </div> -->
       <% unless Rails.env.production? %>
         <div id='footnotes_holder'></div>
       <% end %>
-      <!-- </div> -->
       <%= render "layouts/footer" %>
     </div>
     <script type="text/javascript">
@@ -58,47 +53,12 @@
             });
           });
       
-      
-          //////////////////////////////////////////////////////////////////////////////////
-           //blue tabs script start
-        $('.blue_tabs .tab-links a').on('click', function(e)  {
-          //var currentAttrValue = $(this).attr('href');
-          //$('.tabContainer').hide();
-          //$('.tabContainer' + currentAttrValue).show();
-          //$(this).parent('li').addClass('active').siblings().removeClass('active');
-          //e.preventDefault();
-          //pagination
-          $("#table1").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager1'}}})
-          $("#table2").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager2'}}})
-          $("#table3").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager3'}}})
-          $("#table4").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager4'}}})
-          $("#table5").tablesorter({widthFixed: true,widgets: ['zebra', 'pager'],widgetOptions: {pager_selectors: {container   : '#pager5'}}})
-        });
-      
       new SurveyApp.LanguageSelection($("#language_selection"));
       new SurveyApp.UserOptions($("#welcome")) ;
       
       if ($("#flash_container").length ){
         new SurveyApp.FlashHash($("#flash_container"))
-        // console.log($("#flash_container").length);
       }
-
-      // $('.add-question-btn').click(function(){
-      //   $('.question-types').toggleClass('show');
-      //   return false;
-      // });
-
-
-      // $('.add-question-btn').click(function(){
-      //   $(this).toggleClass('minusImg');
-      //   $(this).prev('.question-types').toggleClass('show');
-      //   return false;
-      // });
-
-      // $('.add-option').click(function(){
-      //   $(this).toggleClass('minusImg');        
-      //   return false;
-      // });
 
       $('.add-question-btn').click(function(){
         $(this).prev('.question-types').toggleClass('show');
@@ -107,10 +67,6 @@
       $('.addBtn').click(function(){
         $('.question-types').removeClass('show');
       });
-
-      // $('.addBtn').click(function(){
-      //   $('.question-types').removeClass('show');
-      // });
 
   $(document).click(function (q)
     {
@@ -121,8 +77,7 @@
           $('.profilePopUp').hide();
         }
     });
-          //////////////////////////////////////////////////////////////////////////////////
-      });
+    });
     </script>
   </body>
 </html>

@@ -3,6 +3,9 @@ SurveyBuilder.Views.Dummies ||= {}
 # Represents a dummy question on the DOM
 class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
   ORDER_NUMBER_STEP: 2
+  events:
+    'blur input.ratingNo': 'render_view'
+    'click a.copy_question':'render_view'
 
   initialize: (@model, @template, @survey_frozen) =>
     @model.dummy_view  = this
@@ -12,6 +15,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     @model.on('blur', @render, this)
     @model.on('change:errors', @render, this)
     @model.on('save:completed', @renderImageUploader, this)
+    @model.on('save:completed', @render, this)
     @model.on('change:id', @render, this)
 
   render: =>
@@ -35,13 +39,13 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     $(@el).find('input[type=text]').bind('keyup',@handle_textbox_keyup)      
     $(@el).find('input[type=number]').bind('keyup',@handle_textbox_keyup)
     $(@el).find('input[type=number]').bind('mousewheel',@handle_element_mouseout)
+    $(@el).find('input[type=number]').bind('change',@handle_element_mouseout)
     $(@el).find('input[type=number]').bind('blur',@handle_survey_events)
     $(@el).find('input[type=text]').bind('blur',@handle_survey_events)
     $(@el).find('input[type=checkbox]').bind('change',@handle_checkbox_change)
     
     $(@el).children(".dummy_question_content").click (e) =>
       @show_actual(e)
-
     $(@el).children('.dummy_question_content').children(".top_level_content").find(".delete_question").click (e) => 
       @delete(e)
 
@@ -57,6 +61,9 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
 
   make_clean: =>
     @dirty = false
+
+  render_view: =>
+    @render()
 
   allow_identifier: =>
     !(this.model.get('parent_id') || this.model.get('has_multi_record_ancestor'))
@@ -174,17 +181,15 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     if ( current_ele && ( has_category_id == undefined )  && is_inside_option  && ( has_parent_id == undefined ) )
       propertyHash = {}
       propertyHash[input.attr('name')] = input.val()
-      if(input.val() isnt "")
-        this.model.off('change', this.render)
-        @update_model(propertyHash) 
-        event.stopImmediatePropagation()
+      this.model.off('change', this.render)
+      @update_model(propertyHash) 
+      event.stopImmediatePropagation()
     else if ( current_ele && ( has_category_id == undefined )  && ( has_parent_id == undefined ) )
       propertyHash = {}
       propertyHash[input.attr('name')] = input.val()
-      if(input.val() isnt "")
-        this.model.off('change', this.render)
-        @update_model(propertyHash) 
-        event.stopImmediatePropagation()
+      this.model.off('change', this.render)
+      @update_model(propertyHash) 
+      event.stopImmediatePropagation()
     else if ( has_category_id )
       models = window.questions_models
       cur_element = $(event.target).closest('surveyquestion')
@@ -197,10 +202,9 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
               executed = true
               propertyHash = {}
               propertyHash[input.attr('name')] = input.val()
-              if(input.val() isnt "")
-                this.model.off('change', this.render)
-                @update_model(propertyHash,curr_model)
-                event.stopImmediatePropagation()
+              this.model.off('change', this.render)
+              @update_model(propertyHash,curr_model)
+              event.stopImmediatePropagation()
       )
     else if ( has_parent_id )
       models = window.questions_models
@@ -211,14 +215,12 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
           curr_model = num
           propertyHash = {}
           propertyHash[input.attr('name')] = input.val()
-          if(input.val() isnt "")
-            this.model.off('change', this.render)
-            @update_model(propertyHash,curr_model)
-            event.stopImmediatePropagation()
+          this.model.off('change', this.render)
+          @update_model(propertyHash,curr_model)
+          event.stopImmediatePropagation()
       )
     return
-    event.stopImmediatePropagation()
-
+    
   update_model: (propertyHash,curr_model) =>
     if curr_model
       curr_model.set(propertyHash)
@@ -236,6 +238,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
         this.model.set('image', { thumb: { url: data.result.image_url }})
         loading_overlay.hide_overlay()
         @renderImageUploader()
+        @render()
 
   hide : =>
     $(this.el).hide()
@@ -284,3 +287,4 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
 
   copy_question: =>
     $(@el).children('.dummy_question_content').children(".top_level_content").children(".copy_question_hidden").click()  
+    
