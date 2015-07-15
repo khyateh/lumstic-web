@@ -735,7 +735,7 @@
 			}
 		},
 		
-		addRelated: function( model, options ) {
+		addRelated: function( model ) {
 			if ( model !== this.related ) {
 				var oldRelated = this.related || null;
 				this.setRelated( model );
@@ -743,7 +743,7 @@
 			}
 		},
 		
-		removeRelated: function( model, options ) {
+		removeRelated: function( model ) {
 			if ( !this.related ) {
 				return;
 			}
@@ -1238,7 +1238,7 @@
 			
 			// Duplicate backbone's behavior to allow separate key/value parameters, instead of a single 'attributes' object
 			var attributes;
-			if ( _.isObject( key ) || key == null ) {
+			if ( _.isObject( key ) || key === null ) {
 				attributes = key;
 				options = value;
 			}
@@ -1300,7 +1300,7 @@
 		 * Override 'change', so the change will only execute after 'set' has finised (relations are updated),
 		 * and 'previousAttributes' will be available when the event is fired.
 		 */
-		change: function( options ) {
+		change: function() {
 			var dit = this, args = arguments;
 			Backbone.Relational.eventQueue.add( function() {
 					Backbone.Model.prototype.change.apply( dit, args );
@@ -1395,7 +1395,7 @@
 		}
 	},
 	{
-		setup: function( superModel ) {
+		setup: function() {
 			// We don't want to share a relations array with a parent, as this will cause problems with
 			// reverse relations.
 			this.prototype.relations = ( this.prototype.relations || [] ).slice( 0 );
@@ -1677,7 +1677,7 @@
 	};
 
 	// Override .extend() to automatically call .setup()
-	Backbone.RelationalModel.extend = function( protoProps, classProps ) {
+	Backbone.RelationalModel.extend = function() {
 		var child = Backbone.Model.extend.apply( this, arguments );
 		
 		child.setup( this );

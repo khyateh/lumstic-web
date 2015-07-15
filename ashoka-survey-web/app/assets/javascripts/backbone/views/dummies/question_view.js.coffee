@@ -5,7 +5,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
   ORDER_NUMBER_STEP: 2
   events:
     'blur input.ratingNo': 'render_view'
-    'click a.copy_question':'render_view'
+    'click a.copy_question':'clear_focus'
 
   initialize: (@model, @template, @survey_frozen) =>
     @model.dummy_view  = this
@@ -50,6 +50,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
       @delete(e)
 
     $(@el).children('.dummy_question_content').children(".top_level_content").find(".copy_question").click (e) => 
+      @clear_focus()
       @model.save()
       @save_all_changes(e)
     @renderImageUploader()
@@ -63,6 +64,10 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     @dirty = false
 
   render_view: =>
+    @render()
+
+  clear_focus: =>
+    $('input').blur()
     @render()
 
   allow_identifier: =>
@@ -149,7 +154,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     event.stopImmediatePropagation()
 
   typingTimer = undefined
-  doneTypingInterval = 1000
+  doneTypingInterval = 500
   handle_textbox_keyup: (event) =>
     eventInside = event
     clearTimeout typingTimer

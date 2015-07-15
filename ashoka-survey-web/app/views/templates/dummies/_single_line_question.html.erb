@@ -8,9 +8,6 @@
       <abbr name="mandatory" title="required" style="display:none;">
         *
       </abbr>
-      <!-- <label>{{content}}</label> -->
-      <!-- {{#identifier}}<span class="identifier_icon">bookmarked</span>{{/identifier}} -->
-      <!-- <input type="text" disabled="true" /> -->
     </div>
     {{#finalized}}
     <%= render "templates/dummies/finalized_icon" %>
@@ -18,10 +15,8 @@
     {{^finalized}}
     <span class="form-top-right-actions">
       <a data-tooltip="Delete" href="javascript:void(0)" class="delete_question">
-        <!-- delete -->
       </a>
       <a data-tooltip="Copy" href="{{duplicate_url}}" class="copy_question" data-method="post"></a>
-      <!-- <a href="javascript:void(0)" class="copy_question_hidden right" >Copy</a> -->
       <div  class="ref_img" data-tooltip="Help image" >
 
         <%= render "templates/questions/file_upload" %>
@@ -56,8 +51,6 @@
     </div>
     <img src="{{image.thumb.url}}" class="thumb" />
     <div>
-      <!--<label><%= t("surveys.build.question_title") %></label> -->
-      <!-- <input type="text" name="content" value="{{content}}"/> -->
     </div>
     <div class="no-of-characters">
       <label><%= t("activerecord.attributes.question.max_length") %>

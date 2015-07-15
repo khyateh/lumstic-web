@@ -2,9 +2,6 @@
   <span class="question-container">
     <div class="questionWrp">
       <span>{{question_number}})</span>
-      <!-- {{#identifier}}<span class="identifier_icon">bookmarked</span>{{/identifier}} -->
-      <!--  <select disabled="true"><option selected = "selected"></option></select>  -->
-      <!-- <label><%= t("surveys.build.question_title") %></label> -->
       <input type="text" name="content" value="{{content}}"/>
       <abbr name="mandatory" title="required" style="display:none">*</abbr>
     </div>
@@ -14,10 +11,8 @@
     {{^finalized}}
     <span class="form-top-right-actions">
       <a data-tooltip="Delete" href="javascript:void(0)" class="delete_question">
-        <!-- delete -->
       </a>
       <a data-tooltip="Copy"  href="{{duplicate_url}}" class="copy_question" data-method="post"></a>
-      <!-- <a href="javascript:void(0)" class="copy_question_hidden right" >Copy</a> -->
       <div  class="ref_img" data-tooltip="Help image" >
         <%= render "templates/questions/file_upload" %>
       </div>
@@ -47,13 +42,11 @@
     <img src="{{image.thumb.url}}" class="thumb" />
     <%= render "templates/questions/question_finalized_message" %>
     {{#id}}
-    <%#= render "templates/questions/file_upload" %>
     
     <div class="add_options_in_bulk_wrp">
       <textarea class="add_options_in_bulk" placeholder="<%= t('surveys.build.add_options_in_bulk_help_text') %>"></textarea>
       <div class="add_options_in_bulk inline-add-btn">
         <%= button_tag t("surveys.build.add_options_in_bulk_label"), :class => "add_options_in_bulk" %>
-        <!-- <a href="#" class="add_options_in_bulk_drop_down Btn colrBtn">Add</a> -->
       </div>
       <div class="inline-add-btn">
       <%= button_tag t("add_option"), :class => "add_option " %>

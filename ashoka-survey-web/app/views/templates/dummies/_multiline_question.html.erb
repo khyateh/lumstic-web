@@ -3,11 +3,7 @@
     <div class="questionWrp">
       <span>{{question_number}})</span>
       <span class="mandatory-icon">
-        <!--  {{content}} -->
       </span>
-      <!-- {{#identifier}}<span class="identifier_icon">bookmarked</span>{{/identifier}} -->
-      <!-- <textarea disabled="true" /> -->
-      <!-- <label><%= t("surveys.build.question_title") %></label> -->
       <input type="text" name="content" value="{{content}}"/>
       <abbr name="mandatory" title="required" style="display:none">
         *
@@ -19,10 +15,8 @@
     {{^finalized}}
     <span class="form-top-right-actions">
       <a data-tooltip="Delete" href="javascript:void(0)" class="delete_question">
-        <!-- delete -->
       </a>
       <a data-tooltip="Copy"  href="{{duplicate_url}}" class="copy_question" data-method="post"></a>
-      <!-- <a href="javascript:void(0)" class="copy_question_hidden right" >Copy</a> -->
       <div  class="ref_img" data-tooltip="Help image" >
         <%= render "templates/questions/file_upload" %>
       </div>
@@ -56,5 +50,4 @@
       <input type="number" name="max_length" value="{{max_length}}"/>
     </div>
     <%= render "templates/questions/question_finalized_message" %>
-    <%#= render "templates/questions/file_upload" %>
   </div>

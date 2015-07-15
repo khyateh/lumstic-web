@@ -12,6 +12,7 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     'blur input[type=text]': 'handle_survey_events'
     'blur input[type=number]': 'handle_survey_events'
     'change input[type=checkbox]': 'handle_checkbox_change'
+    'click a.copy_question':'clear_focus'
 
   initialize: (@model, @template, @survey_frozen) =>
     @sub_questions = []
@@ -49,6 +50,7 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
       window.conditional_ques_count -= @sub_questions.length
       $(".clsass_sub_questions").html(window.conditional_ques_count)
     $(@el).children('.dummy_category_content').find(".copy_question").click (e) =>
+      @clear_focus()
       @model.save() 
       @save_all_changes(e)
     $(@el).children(".dummy_category_content").children('.collapse_category').click (e) => 
@@ -88,6 +90,10 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
   you_clicked_me: (event) =>
     $(event.target).prev('.question-types').toggleClass('show')
     return false
+
+  clear_focus: =>
+    $('input').blur()
+    @render()
 
   add_sub_question_model: (event) =>
     type = $(event.target).prev().val()

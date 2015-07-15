@@ -45,7 +45,7 @@ Github: https://github.com/vadimsva/popModal
 				};
 				_options = $.extend(_defaults, params);
 				
-				if ( $('body').find('.' + elemClass).length != 0 && $('body').find('.' + elemClass).attr('data-popmodal_id') == elem.attr('data-popmodal_id') ) {
+				if ( $('body').find('.' + elemClass).length !== 0 && $('body').find('.' + elemClass).attr('data-popmodal_id') === elem.attr('data-popmodal_id') ) {
 					popModalClose();
 				} else {
 					$('html.' + elemClass + 'Open').off('.' + elemClass + 'Event').removeClass(elemClass + 'Open');
@@ -55,7 +55,7 @@ Github: https://github.com/vadimsva/popModal
 					if (_options.showCloseBut) {
 						closeBut = $('<button type="button" class="close">&times;</button>');
 					}
-					if (elem.css('position') == 'fixed') {
+					if (elem.css('position') === 'fixed') {
 						isFixed = 'position:fixed;';
 					}
 					if (_options.overflowContent) {
@@ -81,7 +81,7 @@ Github: https://github.com/vadimsva/popModal
 							getPlacement();
 						});
 					} else {
-						if ($.type(_options.html) == 'object') {
+						if ($.type(_options.html) === 'object') {
 							_options.html.after($('<div class="popModal_source"></div>'));
 						}
 						tooltipContent.append(_options.html);
@@ -102,10 +102,11 @@ Github: https://github.com/vadimsva/popModal
 					}
 					
 					if (!$.isFunction(_options.html)) {
-						if ($.type(_options.html) == 'string') {
-							var htmlStr = _options.html;
+						var htmlStr;
+						if ($.type(_options.html) === 'string') {
+							htmlStr = _options.html;
 						} else {
-							var htmlStr = _options.html[0].outerHTML;
+							htmlStr = _options.html[0].outerHTML;
 						}
 					}
 					
@@ -137,11 +138,11 @@ Github: https://github.com/vadimsva/popModal
 								if (isNaN(zIndex)) {
 									zIndex = 0;
 								}
-                if (_options.onDocumentClickClosePrevent != '' && target.is(_options.onDocumentClickClosePrevent)) {
+                if (_options.onDocumentClickClosePrevent !== '' && target.is(_options.onDocumentClickClosePrevent)) {
                   zIndex = 9999;
                 }
 								var target_zIndex = target.css('zIndex');
-								if (target_zIndex == 'auto') {
+								if (target_zIndex === 'auto') {
 									target_zIndex = 0;
 								}
 								if (zIndex < target_zIndex) {
@@ -188,7 +189,7 @@ Github: https://github.com/vadimsva/popModal
 					});
 
 					$('html').on('keydown.' + elemClass + 'Event', function(event) {
-						if (event.keyCode == 27) {
+						if (event.keyCode === 27) {
 							popModalClose();
 						}
 					});
@@ -203,20 +204,21 @@ Github: https://github.com/vadimsva/popModal
 		
 		function getView() {
 			expandView = true;
-			if (elem.parent().css('position') != 'absolute' || elem.parent().css('position') != 'fixed') {
-				if (elemObj.find('.' + elemClass + '_content').width() < 270 && elemObj.find('.' + elemClass + '_content').height() <= 20 && elemObj.find('.' + elemClass + '_footer').length == 0) {
+			if (elem.parent().css('position') !== 'absolute' || elem.parent().css('position') !== 'fixed') {
+				if (elemObj.find('.' + elemClass + '_content').width() < 270 && elemObj.find('.' + elemClass + '_content').height() <= 20 && elemObj.find('.' + elemClass + '_footer').length === 0) {
 					expandView = false;
 				}
 			}
 		}
 		
 		function getPlacement() {
+			var eLeft, eTop;
 			if (_options.inline) {
-				var eLeft = elem.position().left;
-				var eTop = elem.position().top;
+				eLeft = elem.position().left;
+				eTop = elem.position().top;
 			} else {
-				var eLeft = elem.offset().left;
-				var eTop = elem.offset().top;
+				eLeft = elem.offset().left;
+				eTop = elem.offset().top;
 			}
 			var offset = 10,
 			eMLeft = parseInt(elem.css('marginLeft')),
@@ -260,11 +262,11 @@ Github: https://github.com/vadimsva/popModal
 				var maxDelta = Math.max(deltaBL, deltaBR, deltaC);
 				if (isCurrentFits(current)) {
 				  optimal = current;
-				} else if (deltaBR > 0 && deltaBR == maxDelta) {
+				} else if (deltaBR > 0 && deltaBR === maxDelta) {
 					optimal = bl;
-				} else if (deltaBL > 0 && deltaBL == maxDelta) {
+				} else if (deltaBL > 0 && deltaBL === maxDelta) {
 					optimal = br;
-				} else if (deltaC > 0 && deltaC == maxDelta) {
+				} else if (deltaC > 0 && deltaC === maxDelta) {
 					optimal = bc;
 				} else {
 					optimal = current;
@@ -273,8 +275,8 @@ Github: https://github.com/vadimsva/popModal
 			}
 			
 			function isCurrentFits(current) {
-			  return current == bl ? deltaBR > 0 
-				: current == br ? deltaBL > 0 
+			  return current === bl ? deltaBR > 0 
+				: current === br ? deltaBL > 0 
 				: deltaC > 0;
 			}
 			
@@ -282,7 +284,7 @@ Github: https://github.com/vadimsva/popModal
 				placement = optimalPosition(_options.placement);
 			} else if ((/^left/).test(_options.placement)) {
 				if (deltaL > 0) {
-					if (_options.placement == lc && deltaCT > 0) {
+					if (_options.placement === lc && deltaCT > 0) {
 						placement = lc;
 					} else {
 						placement = lt;
@@ -292,7 +294,7 @@ Github: https://github.com/vadimsva/popModal
 				}
 			} else if ((/^right/).test(_options.placement)) {
 				if (deltaR > 0) {
-					if (_options.placement == rc && deltaCT > 0) {
+					if (_options.placement === rc && deltaCT > 0) {
 						placement = rc;
 					} else {
 						placement = rt;
@@ -365,7 +367,7 @@ Github: https://github.com/vadimsva/popModal
 		function getAnimTime() {
 			if (!animTime) {
 				animTime = elemObj.css('animationDuration');
-				if (animTime != undefined) {
+				if (animTime !== undefined) {
 					animTime = animTime.replace('s', '') * 1000;
 				} else {
 					animTime = 0;
@@ -385,31 +387,31 @@ Github: https://github.com/vadimsva/popModal
 			return methods.init.apply(this, arguments);
 		}
 
-	}
+	};
 
 	$('* [data-popmodal-bind]').bind('click', function() {
 		var elemBind = $(this).attr('data-popmodal-bind');
 		var params = {html: $(elemBind)};
-		if ($(this).attr('data-placement') != undefined) {
-			params['placement'] = $(this).attr('data-placement');
+		if ($(this).attr('data-placement') !== undefined) {
+			params.placement = $(this).attr('data-placement');
 		}
-		if ($(this).attr('data-showclose-but') != undefined) {
-			params['showCloseBut'] = (/^true$/i).test($(this).attr('data-showclose-but'));
+		if ($(this).attr('data-showclose-but') !== undefined) {
+			params.showCloseBut = (/^true$/i).test($(this).attr('data-showclose-but'));
 		}
-		if ($(this).attr('data-overflowcontent') != undefined) {
-			params['overflowContent'] = (/^false$/i).test($(this).attr('data-overflowcontent'));
+		if ($(this).attr('data-overflowcontent') !== undefined) {
+			params.overflowContent = (/^false$/i).test($(this).attr('data-overflowcontent'));
 		}
-		if ($(this).attr('data-ondocumentclick-close') != undefined) {
-			params['onDocumentClickClose'] = (/^true$/i).test($(this).attr('data-ondocumentclick-close'));
+		if ($(this).attr('data-ondocumentclick-close') !== undefined) {
+			params.onDocumentClickClose = (/^true$/i).test($(this).attr('data-ondocumentclick-close'));
 		}
-		if ($(this).attr('data-ondocumentclick-close-prevent') != undefined) {
-			params['onDocumentClickClosePrevent'] = $(this).attr('data-ondocumentclick-close-prevent');
+		if ($(this).attr('data-ondocumentclick-close-prevent') !== undefined) {
+			params.onDocumentClickClosePrevent = $(this).attr('data-ondocumentclick-close-prevent');
 		}
-		if ($(this).attr('data-inline') != undefined) {
-			params['inline'] = (/^true$/i).test($(this).attr('data-inline'));
+		if ($(this).attr('data-inline') !== undefined) {
+			params.inline = (/^true$/i).test($(this).attr('data-inline'));
 		}
-		if ($(this).attr('data-beforeloading-content') != undefined) {
-			params['beforeLoadingContent'] = $(this).attr('data-beforeloading-content');
+		if ($(this).attr('data-beforeloading-content') !== undefined) {
+			params.beforeLoadingContent = $(this).attr('data-beforeloading-content');
 		}
 		$(this).popModal(params);
 	});
@@ -420,7 +422,7 @@ Github: https://github.com/vadimsva/popModal
         o.handler();
       }
     }
-  }
+  };
 })(jQuery);
 
 
@@ -432,6 +434,7 @@ Github: https://github.com/vadimsva/popModal
 		elemClass = 'notifyModal',
 		onTopClass = '',
 		_options,
+		notifDur,
 		animTime;
 		
 		var methods = {
@@ -453,8 +456,8 @@ Github: https://github.com/vadimsva/popModal
 				var notifyContainer = $('<div class="' + elemClass + ' ' + _options.placement + ' ' + onTopClass + ' ' + _options.type + '"></div>');
 				var notifyContent = $('<div class="' + elemClass + '_content"></div>');
 				var closeBut = $('<button type="button" class="close">&times;</button>');
-				if (elem[0] == undefined) {
-					elem = elem['selector'];
+				if (elem[0] === undefined) {
+					elem = elem.selector;
 				} else {
 					elem = elem[0].innerHTML;
 				}
@@ -470,7 +473,7 @@ Github: https://github.com/vadimsva/popModal
 				elemObj.click(function() {
 					notifyModalClose();
 				});
-				if (_options.duration != -1) {
+				if (_options.duration !== -1) {
 					notifDur = setTimeout(notifyModalClose, _options.duration);
 				}
 
@@ -485,7 +488,7 @@ Github: https://github.com/vadimsva/popModal
 			elemObj.removeClass('open');
 			setTimeout(function() {
 				elemObj.remove();
-				if (_options.duration != -1) {
+				if (_options.duration !== -1) {
 					clearTimeout(notifDur);
 				}
 				if (_options.onClose && $.isFunction(_options.onClose)) {
@@ -497,7 +500,7 @@ Github: https://github.com/vadimsva/popModal
 		function getAnimTime() {
 			if (!animTime) {
 				animTime = elemObj.css('transitionDuration');
-				if (animTime != undefined) {
+				if (animTime !== undefined) {
 					animTime = animTime.replace('s', '') * 1000;
 				} else {
 					animTime = 0;
@@ -506,7 +509,7 @@ Github: https://github.com/vadimsva/popModal
 		}
 		
 		$('html').keydown(function(event) {
-			if (event.keyCode == 27) {
+			if (event.keyCode === 27) {
 				notifyModalClose();
 			}
 		});
@@ -517,19 +520,19 @@ Github: https://github.com/vadimsva/popModal
 			return methods.init.apply(this, arguments);
 		}
 
-	}
+	};
 	
 	$('* [data-notifymodal-bind]').bind('click', function() {
 		var elemBind = $(this).attr('data-notifymodal-bind');
 		var params = {};
-		if ($(this).attr('data-duration') != undefined) {
-			params['duration'] = parseInt($(this).attr('data-duration'));
+		if ($(this).attr('data-duration') !== undefined) {
+			params.duration = parseInt($(this).attr('data-duration'));
 		}
-		if ($(this).attr('data-placement') != undefined) {
-			params['placement'] = $(this).attr('data-placement');
+		if ($(this).attr('data-placement') !== undefined) {
+			params.placement = $(this).attr('data-placement');
 		}
-		if ($(this).attr('data-ontop') != undefined) {
-			params['onTop'] = (/^true$/i).test($(this).attr('data-ontop'));
+		if ($(this).attr('data-ontop') !== undefined) {
+			params.onTop = (/^true$/i).test($(this).attr('data-ontop'));
 		}
 		$(elemBind).notifyModal(params);
 	});
@@ -586,7 +589,7 @@ Github: https://github.com/vadimsva/popModal
 						placementDefault = bl;
 					}
 					
-					if (elemObj.data('placement') == undefined) {
+					if (elemObj.data('placement') === undefined) {
 						elemObj.data('placement', placementDefault);
 					}
 
@@ -595,11 +598,11 @@ Github: https://github.com/vadimsva/popModal
 						var maxDelta = Math.max(deltaBL, deltaBR, deltaC);
 						if (isCurrentFits(current)) {
 							optimal = current;
-						} else if (deltaBR > 0 && deltaBR == maxDelta) {
+						} else if (deltaBR > 0 && deltaBR === maxDelta) {
 							optimal = bl;
-						} else if (deltaBL > 0 && deltaBL == maxDelta) {
+						} else if (deltaBL > 0 && deltaBL === maxDelta) {
 							optimal = br;
-						} else if (deltaC > 0 && deltaC == maxDelta) {
+						} else if (deltaC > 0 && deltaC === maxDelta) {
 							optimal = bc;
 						} else {
 							optimal = current;
@@ -608,8 +611,8 @@ Github: https://github.com/vadimsva/popModal
 					}
 					
 					function isCurrentFits(current) {
-						return current == bl ? deltaBR > 0 
-						: current == br ? deltaBL > 0 
+						return current === bl ? deltaBR > 0 
+						: current === br ? deltaBL > 0 
 						: deltaC > 0;
 					}
 					
@@ -739,7 +742,7 @@ Github: https://github.com/vadimsva/popModal
 						if (currentDialog < maxDialog) {
 							elemObj.find('.' + nextBut).removeClass('notactive');
 						}
-						if (currentDialog == 0) {
+						if (currentDialog === 0) {
 							elemObj.find('.' + prevBut).addClass('notactive');
 						}
 						changeDialogContent();
@@ -752,7 +755,7 @@ Github: https://github.com/vadimsva/popModal
 						if (currentDialog > 0) {
 							elemObj.find('.' + prevBut).removeClass('notactive');
 						}
-						if (currentDialog == maxDialog) {
+						if (currentDialog === maxDialog) {
 							elemObj.find('.' + nextBut).addClass('notactive');
 						}
 						changeDialogContent();
@@ -774,11 +777,11 @@ Github: https://github.com/vadimsva/popModal
 				});
 				
 				$('html').on('keydown.' + elemClass + 'Event', function(event) {
-					if (event.keyCode == 27) {
+					if (event.keyCode === 27) {
 						dialogModalClose();
-					} else if (event.keyCode == 37) {
+					} else if (event.keyCode === 37) {
 						elemObj.find('.' + prevBut).click();
-					} else if (event.keyCode == 39) {
+					} else if (event.keyCode === 39) {
 						elemObj.find('.' + nextBut).click();
 					}
 				});
@@ -804,7 +807,7 @@ Github: https://github.com/vadimsva/popModal
 		function getAnimTime() {
 			if (!animTime) {
 				animTime = elemObj.css('transitionDuration');
-				if (animTime != undefined) {
+				if (animTime !== undefined) {
 					animTime = animTime.replace('s', '') * 1000;
 				} else {
 					animTime = 0;
@@ -818,13 +821,13 @@ Github: https://github.com/vadimsva/popModal
 			return methods.init.apply( this, arguments );
 		}
 
-	}
+	};
 	
 	$('* [data-dialogmodal-bind]').bind('click', function() {
 		var elemBind = $(this).attr('data-dialogmodal-bind');
 		var params = {};
-		if ($(this).attr('data-topoffset') != undefined) {
-			params['topOffset'] = $(this).attr('data-topoffset');
+		if ($(this).attr('data-topoffset') !== undefined) {
+			params.topOffset = $(this).attr('data-topoffset');
 		}
 		$(elemBind).dialogModal(params);
 	});
@@ -835,7 +838,7 @@ Github: https://github.com/vadimsva/popModal
         o.handler();
       }
     }
-  }
+  };
 })(jQuery);
 
 
@@ -850,14 +853,15 @@ Github: https://github.com/vadimsva/popModal
 				elemObj,
 				elemClass = 'titleModal',
 				getElem = $('.' + elemClass),
-				animTime,
+				titleAttr,
+				placement,
 				effectIn = 'fadeIn',
 				effectOut = 'fadeOut';
 
 				getElem.on('mouseenter', function() {
 					elem = $(this);
-					if(elem.attr('title') != undefined || elem.css('textOverflow') == 'ellipsis' || elem.css('textOverflow') == 'clip') {
-						if(elem.attr('title') != undefined) {
+					if(elem.attr('title') !== undefined || elem.css('textOverflow') === 'ellipsis' || elem.css('textOverflow') === 'clip') {
+						if(elem.attr('title') !== undefined) {
 							titleAttr =	elem.attr('title');
 						} else {
 							titleAttr = elem.text();
@@ -867,7 +871,7 @@ Github: https://github.com/vadimsva/popModal
 						titleModal = $('<div class="' + elemClass + '_container animated"></div>');
 						elemObj = $('.' + elemClass + '_container');
 						placement = elem.attr('data-placement');
-						if (placement == undefined) {
+						if (placement === undefined) {
 							placement = 'bottom';
 						}
 						if (elemObj) {
@@ -880,7 +884,7 @@ Github: https://github.com/vadimsva/popModal
 
 				getElem.on('mouseleave', function() {
 					elem = $(this);
-					if(elem.attr('data-title') != undefined){
+					if(elem.attr('data-title') !== undefined){
 						titleAttr =	elem.attr('data-title');
 						elem.removeAttr('data-title');
 						elem.attr('title', titleAttr);
@@ -900,7 +904,7 @@ Github: https://github.com/vadimsva/popModal
 					eObjMTop = elemObj.css('marginTop'),
 					eObjWidth = elemObj.outerWidth(),
 					eObjHeight = elemObj.outerHeight();
-					if (elem.css('position') == 'fixed' || elem.css('position') == 'absolute') {
+					if (elem.css('position') === 'fixed' || elem.css('position') === 'absolute') {
 						eLeft = 0;
 						eTop = 0;
 					} else {
@@ -1050,7 +1054,7 @@ Github: https://github.com/vadimsva/popModal
 		function getAnimTime() {
 			if (!animTime) {
 				animTime = elemObj.css('transitionDuration');
-				if (animTime != undefined) {
+				if (animTime !== undefined) {
 					animTime = animTime.replace('s', '') * 1000;
 				} else {
 					animTime = 0;
@@ -1064,13 +1068,13 @@ Github: https://github.com/vadimsva/popModal
 			return methods.init.apply( this, arguments );
 		}
 
-	}
+	};
 	
 	$('* [data-confirmmodal-bind]').bind('click', function() {
 		var elemBind = $(this).attr('data-confirmmodal-bind');
 		var params = {};
-		if ($(this).attr('data-topoffset') != undefined) {
-			params['topOffset'] = $(this).attr('data-topoffset');
+		if ($(this).attr('data-topoffset') !== undefined) {
+			params.topOffset = $(this).attr('data-topoffset');
 		}
 		$(elemBind).confirmModal(params);
 	});
@@ -1081,5 +1085,5 @@ Github: https://github.com/vadimsva/popModal
         o.handler();
       }
     }
-  }
+  };
 })(jQuery);
