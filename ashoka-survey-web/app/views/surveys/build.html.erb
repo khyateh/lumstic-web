@@ -8,17 +8,12 @@
 </head>
 <%= content_for :body_attributes do %>
   id="build"<% end %>
-<%# render "layouts/status_bar", :status => "edit" %>
 <div class="container">
   <header id="backBtnContainer">
     <h2 class="left">
       <a href="/surveys" class="backBtn"></a>
       <span>
-        <!--<%= t('.list_of_users_heading', :survey_name => @survey.name) %>-->
         Survey  builder
-        <!-- <span class="subHeading">
-          <%= @survey.name %>
-        </span> -->
       </span>
     </h2>
   </header>
@@ -49,16 +44,6 @@
     <%= button_tag t(".finalize_survey"), :id => 'finalize', :class => "button right inline-btn" if can? :finalize, @survey %>
     <%= button_to '', survey_finalize_path(@survey.id), :method => :put, :class => 'hidden', :id => 'finalize_hidden' if can? :finalize, @survey %>
     </div>
-<!--   <div class="questionBox">
-    <header>Questions</header>
-    <table>
-      <tr>
-        <td><span class="clsass_main_questions" >05</span>&nbsp;&nbsp;Main</td>
-        <td><span class="clsass_sub_questions">10</span>&nbsp;&nbsp;Sub</td>
-      </tr>
-    </table>
-  </div> -->
-
 
     <div id="settings_pane" class="survey_sideInfo" ></div>
     <div id="dummy_pane">
@@ -139,7 +124,6 @@
         var container = $(".addQuestion");
         var container02 = $(".settingOptionsWrp");
         var container03 = $(".question-row");
-        // var container04 = $(".addQuestion.add-subQuestion");
 
         if (!container.is(q.target) // if the target of the click isn't the container...
             && container.has(q.target).length === 0) // ... nor a descendant of the container
@@ -161,12 +145,6 @@
                 '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
         }
 
-        // if (!container04.is(q.target) // if the target of the click isn't the container...
-        //     && container04.has(q.target).length === 0) // ... nor a descendant of the container
-        // {
-        //    $('.question-types').removeClass('show');
-        // }
-
     });
 
 
@@ -184,7 +162,6 @@
                 '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
         $('.form-top-right-actions').closest('.dummy_category').css({'box-shadow':'0px 0px 0px #000',
                 '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
-        // $('.form-top-right-actions').hide();
 
         $(event.target).closest('.question-row').closest('.dummy_question').css({'box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
                         '-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
@@ -193,8 +170,6 @@
                         '-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
                         '-moz-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)'});
 
-        // $(event.target).closest('.question-row').find('.form-top-right-actions').show();
-        // $(this).parents('.question-row').css('border', '2px solid red');
       });
 
      $('.question-row').live('click',function(event){
@@ -202,7 +177,6 @@
                 '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
         $('.question-row').closest('.dummy_category').css({'box-shadow':'0px 0px 0px #000',
                 '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
-        // $('.form-top-right-actions').hide();
 
         $(event.target).closest('.question-row').closest('.dummy_question').css({'box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
                         '-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
@@ -211,17 +185,8 @@
                         '-webkit-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)' ,
                         '-moz-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)'});
 
-        // $(event.target).closest('.question-row').find('.form-top-right-actions').show();
-        // $(this).parents('.question-row').css('border', '2px solid red');
       });
 
-      // $('#page').live('click',function(event) {
-      //    $('.question-row').find('.dummy_question').css({'box-shadow':'0px 0px 0px #000',
-      //           '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
-      //   $('.question-row').find('.dummy_category').css({'box-shadow':'0px 0px 0px #000',
-      //           '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
-      //   $('.form-top-right-actions').hide();
-      // });
 </script>
 
 

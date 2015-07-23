@@ -67,26 +67,21 @@
       <span>Survey reports
         <span class="subHeading">
             <%= @survey.name %>
-          <!-- Temperature details as per city -->
         </span>
       </span>
     </h2>
     <%= link_to icon_for('icon-table', t('.download_excel')), 'javascript:void(0);', :class => 'download_excel Btn colrBtn right' if @complete_responses_count > 0 && can?(:generate_excel, @survey) %>
-    <!-- <a href="#" class="Btn colrBtn right">Download excel</a>-->
   </header>
   <div class="blue_tabs">
     <ul class="tab-links">
       <li >
         <%= link_to  t('edit'), survey_build_path(@survey.id) if can? :build, @survey %>
-        <!-- <a href="#tab01"><%= t "edit" %></a> -->
       </li>
       <li ><%= link_to t("overview"), survey_dashboard_index_path(@survey.id) if can?(:view_survey_dashboard, @survey) %></li>
       <li >
         <%= link_to t("Responses"), survey_responses_path(@survey.id)  if can?(:read, @survey) %>
-        <!-- <a href="#tab03"><%= t "Responses" %></a> -->
       </li>
       <li class="active">
-        <!-- <a href="#tab04"><%= t "Reports" %></a> -->
         <%= link_to t('reports'), report_survey_path(@survey.id) if can?(:report, @survey) && @survey.finalized? %>
       </li>
     </ul>
@@ -98,17 +93,13 @@
     <div class="select_report_date_range">
     From Date: <input type="text" id="report_start_range">
     To Date: <input type="text" id="report_end_range">
-      <!-- <div class="report_start_range"></div>
-      <div class="report_end_range"></div> -->
+
       <span class="go_btn Btn colrBtn" style="margin-left:1em;">Apply</span> 
       <span id="show_all" class="show_all Btn colrBtn" style="margin-left:1em;">Show All</span> 
     </div>
-    <%# link_to "Go" , report_survey_path(@survey.id , :from => (Date.today - 14 ), :to => (Date.today - 13 ) )  %>
     
   </div>
-  <%# @complete_responses_count %>
   <% if @complete_responses_count != 0 %>
-    <%#= render "layouts/status_bar", :status => "analyze" %>
     <% @survey.ordered_question_tree.each do |question| %>
       <div id="chart_div_<%= question.id %>"></div>
     <% end %>
@@ -125,14 +116,11 @@
       new SurveyApp.ExcelDownloader($("#excel-dialog"), $(".download_excel"), <%= @survey.id %>)
       date_format =  'yy-mm-dd' 
       from_date = $('#report_start_range').datepicker({ dateFormat: date_format });
-      // from_date.hide();
 
       to_date = $('#report_end_range').datepicker({ dateFormat: date_format });
-      // to_date.hide();
 
       $('.go_btn').click(function(){
         window.location = "http://www.lumstic.com/surveys/<%= @survey.id %>/report?from=" + from_date.val() + "&to=" + to_date.val();
-        // alert("HELLO")
       });
       $('#show_all').click(function(){
         window.location = "http://www.lumstic.com/surveys/<%= @survey.id %>/report";
