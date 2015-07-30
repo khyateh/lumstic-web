@@ -1,7 +1,6 @@
 <%= content_for :body_attributes do %>
   id="publish"
 <% end %>
-<%#= render "layouts/status_bar", :status => "publish" %>
 <div class="container">
   <header id="backBtnContainer">
     <h2 class="left">
@@ -24,20 +23,6 @@
       <% if @unpublished_users.present? %>
         <div class="publish-to-heading">
           <h4><%= t ".survey_users" %></h4>
-          <!-- <div id="pager1" class="pager">
-            <h5 class="left"><%= t ".unpublished_users" %></h5>
-            
-              <select class="pagesize">
-                <option selected="selected"  value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option  value="40">40</option>
-              </select>
-              <input type="text" value="1-10 of 14" class="pagedisplay"/>
-              <%= image_tag "prev.svg" , class: "prev"  %>
-              <%= image_tag "next.svg" , class: "next"  %>
-            
-          </div> -->
         </div>
         <div class="list-of-published-users">
           <ol class="published">
@@ -51,20 +36,6 @@
         </div>
       <% end %>
       <div class="publish-to-heading">
-        <!-- <div id="pager1" class="pager">
-          <h5 class="left">Choose users to unpublish to</h5>
-          
-            <select class="pagesize">
-              <option selected="selected"  value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-              <option  value="40">40</option>
-            </select>
-            <input type="text" value="1-10 of 14" class="pagedisplay"/>
-            <%= image_tag "prev.svg" , class: "prev"  %>
-            <%= image_tag "next.svg" , class: "next"  %>
-          
-        </div> -->
       </div>
       <div class="list-of-users-to-unpublish">              
           <%= f.input :user_ids, :as => :custom_check_boxes, :collection => @published_users, :member_label => Proc.new { |user| user.name }, :label => "" %>        

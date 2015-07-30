@@ -1,6 +1,5 @@
 <%= content_for :body_attributes do %>
   id="publish"<% end %>
-<%# render "layouts/status_bar", :status => "publish" %>
 <div class="container">
   <header id="backBtnContainer">
     <h2 class="left">
@@ -31,21 +30,6 @@
       </div>
       <div class="publish-to-users">
         <% if @published_users.present? %>
-          <!-- <div class="publish-to-heading">
-            <h4><%= t ".survey_users" %></h4>
-            <div id="pager1" class="pager">
-              <h5 class="left"><%= t ".published_to_users" %></h5>
-              <select class="pagesize">
-                <option selected="selected"  value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option  value="40">40</option>
-              </select>
-              <input type="text" value="1-10 of 14" class="pagedisplay"/>
-              <%= image_tag "prev.svg" , class: "prev"  %>
-              <%= image_tag "next.svg" , class: "next"  %>
-            </div>
-          </div> -->
           <div class="list-of-published-users">
             <ol class="published">
               <% @published_users.each do |user| %>
@@ -63,20 +47,6 @@
             There are no users you can publish to. Sorry.
           </fieldset>
         <% else %>
-          <!-- <div class="publish-to-heading">
-            <div id="pager1" class="pager">
-              <h5 class="left">Choose users to publish to</h5>
-              <select class="pagesize">
-                <option selected="selected"  value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option  value="40">40</option>
-              </select>
-              <input type="text" value="1-10 of 14" class="pagedisplay"/>
-              <%= image_tag "prev.svg" , class: "prev"  %>
-              <%= image_tag "next.svg" , class: "next"  %>
-            </div>
-          </div> -->
           <div class="list-of-users-to-publish">
             <%= f.input :user_ids, :as => :custom_check_boxes, :collection => @unpublished_users, :member_label => Proc.new { |user| user.name }, :label => "Choose users to publish to:" %>
             <div class="clear"></div>
@@ -119,18 +89,6 @@
             </fieldset>
           <% else %>
             <div class="share-with-heading">
-              <!-- <div id="pager4" class="pager">
-                <h5 class="left">Choose organizations to share with:</h5>
-                <select class="pagesize">
-                  <option selected="selected"  value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                  <option  value="40">40</option>
-                </select>
-                <input type="text" value="1-10 of 14" class="pagedisplay"/>
-                <%= image_tag "prev.svg" , class: "prev"  %>
-                <%= image_tag "next.svg" , class: "next"  %>
-              </div> -->
             </div>
             <div class="list-of-organizations-to-share-with">
               <ol class="organizations-to-share-with">

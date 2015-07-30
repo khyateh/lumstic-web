@@ -2,7 +2,6 @@
 <div class="dashboard-wrapper">
   <div class="left-sideBar">
     <div class="org-shortInfo">
-     <!--  <p>Welcome to the Survey Application</p> -->
       <h1>
         <%=  @decorated_organization.name %>
       </h1>
@@ -14,7 +13,6 @@
       </p>
       <div  class="org-edit">
         <%= link_to " ",  current_user_org_path  , :class => "edit" , :data => {:tooltip => 'Edit Organization' } %>
-        <!-- <a href="#" class="edit"></a> -->
       </div>
     </div>
     <div class="Survey-summary">
@@ -39,16 +37,6 @@
         <span class="left">
           <%= link_to t(".surveys"), surveys_path %>
         </span>
-        <!-- <a href="#" class="addIcon">
-          
-        </a> -->
-        <!-- <% if can? :create, Survey %>
-            <%= link_to surveys_path, :class => "apps addIcon" do %>
-              <span>
-                <%= t("header.create_survey") %>
-              </span>
-            <% end %>
-        <% end %> -->
         <% if can? :create, Survey %>
           <%= link_to " ", surveys_path, :method => :post, :class => "addIcon" , :data => {:tooltip => 'Create Survey' } %>
         <% else  %>
@@ -86,7 +74,6 @@
         <% else  %>
         <a href="#" style="height:20px;"></a>
         <% end %>
-        <!-- <a href="#" class="addIcon"></a> -->
       </div>
     </div>
     <div class="clear"></div>
@@ -100,7 +87,6 @@
           (Active:<%= @active_surveys_count %> | Drafts: <%= @drafts_surveys_count %>)</span>
       </h2>
       <%= link_to t(".all_surveys"), surveys_path , :class => "Btn colrBtn right" %>
-      <!-- <a href="#" class="Btn colrBtn right">all surveys</a> -->
     </header>
     <%# render "organization_dashboards/top_surveys" %>
     <table class="table_list">
@@ -109,7 +95,6 @@
           <th width="20%" class="rightBorder"><%= t ".title" %></th>
           <th width="35%" class="rightBorder"><%= t ".description" %></th>
           <th width="15%" class="rightBorder"><%= t ".responses" %></th>
-          <!-- <th width="8%" class="rightBorder"><%# t ".users" %></th> -->
           <th width="3%" class="rightBorder"><%= t ".reports" %></th>
           <%# t ".overview" %>
           <%# t ".status" %>
@@ -122,14 +107,5 @@
     </table>
   </div>
   <div class="clear"></div>
-  <!-- <div class="organization-dashboard-graphs">
-    <div class="organization-dashboard-graphs-item" id="organization-dashboard-graphs-survey">
-      <%= render_chart @decorated_organization.surveys_per_month_graph, 'organization-dashboard-graphs-survey' %>
-    </div>
-    <div class="organization-dashboard-graphs-item" id="organization-dashboard-graphs-response">
-      <%= render_chart @decorated_organization.responses_per_month_graph, 'organization-dashboard-graphs-response' %>
-    </div>
-  </div> -->
 </div>
-    <%# will_paginate @top_surveys  ,:page_links => false %>
 
