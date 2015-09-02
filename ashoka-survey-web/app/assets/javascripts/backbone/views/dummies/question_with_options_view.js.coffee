@@ -9,7 +9,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
     'keyup input.nestes-question[type=number]': 'handle_textbox_keyup_new'
     'change input[type=checkbox]': 'handle_checkbox_change_new'
     'click button.add_option': 'add_new_option_model'
-    'click button.add_options_in_bulk': 'add_options_in_bulk'
+    # 'click button.add_options_in_bulk': 'add_options_in_bulk'
 
   handle_textbox_keyup_new: (event) =>
     this.model.off('change', this.render)
@@ -39,6 +39,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
     $(@el).children(".dummy_question_content").click (e) =>
       @show_actual(e)
     $(@el).children(".sub_question_group").html('')
+    $(@el).find('button.add_options_in_bulk').bind('click',@add_options_in_bulk)
 
     _(@options).each (option) =>
       # console.dir  option
