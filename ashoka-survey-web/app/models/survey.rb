@@ -5,6 +5,7 @@ class Survey < ActiveRecord::Base
   validates_presence_of :expiry_date
   validate :ensure_survey_to_be_archivable
   validates :description, :length => { :maximum => 1024 }
+  validates :name, :length => { :maximum => 255 }
 
   has_many :questions, :dependent => :destroy
   has_many :categories, :dependent => :destroy

@@ -198,7 +198,8 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     else if ( has_category_id )
       models = window.questions_models
       cur_element = $(event.target).closest('surveyquestion')
-      id__ = cur_element[0]['id']
+      if cur_element[0]?
+        id__ = cur_element[0]['id']
       executed = false
       _.each(models, (num,index) =>
           if (parseInt(num.id) == parseInt(id__))
@@ -214,7 +215,8 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     else if ( has_parent_id )
       models = window.questions_models
       cur_element = $(event.target).closest('surveyquestion')
-      id__ = cur_element[0]['id']
+      if cur_element[0]?
+        id__ = cur_element[0]['id']
       _.each(models, (num,index) =>
         if (parseInt(num.id) == parseInt(id__))
           curr_model = num

@@ -5,6 +5,7 @@ class Option < ActiveRecord::Base
   attr_accessible :content, :question_id, :order_number
   validates_uniqueness_of :order_number, :scope => :question_id
   validates_presence_of :content, :question_id
+  validates :content, :length => { :maximum => 255 }
   delegate :survey, :to => :question, :prefix => false, :allow_nil => true
   delegate :marked_for_deletion?, :to => :survey, :prefix => true
 

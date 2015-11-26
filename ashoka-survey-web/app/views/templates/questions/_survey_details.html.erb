@@ -1,9 +1,10 @@
 <div style="padding:15px;float:left;width:60%;" >
   <div style="width:100%;position:relative;top:-10px;">
-    <input style="font-weight:bold;font-size:16px;width:100%;" type="text" name="name" value="{{name}}"/>
+    <input style="font-weight:bold;font-size:16px;width:100%;" type="text" name="name"maxlength="255" value="{{name}}"/>
   </div>
-  
-  <textarea style="height:auto!important;width:100%;color:#c1c1c1;font-size:15px;" rows="2" name="description" id="survey_description" placeholder="Write about your organization here"><%= "{{description}}" %></textarea>
+  <div class="inline_errors">{{errors}}</div>  
+  <textarea style="height:auto!important;width:100%;color:#c1c1c1;font-size:15px;" rows="2" name="description" maxlength="1024" id="survey_description" placeholder="Write about your organization here"><%= "{{description}}" %></textarea><br>
+  <div class="inline_errors">{{errors}}</div>  
   
 </div>
 

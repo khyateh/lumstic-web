@@ -12,7 +12,7 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
     @make_dirty()
 
   has_errors: =>
-    !_.isEmpty(this.errors)
+    !_.isEmpty(this.errors) || _.any(@sub_question_models, (sub_question_models) => sub_question_models.has_errors())
 
   make_dirty: =>
     @dirty = true

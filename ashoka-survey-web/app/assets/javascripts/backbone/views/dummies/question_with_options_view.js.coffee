@@ -40,6 +40,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
       @show_actual(e)
     $(@el).children(".sub_question_group").html('')
     $(@el).find('button.add_options_in_bulk').bind('click',@add_options_in_bulk)
+    $(@el).find('a.add-question-btn').bind('click',@clear_focus)
 
     _(@options).each (option) =>
       # console.dir  option
@@ -52,6 +53,9 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
     collection.each( (model) =>
       @add_new_option(model)
     )
+
+  clear_focus: =>
+    $('input').blur()
 
   render_dropdown: () =>
     if @model.has_drop_down_options()

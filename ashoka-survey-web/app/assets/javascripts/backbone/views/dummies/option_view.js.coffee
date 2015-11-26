@@ -23,6 +23,7 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
 
     $(this.el).find('.add-question-btn').bind('click',this.you_clicked_me)
     $(this.el).find('.question-types a').bind('click',this.seleted_a_question)
+    $(@el).find('a.add-question-btn').bind('click',@clear_focus)
 
     $(this.el).find('.delete_option').bind('click', this.delete)
     $(this.el).find('input').bind('keyup', this.update_model)
@@ -60,6 +61,9 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
     input = $(event.target)
     this.model.set({content: input.val()})
     event.stopImmediatePropagation()
+
+  clear_focus: =>
+    $('input').blur()
 
   delete: =>
     this.model.destroy()

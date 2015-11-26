@@ -2,7 +2,7 @@
 
 class PhotoQuestion < Question
   attr_accessible :max_length
-  validates_numericality_of :max_length, :only => :integer, :greater_than => 0, :allow_nil => true
+  validates_numericality_of :max_length, :only => :integer, :greater_than => 0, :less_than_or_equal_to => 100, :allow_nil => true
   before_create :mark_private
 
   private

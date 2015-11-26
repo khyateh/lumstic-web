@@ -3,6 +3,8 @@ class NumericQuestion < Question
 
   validates_numericality_of :max_value, :min_value, :allow_nil => true
   validate :min_value_less_than_max_value
+  validates :max_value, length: { maximum: 15, message: "should be less than 15 digits"}
+  validates :min_value, length: { maximum: 9, message: "should be less than 9 digits" }
 
   def report_data_in_range(start_date,end_date)
     answers_grouped_by_content = answers_for_reports_in_range(start_date,end_date).count(:group => 'answers.content')
@@ -34,7 +36,8 @@ class NumericQuestion < Question
 
   def min_value_less_than_max_value
     if min_value && max_value && (min_value > max_value)
-      errors.add(:min_value, I18n.t('questions.validations.min_value_higher'))
+      # errors.add(:min_value, I18n.t('questions.validations.min_value_higher'))
+      errors.add(:min_value, "is higher than maximum value")
     end
   end
 end

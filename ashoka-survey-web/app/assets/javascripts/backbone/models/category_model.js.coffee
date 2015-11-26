@@ -30,7 +30,7 @@ class SurveyBuilder.Models.CategoryModel extends Backbone.RelationalModel
     sub_question.save_model() for sub_question in this.sub_question_models
 
   has_errors: =>
-    false
+    _.any(@sub_question_models, (sub_question_models) => sub_question_models.has_errors())
 
   success_callback: (model, response) =>
     @make_clean()
