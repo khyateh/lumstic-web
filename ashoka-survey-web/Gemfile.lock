@@ -1,6 +1,10 @@
 GIT
   remote: git://github.com/eventmachine/eventmachine.git
+<<<<<<< HEAD
   revision: a5e9d1821b5229ebcc196b8a7503c90de104ac02
+=======
+  revision: 6d02b4abab759e9aeb6366e71ec62047da5762c4
+>>>>>>> origin/develop
   specs:
     eventmachine (1.2.0.1)
 
@@ -54,9 +58,18 @@ GEM
     axlsx (2.0.1)
       htmlentities (~> 4.3.1)
       nokogiri (>= 1.4.1)
+<<<<<<< HEAD
       rubyzip (~> 1.0.0)
     builder (3.2.2)
     byebug (8.2.4)
+=======
+      rubyzip (>= 0.9.5)
+    builder (3.0.4)
+    byebug (2.0.0)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.3.5)
+>>>>>>> origin/develop
     cancan (1.6.10)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -106,11 +119,21 @@ GEM
     database_cleaner (0.8.0)
     date_validator (0.6.4)
       activemodel (>= 3)
+<<<<<<< HEAD
     delayed_job (4.1.1)
       activesupport (>= 3.0, < 5.0)
     delayed_job_active_record (4.1.0)
       activerecord (>= 3.0, < 5)
       delayed_job (>= 3.0, < 5)
+=======
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.3.7)
+    delayed_job (3.0.5)
+      activesupport (~> 3.0)
+    delayed_job_active_record (0.3.3)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
+>>>>>>> origin/develop
     diff-lcs (1.1.3)
     draper (1.2.1)
       actionpack (>= 3.0)
@@ -122,9 +145,21 @@ GEM
       mail (~> 2.2)
     erubis (2.7.0)
     escape (0.0.4)
+<<<<<<< HEAD
     excon (0.49.0)
     execjs (2.6.0)
     ey_config (0.0.7)
+=======
+    excon (0.22.1)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
+    ey_config (0.0.6)
+    factory_girl (4.2.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.2.1)
+      factory_girl (~> 4.2.0)
+      railties (>= 3.0.0)
+>>>>>>> origin/develop
     fakeweb (1.3.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
@@ -288,6 +323,7 @@ GEM
     i18n (0.7.0)
     i18n-js (2.1.2)
       i18n
+<<<<<<< HEAD
     inflecto (0.0.2)
     ipaddress (0.8.3)
     jquery-rails (4.1.1)
@@ -302,6 +338,20 @@ GEM
     kgio (2.10.0)
     konacha (4.0.0)
       actionpack (>= 4.1, < 5)
+=======
+    journey (1.0.4)
+    jquery-rails (2.0.3)
+      railties (>= 3.1.0, < 5.0)
+      thor (~> 0.14)
+    js-routes (0.9.0)
+      rails (>= 3.2)
+    json (1.8.2)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
+    kgio (2.9.2)
+    konacha (3.0.0)
+      actionpack (>= 3.1, < 5)
+>>>>>>> origin/develop
       capybara
       colorize
       railties (>= 4.1, < 5)
@@ -419,6 +469,7 @@ GEM
       actionpack (= 4.2.4)
       activesupport (= 4.2.4)
       rake (>= 0.8.7)
+<<<<<<< HEAD
       thor (>= 0.18.1, < 2.0)
     raindrops (0.16.0)
     rake (11.1.2)
@@ -430,6 +481,15 @@ GEM
       nokogiri (>= 1.4.1)
       trollop
     request_store (1.0.8)
+=======
+      rdoc (~> 3.4)
+      thor (>= 0.14.6, < 2.0)
+    raindrops (0.13.0)
+    rake (10.5.0)
+    rdoc (3.12.2)
+      json (~> 1.4)
+    request_store (1.0.5)
+>>>>>>> origin/develop
     rmagick (2.13.4)
     rspec (2.11.0)
       rspec-core (~> 2.11.0)
@@ -514,7 +574,11 @@ DEPENDENCIES
   active_model_serializers (~> 0.7.0)
   activejob
   airbrake (~> 3.1.6)
+<<<<<<< HEAD
   axlsx (~> 2.0.1)
+=======
+  axlsx (~> 1.3.4)
+>>>>>>> origin/develop
   byebug
   cancan (~> 1.6.8)
   carrierwave (~> 0.7.1)
@@ -527,7 +591,11 @@ DEPENDENCIES
   dalli (~> 2.3.0)
   database_cleaner (~> 0.8.0)
   date_validator (~> 0.6.3)
+<<<<<<< HEAD
   delayed_job_active_record (~> 4.1.0)
+=======
+  delayed_job_active_record (~> 0.3.3)
+>>>>>>> origin/develop
   draper (~> 1.2.1)
   email_spec (~> 1.4.0)
   eventmachine!
