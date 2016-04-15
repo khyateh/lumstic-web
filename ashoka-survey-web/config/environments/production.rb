@@ -21,6 +21,9 @@ SurveyWeb::Application.configure do
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
+  
+  #Eager load -> false (dev, test); true(prod)
+  config.eager_load = true
 
   config.assets.precompile += ["corporate.js","corporate_webs.css"]
   # Don't fallback to assets pipeline if a precompiled asset is missed
