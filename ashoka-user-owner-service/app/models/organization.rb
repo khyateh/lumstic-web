@@ -68,8 +68,8 @@ class Organization < ActiveRecord::Base
   end
 
   #
-  scope :active_orgs , where(:status => Status::ACTIVE)
-  scope :inactive_orgs , where(:status => Status::INACTIVE)
+  scope :active_orgs , -> {where(:status => Status::ACTIVE)}
+  scope :inactive_orgs , -> {where(:status => Status::INACTIVE)}
   #
 
   def soft_delete_self_and_associated
