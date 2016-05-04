@@ -16,9 +16,9 @@
     <%= semantic_form_for @organization do |f| %>
       <%= f.inputs do %>
         <div class="orgLogoWrp">
-          <% if @organization.logo.present? %>
-            <%= link_to image_tag(@organization.logo_url, :class => "organization-edit-logo-image"), @organization.logo_url %>
-          <% end %>
+          <!-- % if @organization.logo.present? % >
+            < %= link_to image_tag(@organization.logo_url, :class => "organization-edit-logo-image"), @organization.logo_url % >
+          < % end % -->
           <div class="editOptions">
             <div class="file_upload_btn">
               <%= f.input :logo ,:label => false %>

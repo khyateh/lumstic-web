@@ -17,7 +17,8 @@ development:
   encoding: unicode
   database: user_service_development
   pool: 5
-  username: pguser
+  host: localhost
+  username: postgres
   password: khyateh@123
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -43,8 +44,8 @@ test:
   encoding: unicode
   database: user_service_test
   pool: 5
-  username: pguser
-  password: khyateh@123
+  username: 
+  password: 
 
 production:
   adapter: postgresql

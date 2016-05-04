@@ -10,7 +10,7 @@ class Organization < ActiveRecord::Base
 
 
 
-  mount_uploader :logo, LogoUploader
+  #mount_uploader :logo, LogoUploader
 
   after_create :notify_super_admins_if_organization_allows_sharing
 
