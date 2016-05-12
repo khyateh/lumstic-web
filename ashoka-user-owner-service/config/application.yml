@@ -1,0 +1,13 @@
+development:
+  S3_ACCESS_KEY: 'AKIAJ6OYSK4SANUQTU3A' # S3 Access key.
+  S3_SECRET: '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' # S3 Secret key.
+  S3_BUCKET: 'surveywebdevelopmentassets' # Name of the S3 bucket
+  SECRET_TOKEN: '4d2951b95e6f37703961b95c5195d6e883483ba1be63bee0d6ab662c0017bae108b22f1a1ba3cf54c31421d44e202bbe82e46b5ccd21a414fd7b59fcacd1da75'# Secret key used to sign cookies (run `rake secret`)
+  USER_OWNER_HOST: # Set the host for mailers
+
+test:
+  S3_ACCESS_KEY: # S3 Access key.
+  S3_SECRET: # S3 Secret key.
+  S3_BUCKET: # Name of the S3 bucket
+  SECRET_TOKEN: # Secret key used to sign cookies (run `rake secret`)
+  USER_OWNER_HOST: # Set the host for mailers

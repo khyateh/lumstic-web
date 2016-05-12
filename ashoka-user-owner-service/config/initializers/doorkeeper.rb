@@ -1,4 +1,5 @@
 Doorkeeper.configure do
+  orm :active_record
   # This block will be called to check whether the
   # resource owner is authenticated or not
   resource_owner_authenticator do |routes|
@@ -9,6 +10,9 @@ Doorkeeper.configure do
     User.find_by_id(session[:user_id]) || redirect_to(routes.login_url(:return_to => request.fullpath))
   end
 
+  resource_owner_from_credentials do |routes|
+    User.authenticate(params[:username], params[:password])
+  end
   # If you want to restrict the access to the web interface for
   # adding oauth authorized applications you need to declare the
   # block below
@@ -31,6 +35,10 @@ Doorkeeper.configure do
   # If you want to disable expiration, set this to nil.
    access_token_expires_in 10.hours
 
+#if defined?(Rails::Console)
+#  require 'action_controller'
+#  class ApplicationController < ActionController::Base; end
+#end
   # Issue access tokens with refresh token (disabled by default)
   # use_refresh_token
 
