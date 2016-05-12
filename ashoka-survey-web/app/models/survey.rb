@@ -13,15 +13,15 @@ class Survey < ActiveRecord::Base
   has_many :survey_users, :dependent => :destroy
   has_many :participating_organizations, :dependent => :destroy
 
-  scope :finalized, where(:finalized => true)
-  scope :none, limit(0)
+  scope :finalized, lambda { where(:finalized => true)}
+  #scope :none, lambda { limit(0) }
   scope :not_expired, lambda { where('expiry_date > ?', Date.today) }
   scope :expired, lambda { where('expiry_date < ?', Date.today) }
-  scope :with_questions, joins(:questions)
-  scope :drafts, where(:finalized => false)
-  scope :archived, where(:archived => true)
-  scope :unarchived, where(:archived => false)
-  scope :most_recent, order('published_on DESC NULLS LAST, created_at DESC')
+  scope :with_questions, lambda {joins(:questions)}
+  scope :drafts, lambda {where(:finalized => false)}
+  scope :archived, lambda {where(:archived => true)}
+  scope :unarchived, lambda {where(:archived => false)}
+  scope :most_recent, lambda {order('published_on DESC NULLS LAST, created_at DESC')}
 
   before_save :generate_auth_key, :if => Proc.new { |s| s.public? && s.auth_key.blank? }
 
