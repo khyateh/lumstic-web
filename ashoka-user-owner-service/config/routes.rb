@@ -1,15 +1,16 @@
 UserService::Application.routes.draw do
-  use_doorkeeper do 
+  use_doorkeeper
+  # do 
   #skip_controllers :applications
-  controllers :applications => 'apps'
-  end
-  
+  #controllers :applications => 'apps'
+  #end
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
- 
-  
+
+
     mount SudoMode::Engine => '/sudo'
 
     get 'register', :to => 'organizations#new', :as => 'register'
