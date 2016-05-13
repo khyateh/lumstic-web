@@ -15,7 +15,7 @@ class Category < ActiveRecord::Base
     !category.finalized?
   end
 
-  scope :finalized, where(:finalized => true)
+  scope :finalized,lambda{ where(:finalized => true) }
 
 
   def elements

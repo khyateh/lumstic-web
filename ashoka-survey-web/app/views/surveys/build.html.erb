@@ -148,7 +148,7 @@
     });
 
 
-    $('.setting').live('click', function(){
+    $('#parentElement').on('click','.setting', function(){
       $('.setting-options').removeClass('active');
       $('.settingOptionsWrp').removeClass('active');
 
@@ -157,7 +157,7 @@
       return false;
     }); 
 
-      $('.form-top-right-actions a,.form-top-right-actions div').live('click',function(event){
+      $('.form-top-right-actions a,.form-top-right-actions').on('click','div',function(event){
         $('.form-top-right-actions').closest('.dummy_question').css({'box-shadow':'0px 0px 0px #000',
                 '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
         $('.form-top-right-actions').closest('.dummy_category').css({'box-shadow':'0px 0px 0px #000',
@@ -172,7 +172,7 @@
 
       });
 
-     $('.question-row').live('click',function(event){
+     $('#parentElement').on('click','.question-row',function(event){
         $('.question-row').closest('.dummy_question').css({'box-shadow':'0px 0px 0px #000',
                 '-webkit-box-shadow':'0px 0px 0px #000' , '-moz-box-shadow':'0px 0px 0px #000'});
         $('.question-row').closest('.dummy_category').css({'box-shadow':'0px 0px 0px #000',
