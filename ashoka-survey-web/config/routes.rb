@@ -14,7 +14,7 @@ SurveyWeb::Application.routes.draw do
   scope "(:locale)", :locale => /#{I18n.available_locales.join('|')}/ do
   get '/auth/user_owner/callback' => 'sessions#create'
   post '/auth/failure' => 'sessions#failure'
-  post '/logout' => 'sessions#destroy', :as => 'logout'
+  get '/logout' => 'sessions#destroy', :as => 'logout'
 
   resources :dashboards, :only => [:index, :show], :controller => "organization_dashboards"
 
