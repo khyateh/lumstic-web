@@ -29,7 +29,7 @@ class Answer < ActiveRecord::Base
   delegate :first_level?, :to => :question
   delegate :order_number, :to => :question, :prefix => true
 
-  scope :complete, joins(:response).where("responses.status = 'complete'")
+  scope :complete, lambda{ joins(:response).where("responses.status = 'complete'") }
 
   def option_ids
     self.choices.collect(&:option_id)

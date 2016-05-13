@@ -12,7 +12,7 @@ SurveyWeb::Application.routes.draw do
   get "pages/dummy"
 
   scope "(:locale)", :locale => /#{I18n.available_locales.join('|')}/ do
-  post '/auth/:provider/callback' => 'sessions#create'
+  get '/auth/user_owner/callback' => 'sessions#create'
   post '/auth/failure' => 'sessions#failure'
   post '/logout' => 'sessions#destroy', :as => 'logout'
 

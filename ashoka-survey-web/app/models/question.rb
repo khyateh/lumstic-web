@@ -21,8 +21,8 @@ class Question < ActiveRecord::Base
   delegate :question, :to => :parent, :prefix => true
   delegate :marked_for_deletion?, :to => :survey, :prefix => true
 
-  scope :not_private, where("private IS NOT true")
-  scope :finalized, where(:finalized => true)
+  scope :not_private, lambda { where("private IS NOT true") }
+  scope :finalized, lambda { where(:finalized => true)}
 
   mount_uploader :image, ImageUploader
 
