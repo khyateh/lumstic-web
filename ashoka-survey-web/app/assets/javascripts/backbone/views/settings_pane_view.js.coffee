@@ -2,9 +2,10 @@ class SurveyBuilder.Views.SettingsPaneView extends Backbone.View
   el: "#settings_pane"
   DETAILS: "#survey_details_template"
 
-  initialize: (survey_model, @survey_frozen) =>
+  initialize: (survey_model, @survey_frozen, options) =>
     @questions = []
     @add_survey_details(survey_model)
+    this.options = options
 
   add_element: (type, model) =>
     view = SurveyBuilder.Views.QuestionFactory.settings_view_for(type, model, @survey_frozen)

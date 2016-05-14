@@ -102,7 +102,8 @@
 <script type="text/javascript">
   $(document).ready(function(){
     window.notifications_view = new SurveyBuilder.Views.NotificationsView;
-    window.loading_overlay = new SurveyBuilder.Views.LoadingOverlayView
+    window.loading_overlay = new SurveyBuilder.Views.LoadingOverlayView;
+    console.log('Before overlay');
     window.loading_overlay.show_overlay("<%= t('.loading_survey') %>");
     window.survey_builder = new SurveyBuilder.Views.SurveyBuilderView(<%= @survey.id %>, <%= @survey.finalized? %>);
     window.conditional_ques_count = 0;
@@ -186,6 +187,51 @@
                         '-moz-box-shadow':'-1px 4px 30px rgba(0, 0, 0, 0.5)'});
 
       });
+
+<!-- Adding ajaxstart and stop  -->
+  $(document).ready(function(){
+
+    var old_text = 'Loading...';
+    $(document).ajaxStart(function() {      
+      show_overlay(old_text);
+    });
+    
+    $(document).ajaxStop(function() {
+      hide_overlay();
+    });
+    
+
+    
+    function show_overlay(text){
+      var opts;
+        opts = {
+          lines: 17,
+          length: 9,
+          width: 4,
+          radius: 36,
+          speed: 1.0,
+          trail: 64,
+          top: "5px",
+          left: "25px",
+          color: '#ddd'
+        };
+
+        $('#loading_overlay').css('display', 'block');
+        $('#loading_overlay').children(".spinner").spin(opts);
+
+        if (text) {
+          old_text = $('#loading_overlay').children("p.text").text();
+          $('#loading_overlay').children("p.text").text(text);
+        }
+    }
+
+    function hide_overlay(){
+     $('#loading_overlay').hide();
+     if (old_text) {
+        $('#loading_overlay').children("p.text").text(old_text);
+      }   
+    }
+    });
 
 </script>
 

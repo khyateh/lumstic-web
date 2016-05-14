@@ -10,9 +10,10 @@ class SurveyBuilder.Views.Questions.QuestionWithOptionsView extends SurveyBuilde
     'click button.add_option': 'add_new_option_model'
     'click button.add_options_in_bulk': 'add_options_in_bulk'
 
-  initialize: (model, template, @survey_frozen) =>
+  initialize: (model, template, @survey_frozen, options) =>
     super
-    this.options = []
+    #this.options = []
+    this.options = options
     this.model.on('add:options', this.add_new_option, this)
     this.model.get('options').on('destroy', this.delete_option_view, this)
     this.model.on('preload_options', this.preload_options, this)
