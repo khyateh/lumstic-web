@@ -16,6 +16,7 @@ class PublicationsController < ApplicationController
   end
 
   def update
+  logger.debug 'In Update : ' + params[:survey_id]
     survey = Survey.find(params[:survey_id])
     authorize! :update_publication, survey
     publisher = Publisher.new(survey, access_token, params[:survey])

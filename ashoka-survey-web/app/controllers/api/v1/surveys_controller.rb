@@ -34,7 +34,8 @@ module Api
       end
 
       def update
-        sleep 5
+        #sleep 5
+        logger.debug 'In Update ' + params[:id]
         @survey = Survey.find_by_id(params[:id])
         if @survey && @survey.update_attributes(params[:survey])
           render :json => @survey.to_json
