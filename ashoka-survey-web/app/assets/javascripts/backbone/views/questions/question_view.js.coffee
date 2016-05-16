@@ -8,7 +8,8 @@ class SurveyBuilder.Views.Questions.QuestionView extends Backbone.View
     'change input[type=number]': 'handle_textbox_keyup'
     'change input[type=checkbox]': 'handle_checkbox_change'
 
-  initialize: (@model, @template, @survey_frozen) =>
+  initialize: (@model, @template, @survey_frozen, options) =>
+    this.options = options
     this.model.actual_view = this
     this.model.on('save:completed', this.renderImageUploader, this)
     this.model.on('change', this.render, this)

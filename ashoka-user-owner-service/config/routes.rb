@@ -1,17 +1,23 @@
 UserService::Application.routes.draw do
+  use_doorkeeper
+  # do 
+  #skip_controllers :applications
+  #controllers :applications => 'apps'
+  #end
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  scope "(:locale)", :locale => /#{I18n.available_locales.join('|')}/ do
-    mount Doorkeeper::Engine => '/oauth'
+
+
     mount SudoMode::Engine => '/sudo'
 
     get 'register', :to => 'organizations#new', :as => 'register'
     get 'login', :to => 'sessions#new', :as => 'login'
     get 'logout', :to => 'sessions#destroy', :as => 'logout'
 
-    # bug fix 
+    # bug fix
     # get '/organizations/:id/users', :to => 'organizations#edit'
 
     get 'deactivated_organization', :to => 'static_pages#deactivated_organization', :as => 'deactivated'
@@ -26,7 +32,7 @@ UserService::Application.routes.draw do
     resources :documents, :only => [:new, :create, :index,:dummy ]
 
     root :to => 'sessions#new'
-  end
+  #end
 
   namespace :api, :defaults => { :format => 'json' } do
     scope :module => :v1 do

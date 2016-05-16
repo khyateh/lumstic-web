@@ -7,7 +7,8 @@ class SurveyBuilder.Views.Questions.CategoryView extends Backbone.View
     'keyup input[type=text]': 'handle_textbox_keyup'
     'change input[type=checkbox]': 'handle_checkbox_change'
 
-  initialize: (@model, @template, @survey_frozen) =>
+  initialize: (@model, @template, @survey_frozen, options) =>
+    this.options = options
     this.model.actual_view = this
     this.sub_questions = []
     this.model.on('save:completed', this.renderImageUploader, this)

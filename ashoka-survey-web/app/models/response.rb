@@ -29,8 +29,8 @@ class Response < ActiveRecord::Base
   geocoded_by :ip_address, :latitude => :latitude, :longitude => :longitude
   acts_as_gmappable :lat => :latitude, :lng => :longitude, :check_process => false, :process_geocoding => false
 
-  scope :earliest_first, order('updated_at')
-  scope :completed, where(:status => Status::COMPLETE)
+  scope :earliest_first, lambda{order('updated_at')}
+  scope :completed, lambda{where(:status => Status::COMPLETE)}
 
   before_save(:set_completed_date)
 

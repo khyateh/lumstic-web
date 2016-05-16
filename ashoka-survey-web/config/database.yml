@@ -8,8 +8,8 @@ development:
   encoding: utf8
   database: survey_web_dev
   pool: 5
-  username: postgres
-  password: devendra
+  username: pguser
+  password: khyateh@123
   host: localhost
 
 # Warning: The database defined as "test" will be erased and
@@ -20,8 +20,8 @@ test:
   encoding: utf8
   database: survey_web_test
   pool: 5
-  username: postgres
-  password: devendra
+  username: pguser
+  password: khyateh@123
   host: localhost
 
 production:

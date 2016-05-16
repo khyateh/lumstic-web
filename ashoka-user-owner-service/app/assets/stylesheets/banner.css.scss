@@ -3,7 +3,7 @@ div#banner{
   display: block;
   color: $white;
   padding-top: 80px;
-  @include span-columns(1);
+  @include columns(1);
   @include prefix(1);
 
   ul{

@@ -39,10 +39,12 @@ class SurveysController < ApplicationController
   end
 
   def build
+  logger.debug 'In Build : ' + params[:survey_id]
     @survey = SurveyDecorator.find(params[:survey_id])
   end
 
   def finalize
+  logger.debug 'In Finalize : ' + params[:survey_id] 
     @survey = Survey.find(params[:survey_id])
     @survey.finalize
     flash[:notice] = t "flash.survey_finalized", :survey_name => @survey.name

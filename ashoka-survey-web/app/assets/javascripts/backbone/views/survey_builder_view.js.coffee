@@ -17,6 +17,7 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
     this.settings_pane = new SurveyBuilder.Views.SettingsPaneView(this.survey, survey_frozen)
     this.dummy_pane    = new SurveyBuilder.Views.DummyPaneView(this.survey, survey_frozen)
     this.actions_view  = new SurveyBuilder.Views.ActionsView(survey_frozen)
+    
 
     this.survey.fetch({
       success: (model) =>
@@ -25,6 +26,7 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
     })
 
     $(this.el).bind('ajaxStop.preload', =>
+    console.log('Here1')
       window.loading_overlay.hide_overlay()
       $(this.el).unbind('ajaxStop.preload')
       this.dummy_pane.sort_question_views_by_order_number()
@@ -81,21 +83,25 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
 
   save_all_questions: =>
     $(this.el).find("#save input").prop('disabled', true)
-    window.loading_overlay.show_overlay()
+    #console.log('Save not start')
+    window.loading_overlay.show_overlay()    
 
     # Delay so that the UI doesn't hang.
     _.delay(=>
-      $(this.el).bind('ajaxStop.save', this.handle_save_finished)
-      this.survey.save()
-      this.survey.save_all_questions()
+    #console.log('Save start')
+    $(this.el).bind('ajaxStop.save', this.handle_save_finished)
+    this.survey.save()
+    this.survey.save_all_questions()   
+    console.log('Save done')
     , 10)
 
   handle_save_finished: =>
+    console.log('Save complete')
     $(this.el).unbind('ajaxStart.save')
     $(this.el).unbind('ajaxStop.save')
     $(this.el).find("#save input").prop('disabled', false)
     $(this.el).trigger('save_finished')
-    @display_save_status()
+    @display_save_status()    
     window.loading_overlay.hide_overlay()
 
   display_save_status: =>

@@ -13,10 +13,10 @@ class User < ActiveRecord::Base
   before_save :convert_email_to_lower_case
   delegate :active?, :to => :organization, :prefix => true
 
-  scope :super_admins, where(:role => "super_admin")
-  scope :cso_admins, where(:role => "cso_admin")
-  scope :super_admins_and_cso_admins_for, -> organization_id { where("(role = ?) OR (role = ? AND organization_id = ?)",
-                                                                     "super_admin", "cso_admin", organization_id) }
+  scope :super_admins, -> { where(:role => "super_admin")}
+  scope :cso_admins,-> { where(:role => "cso_admin")}
+  scope :super_admins_and_cso_admins_for, -> {organization_id { where("(role = ?) OR (role = ? AND organization_id = ?)",
+                                                                     "super_admin", "cso_admin", organization_id) }}
 
   ROLES = %w(viewer field_agent supervisor designer manager cso_admin super_admin)
 
@@ -26,9 +26,9 @@ class User < ActiveRecord::Base
     INACTIVE = "inactive"
   end
 
-  scope :active_users,   where(:status => Status::ACTIVE)
-  scope :pending_users,  where(:status => Status::PENDING)
-  scope :inactive_users, where(:status => Status::INACTIVE)
+  scope :active_users, -> { where(:status => Status::ACTIVE)}
+  scope :pending_users,  -> { where(:status => Status::PENDING)}
+  scope :inactive_users, -> { where(:status => Status::INACTIVE)}
 
   def self.maybe(user)
     user || NullUser.new

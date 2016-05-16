@@ -20,6 +20,9 @@ SurveyWeb::Application.configure do
 
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
+  
+  #Eager load -> false (dev, test); true(prod)
+  config.eager_load = false
 
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false

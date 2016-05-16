@@ -1,9 +1,9 @@
 SurveyWeb::Application.routes.draw do
   get "corporate_webs/index"
-  match "/about-us", :to => "corporate_webs#about"
-  match "/partners", :to => "corporate_webs#partners"
-  match "/contact-us", :to => "corporate_webs#contact"
-  match "/send_brochure", :to => "corporate_webs#send_brochure"  
+  get "/about-us" => "corporate_webs#about"
+  get "/partners" => "corporate_webs#partners"
+  get "/contact-us" => "corporate_webs#contact"
+  get "/send_brochure" => "corporate_webs#send_brochure"  
 
   get "/help" => "help#index" 
 
@@ -12,9 +12,9 @@ SurveyWeb::Application.routes.draw do
   get "pages/dummy"
 
   scope "(:locale)", :locale => /#{I18n.available_locales.join('|')}/ do
-  match '/auth/:provider/callback', :to => 'sessions#create'
-  match '/auth/failure', :to => 'sessions#failure'
-  match '/logout', :to => 'sessions#destroy', :as => 'logout'
+  get '/auth/user_owner/callback' => 'sessions#create'
+  post '/auth/failure' => 'sessions#failure'
+  get '/logout' => 'sessions#destroy', :as => 'logout'
 
   resources :dashboards, :only => [:index, :show], :controller => "organization_dashboards"
 
@@ -29,7 +29,7 @@ SurveyWeb::Application.routes.draw do
     get 'build'
     put 'finalize'
     put 'archive'
-    match  "public_response" => "responses#create"
+    post  "public_response" => "responses#create"
     resources :responses, :only => [:new, :create, :index, :edit, :show, :update, :destroy] do
       collection { get "generate_excel" }
       member do
@@ -85,7 +85,7 @@ namespace :api, :defaults => {:format => 'json'} do
       post 'duplicate', :on => :member
     end
     get 'deep_surveys', :to => 'deep_surveys#index'
-    match '/login', :to => 'auth#create'
+    post '/login' => 'auth#create'
     resources :responses, :only => [:create, :update, :show] do
       member { put "image_upload" }
       collection { get 'count' }

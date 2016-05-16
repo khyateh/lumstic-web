@@ -2,7 +2,8 @@ SurveyBuilder.Views.Questions ||= {}
 
 #  The settings of a single option in the settings pane
 class SurveyBuilder.Views.Questions.OptionView extends Backbone.View
-  initialize: (@model, @template, @survey_frozen) =>
+  initialize: (@model, @template, @survey_frozen, options) =>
+    this.options = options
     alert "initialize"
     this.sub_questions = []
     this.model.on('change:errors', this.render, this)

@@ -61,7 +61,13 @@ class SurveyBuilder.Models.SurveyModel extends Backbone.RelationalModel
   update_question_count: =>
     $(".clsass_main_questions").html(@question_models.length)
 
+  finalize: =>
+    console.log('In finalize :')
+    this.finalized = true
+    console.log(this)
+    this.save_model()
+  
   attr_accessible: =>
-    [ "name", "description", "expiry_date", "organization_logo_url"]
+    [ "name", "description", "expiry_date", "organization_logo_url", "finalized"]
 
 SurveyBuilder.Models.SurveyModel.setup()

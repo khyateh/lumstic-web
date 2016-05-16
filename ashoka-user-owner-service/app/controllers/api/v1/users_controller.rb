@@ -2,7 +2,8 @@
 module Api
   module V1
     class UsersController < ActionController::Base
-      doorkeeper_for :all
+      #doorkeeper_for :all
+      before_action :doorkeeper_authorize!
       load_and_authorize_resource :user, :parent => false, :except => [:validate_users, :index]
       respond_to :json
 
