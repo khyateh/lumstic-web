@@ -1,11 +1,19 @@
+
 module Api::V1
   class ResponsesController < APIApplicationController
-    load_resource :survey, :only => [:index, :show, :count]
-    load_resource :through => :survey, :only => [:show, :count]
+ #   load_resource :survey, :only => [:index, :show, :count]
+ #   load_resource :through => :survey, :only => [:show, :count]
     authorize_resource
 
-    before_filter :decode_base64_images, :convert_to_datetime, :only => [:create, :update]
+    before_filter :read_params, :decode_base64_images, :convert_to_datetime, :only => [:create, :update]
     before_filter :require_response_to_not_exist, :only => :create
+
+    def read_params
+        require 'json'
+        @@body =  JSON.parse(request.body.read)
+	@@resp = @@body["response"]
+        @@resp["ip_address"]  = "0.0.0.0"
+    end
 
     def count
       render :json => { count: @responses.count }
@@ -13,18 +21,18 @@ module Api::V1
 
     def create
       response = Response.new
-      if response.create_response(params[:response])
-        render :json => response.to_json_with_answers_and_choices
+      if response.create_response(@@resp.except("access_token"))
+	render :json => response.to_json_with_answers_and_choices
       else
         render :json => response.to_json_with_answers_and_choices, :status => :bad_request
-        Airbrake.notify(ActiveRecord::RecordInvalid.new(response))
+#        Airbrake.notify(ActiveRecord::RecordInvalid.new(response))
       end
     end
 
     def update
-      response = Response.find_by_id(params[:id])
+      response = Response.find_by_id(@@resp[:id])
       return render :nothing => true, :status => :gone if response.nil?
-      response.update_response_with_conflict_resolution(params[:response])
+      response.update_response_with_conflict_resolution(@@resp)
       response.update_records # TODO: Refactor this into the model method, if possible
 
       if response.invalid?
@@ -35,15 +43,20 @@ module Api::V1
       end
     end
 
+    def incomplete
+      response = Response.find_incomplete_by_surveyid(params[:id])
+      render :json => response.as_json(:include => :answers)
+    end
+
     def show
-      response = Response.find_by_id(params[:id])
+      response = Response.find_by_surveyid(params[:id])
       render :json => response.as_json(:include => :answers)
     end
 
     private
 
     def decode_base64_images
-      answers_attributes = params[:response][:answers_attributes] || []
+      answers_attributes = @@resp[:answers_attributes] || []
       answers_attributes.each do |_, answer|
         if answer.has_key? 'photo'
           sio = StringIO.new(Base64.decode64(answer['photo']))
@@ -56,16 +69,18 @@ module Api::V1
     end
 
     def convert_to_datetime
-      answers_attributes = params[:response][:answers_attributes]
+      answers_attributes = @@resp["answers_attributes"]
+
       answers_attributes.each do |key, answer_attributes|
-        answer_attributes["updated_at"] = Time.at(answer_attributes["updated_at"].to_i).to_s
+        answer_attributes["updated_at"] = Time.at(answer_attributes["updated_at"].to_i).strftime("%Y%jT%H%M%S")
       end unless answers_attributes.blank?
-      params[:response][:updated_at] = Time.at(params[:response][:updated_at].to_i).to_s unless params[:response].nil?
+
+      @@resp["updated_at"] = Time.at(@@resp["updated_at"].to_i).strftime("%Y%jT%H%M%S") unless @@resp.nil?
     end
 
     def require_response_to_not_exist
-      if params[:mobile_id]
-        response = Response.find_by_mobile_id(params[:mobile_id])
+      if @@resp[:mobile_id]
+        response = Response.find_by_mobile_id(@@resp[:mobile_id])
         if response
           render :json => response.to_json_with_answers_and_choices
         end
