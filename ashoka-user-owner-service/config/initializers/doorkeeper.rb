@@ -11,8 +11,9 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_credentials do |routes|
-    User.authenticate(params[:username], params[:password])
+    User.authenticate!(params[:username], params[:password])
   end
+
   # If you want to restrict the access to the web interface for
   # adding oauth authorized applications you need to declare the
   # block below
@@ -53,3 +54,5 @@ Doorkeeper.configure do
   # Check out the wiki for mor information on customization
   # client_credentials :from_basic, :from_params
 end
+
+Doorkeeper.configuration.token_grant_types << "password"
