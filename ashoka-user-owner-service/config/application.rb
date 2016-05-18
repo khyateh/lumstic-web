@@ -18,16 +18,17 @@ end
 module UserService
     class Application < Rails::Application
 
-      #  config.to_prepare do
+      config.to_prepare do
             # Only Applications list
-      #      Doorkeeper::ApplicationsController.layout "doorkeeper_layout"
+            Doorkeeper::ApplicationsController.layout "doorkeeper_layout"
 
             # Only Authorization endpoint
-      #      Doorkeeper::AuthorizationsController.layout "doorkeeper_layout"
+            Doorkeeper::AuthorizationsController.layout "doorkeeper_layout"
 
             # Only Authorized Applications
-      #      Doorkeeper::AuthorizedApplicationsController.layout "doorkeeper_layout"
-      #  end
+            Doorkeeper::AuthorizedApplicationsController.layout "doorkeeper_layout"
+        end
+      
         # Settings in config/environments/* take precedence over those specified here.
         # Application configuration should go into files in config/initializers
         # -- all .rb files in that directory are automatically loaded.

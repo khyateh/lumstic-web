@@ -6,6 +6,7 @@
 
 /config/application.yml
 .vscode
+.pryrc
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
