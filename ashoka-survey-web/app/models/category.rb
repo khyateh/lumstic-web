@@ -11,8 +11,14 @@ class Category < ActiveRecord::Base
   delegate :marked_for_deletion?, :to => :survey, :prefix => true
 
   before_destroy do |category|
-    return if category.survey_marked_for_deletion?
-    !category.finalized?
+    #return if category.survey_marked_for_deletion?
+    #!category.finalized?
+    
+    ret_val = !category.finalized? 
+    if category.survey_marked_for_deletion?
+     ret_val = true
+    end
+    ret_val
   end
 
   scope :finalized,lambda{ where(:finalized => true) }
