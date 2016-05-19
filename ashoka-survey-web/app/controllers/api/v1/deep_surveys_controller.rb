@@ -4,8 +4,8 @@ module Api
       authorize_resource :class => Survey
 
       def index
-        surveys = Survey.accessible_by(current_ability).active_plus(extra_survey_ids)
-        render :json => surveys, :each_serializer => DeepSurveySerializer
+         surveys = Survey.accessible_by(current_ability).active_plus(extra_survey_ids)
+	 render :json => surveys, include: [ 'questions', 'categories' ], :each_serializer => DeepSurveySerializer        
       end
 
       private

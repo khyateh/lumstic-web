@@ -30,6 +30,15 @@ class Question < ActiveRecord::Base
     Base64.encode64(image.thumb.file.read) if image?
   end
 
+  def serializable_hash(opts = nil)
+    opts ||= {}
+    question = {:id=> id, :content => content, :mandatory => mandatory, :image_in_base64 => image_in_base64, :type => type, :survey_id => survey_id, :order_number => order_number,
+              :parent_id => parent_id, :identifier => identifier, :category_id => category_id,
+	      :max_length => max_length, :min_value => min_value, :max_value => max_value}
+    question[:options] = options
+    question
+  end
+
   def duplicate(survey_id)
     question = self.dup
     question.survey_id = survey_id
