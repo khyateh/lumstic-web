@@ -14,8 +14,15 @@ class Question < ActiveRecord::Base
 
   after_save :update_image_size!, :if => :image_changed?
   before_destroy do |question|
-    return if question.survey_marked_for_deletion?
-    !question.finalized?
+  
+  #return if question.survey_marked_for_deletion?
+  # !question.finalized?
+  
+    ret_val = !question.finalized? 
+    if question.survey_marked_for_deletion?
+     ret_val = true
+    end
+    ret_val
   end
 
   delegate :question, :to => :parent, :prefix => true

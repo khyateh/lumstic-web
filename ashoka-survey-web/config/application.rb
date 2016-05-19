@@ -82,5 +82,8 @@ module SurveyWeb
     I18n.fallbacks.map('fr' => 'en')
 
     config.middleware.use Rack::ContentLength
+    
+    #Setting Queue Adapter => delayed_job
+    config.active_job.queue_adapter = :delayed_job
   end
 end

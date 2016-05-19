@@ -103,7 +103,7 @@
   $(document).ready(function(){
     window.notifications_view = new SurveyBuilder.Views.NotificationsView;
     window.loading_overlay = new SurveyBuilder.Views.LoadingOverlayView;
-    console.log('Before overlay');
+    
     window.loading_overlay.show_overlay("<%= t('.loading_survey') %>");
     window.survey_builder = new SurveyBuilder.Views.SurveyBuilderView(<%= @survey.id %>, <%= @survey.finalized? %>);
     window.conditional_ques_count = 0;
@@ -123,7 +123,7 @@
 <script>
   $(document).click(function (q){
         var container = $(".addQuestion");
-        var container02 = $(".settingOptionsWrp");
+        var container02 = $(".settingOptionsWrp");        
         var container03 = $(".question-row");
 
         if (!container.is(q.target) // if the target of the click isn't the container...
@@ -148,8 +148,7 @@
 
     });
 
-
-    $('#parentElement').on('click','.setting', function(){
+    $('body').on('click','.setting', function(){    
       $('.setting-options').removeClass('active');
       $('.settingOptionsWrp').removeClass('active');
 

@@ -1,0 +1,17 @@
+<div class="container">
+
+    <header class="page-header">
+    <h2>
+    <%= link_to '', oauth_applications_path , :class => "backBtn" %>
+    <span>New application</span></h2>
+    </header>
+
+<div>
+    <%= render partial: 'form', :application => @application %>
+</div>
+
+
+    <!-- <h3>Actions</h3>
+    <p><%= link_to 'Home', main_app.root_path %></p> -->
+
+</div>
