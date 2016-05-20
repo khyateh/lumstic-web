@@ -23,6 +23,12 @@ class Category < ActiveRecord::Base
 
   scope :finalized,lambda{ where(:finalized => true) }
 
+  def serializable_hash(opt = nil)
+    opt ||= {}
+    category = {:id=> id, :parent_id => parent_id, :type => type, :content => content, 
+                :survey_id => survey_id, :order_number => order_number, :category_id => category_id}
+    category
+  end
 
   def elements
     (questions + categories.includes([:questions, :categories])).sort_by(&:order_number).map{|x| x if x.is_a?(QuestionWithOptions) && x.parent_id.nil? || x.parent_id.nil? }.compact
