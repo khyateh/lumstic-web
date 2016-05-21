@@ -18,8 +18,13 @@ class AdminAbility < Ability
 
     can :manage, Response, :survey => { :organization_id => user_info[:org_id] }
     can :manage, Response, :organization_id => user_info[:org_id]
-    can :create, Response, :survey => { :participating_organizations => { :organization_id => user_info[:org_id ] } }
-
+    
+    can :create, Response, :survey => { :organization_id => user_info[:org_id] }
+    #can :create, Response, Survey.with_participating_organizations(user_info[:org_id]) 
+    #TODOERROR GETTING CHILD OF CHILD below undefined method oragnization_id for #<participating_organizations::ActiveRecord_Associations_CollectionProxy
+    #can :create, Response, :survey => { :participating_organizations => { :organization_id => user_info[:org_id ] } }  
+    
+             
     can_perform_on_own_and_shared_surveys(:edit_publication)
     can_perform_on_own_and_shared_surveys(:update_publication)
 

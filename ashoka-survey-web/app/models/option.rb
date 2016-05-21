@@ -10,7 +10,7 @@ class Option < ActiveRecord::Base
   delegate :marked_for_deletion?, :to => :survey, :prefix => true
 
   scope :finalized, lambda{where(:finalized => true)}
-  scope :ascending, lambda { where(:order => "order_number ASC")} 
+  scope :ascending, lambda { where(:order_number => "order_number ASC")} 
 
   before_destroy do |option|
     return if option.survey_marked_for_deletion?

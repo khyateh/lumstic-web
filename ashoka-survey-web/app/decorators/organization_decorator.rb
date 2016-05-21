@@ -44,11 +44,11 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def response_count_grouped_by_month
-    responses.count(:group => "to_char(created_at, 'Mon YYYY')").to_a.sort_by { |date_in_words,_| Date.parse(date_in_words) }
+    responses.group("to_char(created_at, 'Mon YYYY')").count.to_a.sort_by { |date_in_words,_| Date.parse(date_in_words) }
   end
 
   def survey_count_grouped_by_month
-    surveys.count(:group => "to_char(created_at, 'Mon YYYY')").to_a.sort_by { |date_in_words,_| Date.parse(date_in_words) }
+    surveys.group("to_char(created_at, 'Mon YYYY')").count.to_a.sort_by { |date_in_words,_| Date.parse(date_in_words) }
   end
 
   def responses_per_month_graph

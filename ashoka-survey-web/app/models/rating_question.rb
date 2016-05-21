@@ -5,7 +5,7 @@ class RatingQuestion < Question
   DEFAULT_MAX_LENGTH = 5
 
   def report_data
-    answers_grouped_by_content = answers_for_reports.count(:group => 'answers.content')
+    answers_grouped_by_content = answers_for_reports.group('answers.content').count
     answers_grouped_by_content.map { |content,count| [content.to_f, count] }
   end
 

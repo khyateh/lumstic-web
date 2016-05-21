@@ -22,6 +22,8 @@ class Survey < ActiveRecord::Base
   scope :archived, lambda {where(:archived => true)}
   scope :unarchived, lambda {where(:archived => false)}
   scope :most_recent, lambda {order('published_on DESC NULLS LAST, created_at DESC')}
+  #scope :with_participating_organizations, lambda  {|org_Id| includes(:participating_organizations).where(:participating_organizations => {organization_id: org_Id})}
+  scope :with_participating_organizations, lambda  { |orgId| joins(:participating_organizations).where(:participating_organizations => { organization_id: orgId } )}
 
   before_save :generate_auth_key, :if => Proc.new { |s| s.public? && s.auth_key.blank? }
 

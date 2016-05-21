@@ -7,12 +7,13 @@ class NumericQuestion < Question
   validates :min_value, length: { maximum: 9, message: "should be less than 9 digits" }
 
   def report_data_in_range(start_date,end_date)
-    answers_grouped_by_content = answers_for_reports_in_range(start_date,end_date).count(:group => 'answers.content')
+    answers_grouped_by_content = answers_for_reports_in_range(start_date,end_date).group('answers.content').count
     answers_grouped_by_content.map { |content,count| [content.to_f, count] }
+    
   end
 
   def report_data
-    answers_grouped_by_content = answers_for_reports.count(:group => 'answers.content')
+    answers_grouped_by_content = answers_for_reports.group('answers.content').count
     answers_grouped_by_content.map { |content,count| [content.to_f, count] }
   end
 
