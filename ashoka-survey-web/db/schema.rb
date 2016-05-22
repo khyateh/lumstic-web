@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608120327) do
+ActiveRecord::Schema.define(version: 20160522081910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,14 @@ ActiveRecord::Schema.define(version: 20150608120327) do
     t.integer  "response_id"
   end
 
+  create_table "respondents", force: :cascade do |t|
+    t.integer  "survey_id"
+    t.integer  "user_id"
+    t.string   "respondent_json"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "responses", force: :cascade do |t|
     t.integer  "survey_id"
     t.datetime "created_at",                             null: false
@@ -173,6 +181,7 @@ ActiveRecord::Schema.define(version: 20150608120327) do
     t.boolean  "archived",            default: false
     t.text     "thank_you_message"
     t.boolean  "marked_for_deletion", default: false
+    t.integer  "parent_id"
   end
 
   add_index "surveys", ["organization_id"], name: "index_surveys_on_organization_id", using: :btree

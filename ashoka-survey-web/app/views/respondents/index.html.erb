@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Respondents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Survey</th>
+      <th>User</th>
+      <th>Respondent json</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @respondents.each do |respondent| %>
+      <tr>
+        <td><%= respondent.survey_id %></td>
+        <td><%= respondent.user_id %></td>
+        <td><%= respondent.respondent_json %></td>
+        <td><%= link_to 'Show', respondent %></td>
+        <td><%= link_to 'Edit', edit_respondent_path(respondent) %></td>
+        <td><%= link_to 'Destroy', respondent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Respondent', new_respondent_path %>

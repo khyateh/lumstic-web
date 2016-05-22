@@ -12,6 +12,8 @@ class Survey < ActiveRecord::Base
   has_many :responses, :dependent => :destroy
   has_many :survey_users, :dependent => :destroy
   has_many :participating_organizations, :dependent => :destroy
+  belongs_to :parent_surveys, class_name: 'Survey'
+  has_many :surveys, class_name: 'Survey', foreign_key: :parent_id
 
   scope :finalized, lambda { where(:finalized => true)}
   #scope :none, lambda { limit(0) }
@@ -27,7 +29,7 @@ class Survey < ActiveRecord::Base
 
   before_save :generate_auth_key, :if => Proc.new { |s| s.public? && s.auth_key.blank? }
 
-  attr_accessible :name, :expiry_date, :description, :questions_attributes, :finalized, :public
+  attr_accessible :name, :expiry_date, :description, :questions_attributes, :finalized, :public, :parent_id
   accepts_nested_attributes_for :questions
 
   def self.active
