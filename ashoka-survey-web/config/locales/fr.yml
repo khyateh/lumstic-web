@@ -225,6 +225,8 @@ fr:
         copied: (de Copie)
         archive: "fr (Archived)"
         crowd_source: 'fr Crowd source'
+        archive: "fr (Midline)"
+        
 
       question:
         content: "Contenu"

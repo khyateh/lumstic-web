@@ -30,6 +30,7 @@ SurveyWeb::Application.routes.draw do
     get 'build'
     put 'finalize'
     put 'archive'
+    get 'midline'
     post  "public_response" => "responses#create"
     resources :responses, :only => [:new, :create, :index, :edit, :show, :update, :destroy] do
       collection { get "generate_excel" }

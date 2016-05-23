@@ -7,6 +7,7 @@ class AdminAbility < Ability
     can :update, Survey, :organization_id => user_info[:org_id]
     can :destroy, Survey, :organization_id => user_info[:org_id]
     can :archive, Survey, :organization_id => user_info[:org_id]
+    can :midline, Survey, :organization_id => user_info[:org_id]
     can :finalize, Survey, :organization_id => user_info[:org_id]
     can :view_survey_dashboard, Survey, :organization_id => user_info[:org_id]
 

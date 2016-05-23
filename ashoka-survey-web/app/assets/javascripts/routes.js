@@ -472,6 +472,11 @@
   if (!options){ options = {}; }
   return Utils.build_path(["survey_id"], ["locale","format"], [2,[2,[2,[2,[2,[2,[2,[1,[2,[7,"/",false],[3,"locale",false]],false],[7,"/",false]],[6,"surveys",false]],[7,"/",false]],[3,"survey_id",false]],[7,"/",false]],[6,"finalize",false]],[1,[2,[8,".",false],[3,"format",false]],false]], arguments);
   },
+  // survey_midline => (/:locale)/surveys/:survey_id/archive(.:format)
+  survey_midline_path: function(_survey_id, options) {
+  if (!options){ options = {}; }
+  return Utils.build_path(["survey_id"], ["locale","format"], [2,[2,[2,[2,[2,[2,[2,[1,[2,[7,"/",false],[3,"locale",false]],false],[7,"/",false]],[6,"surveys",false]],[7,"/",false]],[3,"survey_id",false]],[7,"/",false]],[6,"midline",false]],[1,[2,[8,".",false],[3,"format",false]],false]], arguments);
+  },
 // survey_public_response => (/:locale)/surveys/:survey_id/public_response(.:format)
   survey_public_response_path: function(_survey_id, options) {
   if (!options){ options = {}; }

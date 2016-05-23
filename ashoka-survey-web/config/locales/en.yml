@@ -147,7 +147,7 @@ en:
       status: Status
       users: Users
       end_date: End date
-
+      midline: "Midline Survey"
 
       survey_dashboard: "Dashboard"
     share:
@@ -274,6 +274,7 @@ en:
         copied: "(Copy)"
         archive: "(Archived)"
         crowd_source: 'Crowd source'
+        midline: "(Midline)"
 
       question:
         content: "Content"

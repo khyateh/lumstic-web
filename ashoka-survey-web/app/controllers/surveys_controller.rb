@@ -64,14 +64,20 @@ class SurveysController < ApplicationController
   def report
     @survey = SurveyDecorator.find(params[:id])
     responses = Response.accessible_by(current_ability)
-    @date_range_start = params[:from] || -9000.days.from_now
-    @date_range_end =  params[:to] || 9000.days.from_now
+    @date_range_start = params[:from] || -1.days.from_now
+    @date_range_end =  params[:to] || 1.days.from_now
     # responses = Response.accessible_by(current_ability).first
     # @complete_responses_count = responses.where(:status => 'complete',:blank => false).count
     @complete_responses_count = @survey.complete_responses_count(current_ability)
     @markers = @survey.responses.where(:status => "complete").to_gmaps4rails
   end
-
+  
+  def midline
+   @survey = Survey.find(params[:survey_id])   
+   job = @survey.delay(:queue => 'survey_duplication').duplicate(:organization_id => current_user_org, :parent_id => @survey.id, :retainName => true)
+   redirect_to surveys_path + '?filter=drafts'
+  end
+ 
   private
 
   def redirect_to_https

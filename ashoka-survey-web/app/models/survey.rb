@@ -89,7 +89,12 @@ class Survey < ActiveRecord::Base
       survey = self.dup
       survey.finalized = false
       survey.archived = false
+      if options[:retainName] 
+        survey.name += "#{name}  #{I18n.t('activerecord.attributes.survey.midline')}"
+      else
       survey.name = "#{name}  #{I18n.t('activerecord.attributes.survey.copied')}"
+      end
+      
       survey.organization_id = options[:organization_id] if options[:organization_id]
       survey.public = false
       survey.auth_key = nil

@@ -24,6 +24,9 @@
         <li>
           <%= link_to icon_for('icon-bolt', t('surveys.index.archive')), survey_archive_path(survey.id), :class => "archive Btn nrmlBtn", :method => :put if can? :archive, survey %>
         </li>
+        <li>
+          <%= link_to icon_for('icon-magnet', t('surveys.index.midline')), survey_midline_path(survey.id), :class => "Btn nrmlBtn", :method => :get if can? :archive, survey %>
+        </li>
     <% else %>
         <li>
           <%= link_to icon_for('icon-ok', t('surveys.index.finalize')), survey_finalize_path(survey.id), :method => :put, :data => { :confirm => t("surveys.confirm_finalize") }, :class => "Btn nrmlBtn"  if can? :finalize, survey %>
