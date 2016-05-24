@@ -42,7 +42,9 @@ gem 'gon', '~> 4.1.1'
 gem 'actionview'
 gem 'activejob'
 gem 'protected_attributes'
-
+gem 'minitest'
+gem 'test-unit'
+gem 'responders', '~> 2.0'
 
 group :production do
   gem 'ey_config', '~> 0.0.6'

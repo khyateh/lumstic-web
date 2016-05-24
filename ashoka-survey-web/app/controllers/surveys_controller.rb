@@ -73,8 +73,10 @@ class SurveysController < ApplicationController
   end
   
   def midline
-   @survey = Survey.find(params[:survey_id])   
+   @survey = Survey.find(params[:survey_id])
+   flash[:notice] = t "flash.midline_created"
    job = @survey.delay(:queue => 'survey_duplication').duplicate(:organization_id => current_user_org, :parent_id => @survey.id, :retainName => true)
+   delay 10
    redirect_to surveys_path + '?filter=drafts'
   end
  

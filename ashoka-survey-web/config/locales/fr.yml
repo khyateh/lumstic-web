@@ -15,6 +15,7 @@ fr:
   flash:
     survey_created: "Enquête créé avec succès"
     survey_deleted: "Enquête supprimé"
+    midline_created: "fr Creating midline survey. Please check the draft survey list to find the midline survey, in a short while"
     survey_finalized: "%{survey_name} a été publié"
     response_to_draft_survey: "Impossible d'ajouter la réponse. %{survey_name} n'est pas publié."
     response_to_expired_survey: "Can't add response. %{survey_name} is past its expiry date."

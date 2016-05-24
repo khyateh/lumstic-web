@@ -18,6 +18,7 @@ en:
   flash:
     survey_created: "Survey created successfully"
     survey_deleted: "Survey deleted"
+    midline_created: "Creating midline survey. Please check the draft survey list to find the midline survey, in a short while"
     survey_finalized: "%{survey_name} has been finalized"
     response_to_draft_survey: "Can't add response. %{survey_name} is not finalized."
     response_to_expired_survey: "Can't add response. %{survey_name} is past its expiry date."
