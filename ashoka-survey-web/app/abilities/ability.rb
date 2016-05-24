@@ -57,7 +57,8 @@ class Ability
   
   def can_perform_on_own_and_shared_response(action)
     can action, Response, sql_for_own_and_shared_response do |survey|
-      survey.organization_id == @user_info[:org_id] || survey.participating_organizations.find_by_organization_id(@user_info[:org_id])
+      (survey.organization_id == @user_info[:org_id])  
+      #|| (participating_organizations.survey_id == survey.id && participating_organizations.find_by_organization_id(@user_info[:org_id]) == survey.organization_id)
     end
   end
 
@@ -65,7 +66,7 @@ class Ability
 
   def sql_for_own_and_shared_response
     [
-        'survey_id in (SELECT "surveys".id FROM "surveys"
+        'responses.survey_id in (SELECT "surveys".id FROM "surveys"
       LEFT OUTER JOIN participating_organizations ON participating_organizations.survey_id = surveys.id
       WHERE (surveys.organization_id = ? OR participating_organizations.organization_id = ?))',
         @user_info[:org_id], @user_info[:org_id]

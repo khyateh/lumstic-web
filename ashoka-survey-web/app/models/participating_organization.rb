@@ -1,6 +1,6 @@
 class ParticipatingOrganization < ActiveRecord::Base
   attr_accessible :organization_id, :survey_id
-  belongs_to :survey
+  belongs_to :survey 
   validates_uniqueness_of :organization_id, :scope => :survey_id
   validates_presence_of :organization_id, :survey_id
   validate :survey_must_be_finalized
