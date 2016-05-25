@@ -3,8 +3,7 @@ SurveyBuilder.Views.Questions ||= {}
 #  The settings of a single option in the settings pane
 class SurveyBuilder.Views.Questions.OptionView extends Backbone.View
   initialize: (@model, @template, @survey_frozen, options) =>
-    this.options = options
-    alert "initialize"
+    this.options = options    
     this.sub_questions = []
     this.model.on('change:errors', this.render, this)
     this.model.on('change:id', this.render, this)
@@ -33,15 +32,15 @@ class SurveyBuilder.Views.Questions.OptionView extends Backbone.View
   delete: =>
     this.model.destroy()
 
-  add_sub_question_model: (event) =>
+  add_sub_question_model: (event) =>    
     type = $(event.target).prev().val()
     this.model.add_sub_question(type)
 
-  add_sub_category_model: (event) =>
+  add_sub_category_model: (event) =>    
     type = $(event.target).data('type')
     this.model.add_sub_question(type)
 
-  add_sub_question: (sub_question_model) =>
+  add_sub_question: (sub_question_model) =>   
     window.loading_overlay.show_overlay()
     $(this.el).bind('ajaxStop.new_question', =>
       window.loading_overlay.hide_overlay()

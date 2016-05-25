@@ -42,8 +42,8 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
     # group.append("<p class='sub_question_group_message'> #{I18n.t('js.questions_for')} #{option.model.get('content')}</p>")
     _(this.sub_questions).each (sub_question) =>
       x = sub_question.render().el
-      $(x).find('input[type=text').addClass('nested-question')
-      $(x).find('input[type=number').addClass('nested-question')
+      $(x).find('input[type=text]').addClass('nested-question')
+      $(x).find('input[type=number]').addClass('nested-question')
       group.append(x)
     
     $(@el).append(group) unless _(this.sub_questions).isEmpty()

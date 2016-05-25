@@ -26,7 +26,6 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
     })
 
     $(this.el).bind('ajaxStop.preload', =>
-    console.log('Here1')
       window.loading_overlay.hide_overlay()
       $(this.el).unbind('ajaxStop.preload')
       this.dummy_pane.sort_question_views_by_order_number()

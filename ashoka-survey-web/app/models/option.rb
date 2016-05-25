@@ -13,8 +13,14 @@ class Option < ActiveRecord::Base
   scope :ascending, lambda { where(:order_number => "order_number ASC")} 
 
   before_destroy do |option|
-    return if option.survey_marked_for_deletion?
-    !option.finalized?
+   # return if option.survey_marked_for_deletion?
+   # !option.finalized?
+    
+    ret_val = !option.finalized? 
+    if option.survey_marked_for_deletion?
+     ret_val = true
+    end
+    ret_val
   end
 
   def duplicate(survey_id)
