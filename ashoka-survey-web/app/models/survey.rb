@@ -15,7 +15,7 @@ class Survey < ActiveRecord::Base
   belongs_to :parent_surveys, class_name: 'Survey'
   has_many :surveys, class_name: 'Survey', foreign_key: :parent_id
 
-  has_many :respondents, ->{ where("user_id = ?", Thread.current[:current_user]) }
+  has_many :respondents, ->{ where("user_id = ?", Thread.current[:survey_current_user]) }
 
   scope :finalized, lambda { where(:finalized => true)}
   #scope :none, lambda { limit(0) }
@@ -33,14 +33,6 @@ class Survey < ActiveRecord::Base
 
   attr_accessible :name, :expiry_date, :description, :questions_attributes, :finalized, :public, :parent_id
   accepts_nested_attributes_for :questions
-
-  def self.current_user=(usr)
-    Thread.current[:current_user] = usr
-  end
-
-  def respondent
-    respondents.where('user_id=?',10)
-  end
 
   def self.active
     where(active_arel)
