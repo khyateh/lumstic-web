@@ -92,7 +92,6 @@ namespace :api, :defaults => {:format => 'json'} do
       member { put "image_upload" }
       collection { get 'count' }
     end
-    resources :respondents
   end
 end
 end
