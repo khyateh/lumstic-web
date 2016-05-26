@@ -13,10 +13,10 @@ class PublicationsController < ApplicationController
     partitioned_organizations = @survey.partitioned_organizations(access_token)
     @shared_organizations = partitioned_organizations[:participating]
     @unshared_organizations = partitioned_organizations[:not_participating]
+    create_respondents_list    
   end
 
   def update
-  logger.debug 'In Update : ' + params[:survey_id]
     survey = Survey.find(params[:survey_id])
     authorize! :update_publication, survey
     publisher = Publisher.new(survey, access_token, params[:survey])
@@ -61,4 +61,37 @@ class PublicationsController < ApplicationController
       flash[:error] = t "flash.publish_draft_survey"
     end
   end
+  
+  private
+  def create_respondents_list
+   if @survey.parent_id && !@survey.published_on
+     #Retrieve the reponses from the existing survey and create respondents list
+      results = ActiveRecord::Base.connection.execute(create_respondents_list_sql)
+      puts results
+   end
+  end
+  
+  def create_respondents_list_sql
+   "insert into respondents (survey_id, response_id, organization_id, user_id, location, created_at,updated_at, respondent_json)
+    (select #{@survey.id}, t1.id, t1.organization_id as organization_id, t1.user_id, t1.location, current_timestamp,current_timestamp, row_to_json(t1)
+    from (  select sur.id as survey_id, res.id as id, res.organization_id as organization_id, res.user_id, res.location,
+    ( select array_to_json(array_agg(row_to_json(t))) 
+    from
+    (select q.id as Question_id,  q.type as Question_type,
+    r.location as Location, a.content as Answer_content
+    from surveys s 
+    inner join questions q on q.survey_id = s.id
+    inner join answers a on a.question_id = q.id
+    inner join responses r on s.id = r.survey_id
+    where
+    q.identifier = true and s.marked_for_deletion = false and
+    r.organization_id =res.organization_id and s.id=sur.id
+    order by q.order_number, r.id ) t) as identifiers
+    from surveys sur
+    inner join
+    responses res on sur.id=res.survey_id and res.organization_id=sur.organization_id
+    where sur.id = #{@survey.parent_id}
+    ) t1)"
+  end
+   
 end

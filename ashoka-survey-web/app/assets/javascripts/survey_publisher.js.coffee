@@ -1,6 +1,7 @@
 class SurveyApp.SurveyPublisher
   constructor: (@container) ->
     @crowd_source_toggle = @container.find(".crowd-source-toggle")
+    @auto-allocate_toggle = @container.find(".auto-allocate-toggle")
     @thank_you_message_container = @container.find(".thank-you-message")
     @expiry_date = @container.find(".expiry-date")
     @initialize()

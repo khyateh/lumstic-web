@@ -15,7 +15,7 @@ class SurveyBuilder.Views.PickerPaneView extends Backbone.View
     'click #add_multi_record_category': 'add_multi_record_category'
 
   initialize: (@survey_frozen) =>
-
+  console.log('Pickerpane : Is Frozen ' + @survey_frozen)
   add_radio_question: =>
     $(this.el).trigger('new_question', { type: 'RadioQuestion' }) if @confirm_if_frozen()
 
@@ -49,6 +49,9 @@ class SurveyBuilder.Views.PickerPaneView extends Backbone.View
   add_multi_record_category: =>
     $(this.el).trigger('new_question', { type: 'MultiRecordCategory' }) if @confirm_if_frozen()
 
+  set_if_frozen: (is_frozen) =>
+    @survey_frozen = is_frozen
+  
   confirm_if_frozen: =>
     $('.question-types').removeClass('show');
     if @survey_frozen then confirm(I18n.t('js.confirm_add_question_to_finalized_survey')) else true

@@ -13,6 +13,7 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
 
   initialize:(survey_id, @survey_frozen) =>
     this.picker_pane   = new SurveyBuilder.Views.PickerPaneView(survey_frozen)
+    this.picker_pane.set_if_frozen(survey_frozen) 
     this.survey        = new SurveyBuilder.Models.SurveyModel(survey_id)
     this.settings_pane = new SurveyBuilder.Views.SettingsPaneView(this.survey, survey_frozen)
     this.dummy_pane    = new SurveyBuilder.Views.DummyPaneView(this.survey, survey_frozen)

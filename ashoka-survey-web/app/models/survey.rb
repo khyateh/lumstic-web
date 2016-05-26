@@ -96,8 +96,10 @@ class Survey < ActiveRecord::Base
       else
       survey.name = "#{name}  #{I18n.t('activerecord.attributes.survey.copied')}"
       end
-      
       survey.organization_id = options[:organization_id] if options[:organization_id]
+      puts 'Parent Id'
+      puts options[:parent_id]
+      survey.parent_id = options[:parent_id] if options[:parent_id]
       survey.public = false
       survey.auth_key = nil
       survey.published_on = nil

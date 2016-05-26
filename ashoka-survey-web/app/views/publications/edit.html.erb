@@ -16,6 +16,16 @@
         </div>
         <div class="clear"></div>
       </div>
+      <% if @survey.parent_id %>
+      <div class="publish-to-users">
+          <fieldset>
+            <legend>Choose Publish option:</legend>
+            <p>The survey has been auto allocated to users based on the previous responses. Please click below to change the allocation manually</p>
+               
+          </fieldset>
+      </div>
+      <% else %>
+      <!-- Baseline Publish -->
       <div class="select-crowsource">
           
         <%= f.check_box :public, :class => "regular-checkbox crowd-source-toggle" , :id => "survey_public" , :input_html => { :value => @survey.public } %>
@@ -28,6 +38,8 @@
         </div>
         <div class="clear"></div>
       </div>
+      
+       <% end %>
       <div class="publish-to-users">
         <% if @published_users.present? %>
           <div class="list-of-published-users">
@@ -99,6 +111,9 @@
           <% end %>
         </div>
       <% end %>
+      
+     
+      <!-- Baseline Survey End -->
       <%= f.actions do %>
         <ul class="unpublish-survey-button">
           <%= f.action :submit, :as => :button , :label => t('.publish_survey') , :button_html => {:class => "Btn colrBtn"}%>
