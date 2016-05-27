@@ -11,6 +11,9 @@ class SurveysController < ApplicationController
 
   def index
     @surveys ||= Survey.none
+    #@surveys.each do |sur|
+    #  sur.midline_surveys.all      
+    #end
     filtered_surveys = SurveyFilter.new(@surveys, params[:filter]).filter
     paginated_surveys = filtered_surveys.most_recent.paginate(:page => params[:page], :per_page => 10)
     @surveys = paginated_surveys.decorate

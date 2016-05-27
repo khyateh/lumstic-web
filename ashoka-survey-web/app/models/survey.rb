@@ -12,7 +12,7 @@ class Survey < ActiveRecord::Base
   has_many :responses, :dependent => :destroy
   has_many :survey_users, :dependent => :destroy
   has_many :participating_organizations, :dependent => :destroy
-  belongs_to :parent_surveys, class_name: 'Survey'
+  belongs_to :parent_survey, class_name: 'Survey', foreign_key: :parent_id
   has_many :midline_surveys, class_name: 'Survey', foreign_key: :parent_id
 
   has_many :respondents, ->{ where("user_id = ?", Thread.current[:survey_current_user]) }

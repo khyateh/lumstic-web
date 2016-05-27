@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526060908) do
+ActiveRecord::Schema.define(version: 20160527094858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,22 +103,23 @@ ActiveRecord::Schema.define(version: 20160526060908) do
   create_table "questions", force: :cascade do |t|
     t.text     "content"
     t.integer  "survey_id"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.boolean  "mandatory",                    default: false
-    t.integer  "max_length",         limit: 8
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.boolean  "mandatory",                      default: false
+    t.integer  "max_length",           limit: 8
     t.string   "type"
-    t.integer  "max_value",          limit: 8
+    t.integer  "max_value",            limit: 8
     t.integer  "min_value"
     t.integer  "order_number"
     t.integer  "parent_id"
-    t.boolean  "identifier",                   default: false
+    t.boolean  "identifier",                     default: false
     t.integer  "category_id"
     t.string   "image"
     t.string   "photo_secure_token"
-    t.boolean  "private",                      default: false
-    t.boolean  "finalized",                    default: false
+    t.boolean  "private",                        default: false
+    t.boolean  "finalized",                      default: false
     t.integer  "photo_file_size"
+    t.integer  "original_question_id"
   end
 
   add_index "questions", ["survey_id"], name: "index_questions_on_survey_id", using: :btree

@@ -81,7 +81,7 @@ class PublicationsController < ApplicationController
     r.location as Location, a.content as Answer_content
     from surveys s 
     inner join questions q on q.survey_id = s.id
-    inner join answers a on a.question_id = q.id
+    inner join answers a on a.question_id = q.original_question_id
     inner join responses r on s.id = r.survey_id
     where
     q.identifier = true and s.marked_for_deletion = false and
