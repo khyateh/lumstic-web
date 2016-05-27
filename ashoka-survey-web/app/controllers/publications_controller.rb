@@ -73,26 +73,26 @@ class PublicationsController < ApplicationController
   
   def create_respondents_list_sql
    "insert into respondents (survey_id, response_id, organization_id, user_id, location, created_at,updated_at, respondent_json)
-    (select #{@survey.id}, t1.id, t1.organization_id as organization_id, t1.user_id, t1.location, current_timestamp,current_timestamp, row_to_json(t1)
+    (select t1.survey_id, t1.id, t1.organization_id as organization_id, t1.user_id, t1.location, current_timestamp,current_timestamp, row_to_json(t1)
     from (  select sur.id as survey_id, res.id as id, res.organization_id as organization_id, res.user_id, res.location,
     ( select array_to_json(array_agg(row_to_json(t))) 
     from
     (select q.id as Question_id,  q.type as Question_type,
     r.location as Location, a.content as Answer_content
     from surveys s 
-    inner join questions q on q.survey_id = s.id
-    inner join answers a on a.question_id = q.original_question_id
-    inner join responses r on s.id = r.survey_id
+    inner join questions q on q.survey_id = s.id    
+    inner join responses r on s.parent_id = r.survey_id
+    inner join answers a on a.question_id = q.original_question_id and a.response_id = r.id
     where
-    q.identifier = true and s.marked_for_deletion = false and
+    q.identifier = true and r.status='complete' and
     r.organization_id =res.organization_id and s.id=sur.id
     order by q.order_number, r.id ) t) as identifiers
     from surveys sur
     inner join
-    responses res on sur.id=res.survey_id and res.organization_id=sur.organization_id
+    responses res on sur.parent_id=res.survey_id and res.organization_id=sur.organization_id
     where 
-    not exists (select id from respondents where survey_id = #{@survey.id} and response_id = res.id)
-    and sur.id = #{@survey.parent_id}
+    not exists (select id from respondents where survey_id = sur.id and response_id = res.id)
+    and sur.id = #{@survey.id}
     ) t1)"
   end
    
