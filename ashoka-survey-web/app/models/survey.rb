@@ -13,7 +13,7 @@ class Survey < ActiveRecord::Base
   has_many :survey_users, :dependent => :destroy
   has_many :participating_organizations, :dependent => :destroy
   belongs_to :parent_surveys, class_name: 'Survey'
-  has_many :surveys, class_name: 'Survey', foreign_key: :parent_id
+  has_many :midline_surveys, class_name: 'Survey', foreign_key: :parent_id
 
   has_many :respondents, ->{ where("user_id = ?", Thread.current[:survey_current_user]) }
 
@@ -92,9 +92,9 @@ class Survey < ActiveRecord::Base
       survey.finalized = false
       survey.archived = false
       if options[:retainName] 
-        survey.name += "#{name}  #{I18n.t('activerecord.attributes.survey.midline')}"
+        survey.name = "#{name}  #{I18n.t('activerecord.attributes.survey.midline')}"
       else
-      survey.name = "#{name}  #{I18n.t('activerecord.attributes.survey.copied')}"
+        survey.name = "#{name}  #{I18n.t('activerecord.attributes.survey.copied')}"
       end
       survey.organization_id = options[:organization_id] if options[:organization_id]
       puts 'Parent Id'

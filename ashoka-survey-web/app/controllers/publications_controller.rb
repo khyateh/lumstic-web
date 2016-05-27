@@ -90,7 +90,9 @@ class PublicationsController < ApplicationController
     from surveys sur
     inner join
     responses res on sur.id=res.survey_id and res.organization_id=sur.organization_id
-    where sur.id = #{@survey.parent_id}
+    where 
+    not exists (select id from respondents where survey_id = #{@survey.id} and response_id = res.id)
+    and sur.id = #{@survey.parent_id}
     ) t1)"
   end
    
