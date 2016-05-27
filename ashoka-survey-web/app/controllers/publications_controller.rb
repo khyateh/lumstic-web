@@ -86,7 +86,7 @@ class PublicationsController < ApplicationController
     where
     q.identifier = true and r.status='complete' and
     r.organization_id =res.organization_id and s.id=sur.id
-    order by q.order_number, r.id ) t) as identifiers
+    order by r.id ) t) as identifiers
     from surveys sur
     inner join
     responses res on sur.parent_id=res.survey_id and res.organization_id=sur.organization_id
