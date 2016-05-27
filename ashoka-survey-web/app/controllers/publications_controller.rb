@@ -85,7 +85,7 @@ class PublicationsController < ApplicationController
     inner join answers a on a.question_id = q.original_question_id and a.response_id = r.id
     where
     q.identifier = true and r.status='complete' and
-    r.organization_id =res.organization_id and s.id=sur.id
+    r.organization_id =res.organization_id and s.id=sur.id and r.id = res.id
     order by r.id ) t) as identifiers
     from surveys sur
     inner join
