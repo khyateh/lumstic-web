@@ -10,6 +10,7 @@
   <div id="publish_survey">
     <%= semantic_form_for @survey, :url => survey_publication_path(@survey.id), :method => :put do |f| %>
       <div class="survey_publish_heading">
+       <%= f.hidden_field :survey_id, :value => @survey.id %>
         <h5 class="left"><%= @survey.name %></h5>
         <div class="survey_expiryDate">
           <%= f.input :expiry_date, :as => :string, :required => false, :input_html => { :value => @survey.expiry_date, :class => 'expiry-date' } %>
@@ -21,9 +22,24 @@
           <fieldset>
             <legend>Choose Publish option:</legend>
             <p>The survey has been auto allocated to users based on the previous responses. Please click below to change the allocation manually</p>
-               
+              <div class="unpublish-survey-button">
+                <%= link_to 'Allocate Manually', respondents_path(:survey_id => @survey.id), :class => "Btn colrBtn", :method => :get %>
+              </div>
+            <div class="clear"></div>
+        
           </fieldset>
       </div>
+      
+      <div>
+      
+      
+      </div>   
+      
+      
+      
+      
+      
+      <!-- End of Midline  ------------- -->
       <% else %>
       <!-- Baseline Publish -->
       <div class="select-crowsource">

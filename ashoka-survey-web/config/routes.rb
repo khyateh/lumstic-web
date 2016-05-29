@@ -23,6 +23,7 @@ SurveyWeb::Application.routes.draw do
     resources :dashboard, :only => [:index, :show], :controller => 'survey_dashboard'
     resource :publication, :only => [:update, :edit, :destroy] do
       get 'unpublish'
+      post 'allocate'
     end
     member do
       get  "report"

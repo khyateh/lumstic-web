@@ -3,6 +3,10 @@ class PublicationsController < ApplicationController
 
   after_filter :only => [:destroy] { send_to_mixpanel("Survey unpublished", { :survey => @survey.name}) if @survey.present? }
 
+  def allocate
+   redirect_to respondents_path, params[:survey_id] => @survey.id
+  end
+
   def edit
     @survey = Survey.find(params[:survey_id]).decorate
     authorize! :edit_publication, @survey
@@ -18,15 +22,20 @@ class PublicationsController < ApplicationController
 
   def update
     survey = Survey.find(params[:survey_id])
-    authorize! :update_publication, survey
-    publisher = Publisher.new(survey, access_token, params[:survey])
-    if publisher.publish(:organization_id => current_user_org)
-      flash[:notice] = t "flash.survey_published", :survey_name => survey.name
-      send_to_mixpanel("Survey published", { :survey => survey.name })
-      redirect_to surveys_path
+    
+    if params[:commit] == "allocate"
+      return redirect_to 'respondents', params[:survey_id] => survey.id
     else
-      flash[:error] = publisher.errors.full_messages.join(', ')
-      redirect_to(:back)
+      authorize! :update_publication, survey
+      publisher = Publisher.new(survey, access_token, params[:survey])
+      if publisher.publish(:organization_id => current_user_org)
+        flash[:notice] = t "flash.survey_published", :survey_name => survey.name
+        send_to_mixpanel("Survey published", { :survey => survey.name })
+        redirect_to surveys_path
+      else
+        flash[:error] = publisher.errors.full_messages.join(', ')
+        redirect_to(:back)
+      end
     end
   end
 
@@ -51,7 +60,8 @@ class PublicationsController < ApplicationController
     redirect_to surveys_path
     flash[:notice] = "Unpublished users successfully"
   end
-
+  
+  
   private
 
   def require_finalized_survey
@@ -66,8 +76,7 @@ class PublicationsController < ApplicationController
   def create_respondents_list
    if @survey.parent_id && !@survey.published_on
      #Retrieve the reponses from the existing survey and create respondents list
-      results = ActiveRecord::Base.connection.execute(create_respondents_list_sql)
-      puts results
+      results = ActiveRecord::Base.connection.execute(create_respondents_list_sql)      
    end
   end
   
@@ -92,7 +101,7 @@ class PublicationsController < ApplicationController
     responses res on sur.parent_id=res.survey_id and res.organization_id=sur.organization_id
     where 
     not exists (select id from respondents where survey_id = sur.id and response_id = res.id)
-    and sur.id = #{@survey.id}
+    and sur.id = #{@survey.id} and res.status='complete'
     ) t1)"
   end
    

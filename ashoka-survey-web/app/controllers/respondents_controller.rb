@@ -1,9 +1,28 @@
+require 'will_paginate/array'
+require 'json'
+
+
 class RespondentsController < ApplicationController
   before_action :set_respondent, only: [:show, :edit, :update, :destroy]
 
   # GET /respondents
   def index
-    @respondents = Respondent.all
+   #filtered_surveys = SurveyFilter.new(@surveys, params[:filter]).filter
+   # paginated_surveys = filtered_surveys.most_recent.paginate(:page => params[:page], :per_page => 10)
+   # @surveys = paginated_surveys.decorate
+   # @paginated_surveys = paginated_surveys
+    
+    
+    @respondents = Respondent.where(:survey_id => params[:survey_id])
+    if @respondents.count > 0
+    @survey = Survey.find(params[:survey_id]).decorate
+    
+    authorize! :midline, @survey
+    @publishable_users = User.find_by_organization(access_token,@survey.organization_id) 
+    #@survey.users_for_organization(access_token, current_user_org)
+  
+    #@published_users = publishable_users[:published]
+    end
   end
 
   # GET /respondents/1
@@ -31,12 +50,14 @@ class RespondentsController < ApplicationController
   end
 
   # PATCH/PUT /respondents/1
+  respond_to :html, :json
   def update
-    if @respondent.update(respondent_params)
-      redirect_to @respondent, notice: 'Respondent was successfully updated.'
-    else
-      render :edit
-    end
+    @respondent = Respondent.find(params[:id])
+    #respond_with @respondent    
+    @respondent.update_attributes(params[:respondent])     
+    #redirect_to @respondent #, notice: 'Respondent was successfully updated.'
+    respond_with @respondent, :notice => 'User allocation successful' 
+    
   end
 
   # DELETE /respondents/1
@@ -53,6 +74,6 @@ class RespondentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def respondent_params
-      params.require(:respondent).permit(:survey_id, :user_id, :respondent_json)
+      params.permit(:survey_id, :user_id, :respondent_json)
     end
 end

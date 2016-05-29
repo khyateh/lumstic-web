@@ -58,4 +58,7 @@
 
 //= require mustache
 
+//= require best_in_place
+//= require best_in_place.jquery-ui
+
 var SurveyApp = {};

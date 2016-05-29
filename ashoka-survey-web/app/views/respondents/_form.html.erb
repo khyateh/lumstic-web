@@ -1,8 +1,18 @@
 <%= semantic_form_for @respondent do |f| %>
+ <%   user1 = @publishable_users.select {|user| user.id == respondent.user_id} 
+      j = JSON.parse(@respondent.respondent_json)
+      identifiers = j["identifiers"]                  
+     %>     
   <%= f.inputs do %>
-    <%= f.input :survey_id %>
-    <%= f.input :user_id %>
-    <%= f.input :respondent_json %>
+    <%= f.input :title, :as => :hidden, :input_html  => {:value => respondent.id} %>
+   
+    <div><% identifiers.each do |i| %>
+        <%= i["answer_content"]%>
+        <% end %>
+    </div>
+    <div>
+    <%= f.collection_select :respondent, :user_id, @publishable_users, :id, :name, prompt: true  %>
+    </div>
   <% end %>
 
   <%= f.actions do %>

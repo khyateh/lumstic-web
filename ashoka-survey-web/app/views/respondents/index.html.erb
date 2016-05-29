@@ -1,26 +1,52 @@
-<p id="notice"><%= notice %></p>
+<%# render "layouts/status_bar", :status => "collect" %>
+<!-- p id="notice"><%= notice %></p -->
+<style>
+.mousetoHand
+{
+color:#5B3C1D;
+font-family:Arial;
+font-size:12pt;
+cursor:pointer;
+text-decoration:none;
 
-<h1>Listing Respondents</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Survey</th>
-      <th>User</th>
-      <th>Respondent json</th>
-      <th colspan="3"></th>
+}
+</style>
+<div class="container">
+<div class="survey_publish_heading">Respondents for <b><%= @survey.name %></b></div>
+<br />
+<div class="survey_publish_heading">
+<table >
+  <thead >
+    <tr >
+      <th>Answers for identifier questions</th>
+      <th>Location</th>
+      <th>Users - Click on User to modify </th>      
     </tr>
   </thead>
 
   <tbody>
-    <% @respondents.each do |respondent| %>
-      <tr>
-        <td><%= respondent.survey_id %></td>
-        <td><%= respondent.user_id %></td>
-        <td><%= respondent.respondent_json %></td>
-        <td><%= link_to 'Show', respondent %></td>
-        <td><%= link_to 'Edit', edit_respondent_path(respondent) %></td>
-        <td><%= link_to 'Destroy', respondent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  
+    <% @respondents.find_each do |respondent| 
+      @user1 = @publishable_users.select {|user| user.id == respondent.user_id} 
+      j = JSON.parse(respondent.respondent_json)
+      identifiers = j["identifiers"] #.map{ |answers| answers["answer_content"]}
+      #identifiers = JSON.decode(respondent.respondent_json)["identifiers"].map { |answers| answers["answer_content"] }           
+     %>      
+          
+      <tr align="center">
+        <td> <% identifiers.each do |i| %>
+        <%= i["answer_content"]%>
+        <% end %>
+        </td>
+        <td>
+        <%= j["location"] %>
+       
+        </td>
+        <td class="mousetoHand">        
+        <!-- %= @user1.map(&:name) % -->
+         <!-- %= best_in_place respondent, :id, :as => :hidden % -->
+         <%= best_in_place respondent, :user_id, as: :select, :class => 'mousetoHand' , :collection => @publishable_users.map {|u| [u.id, u.name]} %>        
+        </td>        
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +54,17 @@
 
 <br>
 
-<%= link_to 'New Respondent', new_respondent_path %>
+</div>
+<div class="unpublish-survey-button">
+<%= button_to  'Back to Publish', edit_survey_publication_path(survey_id: @survey.id), class: 'unpublish-survey-button', method: :get %>
+</div>
+</div>
+
+<script language="javascript">
+$(document).ready(function() {
+  /* Activating Best In Place */
+  jQuery(".best_in_place").best_in_place();
+}); 
+
+
+</script>
