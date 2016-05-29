@@ -23,8 +23,7 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
   is_dirty: =>
     @dirty
 
-  save_model: =>    
-    console.log(@sub_question_models)
+  save_model: =>
     this.save({}, {error: this.error_callback, success: this.success_callback}) if @is_dirty()
     for sub_question_model in @sub_question_models
       sub_question_model.save_model()
@@ -60,7 +59,7 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
     window.questions_models.push sub_question_model
     @sub_question_models.push sub_question_model
     sub_question_model.on('destroy', this.delete_sub_question, this)
-    @set_question_number_for_sub_question(sub_question_model)   
+    @set_question_number_for_sub_question(sub_question_model)
     sub_question_model.save_model()
     this.trigger('add:sub_question', sub_question_model)
 

@@ -34,9 +34,12 @@ text-decoration:none;
      %>      
           
       <tr align="center">
-        <td> <% identifiers.each do |i| %>
+        <td> <%if identifiers  
+        identifiers.each do |i| %>
         <%= i["answer_content"]%>
-        <% end %>
+        <% end 
+        end
+        %>
         </td>
         <td>
         <%= j["location"] %>
