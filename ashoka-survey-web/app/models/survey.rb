@@ -44,7 +44,7 @@ class Survey < ActiveRecord::Base
   end
 
   def self.active_plus(extras)
-    where(active_arel.or(extra_arel(extras)))
+    where(active_arel_mobile.or(extra_arel(extras)))
   end
 
   def finalize
@@ -235,6 +235,15 @@ class Survey < ActiveRecord::Base
       and(survey[:finalized].eq(true)).
       and(survey[:archived].eq(false)).
       and(survey[:parent_id].eq(nil))
+    )
+  end
+    
+  def self.active_arel_mobile
+  survey = Survey.arel_table
+    (
+      survey[:expiry_date].gteq(Date.today).
+      and(survey[:finalized].eq(true)).
+      and(survey[:archived].eq(false))
     )
   end
   
