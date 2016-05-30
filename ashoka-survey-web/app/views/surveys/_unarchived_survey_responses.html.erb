@@ -1,6 +1,9 @@
     <li>
-      <%= link_to icon_for('icon-plus-sign', t('surveys.index.add_response')), survey.public_url, :method => :post, :class => survey.class_for_disabled + " Btn nrmlBtn" if can?(:create, Response.new(:survey => survey)) && !survey.expired? %>
+      <%= link_to t("Responses"), survey_responses_path(survey.id), :class => "Btn nrmlBtn"  if can?(:read, survey) %>
     </li>
+    <li>
+      <%= link_to icon_for('icon-plus-sign', t('surveys.index.add_response')), survey.public_url, :method => :post, :class => survey.class_for_disabled + " Btn nrmlBtn" if can?(:create, Response.new(:survey => survey)) && !survey.expired? %>
+    </li>    
     <li>
       <%= link_to icon_for('icon-paste', t('surveys.index.crowd_source')), "#", :class => "#{survey.class_for_disabled} copy_public_link Btn nrmlBtn", :data => { :public_link => survey.public_url } if can?(:read, survey) && survey.public? %>
     </li>
@@ -13,7 +16,7 @@
     <li>
       <%= link_to icon_for('icon-copy', t('surveys.index.duplicate')), "javascript:void(0);", :class => "duplicate Btn nrmlBtn", :data => { :survey_id => survey.id } if can? :duplicate, survey %>
     </li>
-
+    
     <% if survey.finalized? %>
         <li>
           <%= link_to icon_for('icon-arrow-up', t('surveys.index.publish')), edit_survey_publication_path(survey.id) , :class => "Btn nrmlBtn" if can? :edit_publication, survey %>
