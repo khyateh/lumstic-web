@@ -67,8 +67,17 @@ class SurveysController < ApplicationController
   def report
     @survey = SurveyDecorator.find(params[:id])
     responses = Response.accessible_by(current_ability)
-    @date_range_start = params[:from] || -100.days.from_now
-    @date_range_end =  params[:to] || 1.days.from_now
+    start_date = params[:from]
+    end_date = params[:to]
+    if start_date == "" 
+      start_date = nil
+    end
+    if end_date == "" 
+      end_date=nil
+    end
+    
+    @date_range_start = start_date || -100.days.from_now
+    @date_range_end = end_date || 1.days.from_now
     # responses = Response.accessible_by(current_ability).first
     # @complete_responses_count = responses.where(:status => 'complete',:blank => false).count
     @complete_responses_count = @survey.complete_responses_count(current_ability)

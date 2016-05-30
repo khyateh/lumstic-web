@@ -22,6 +22,7 @@ class Survey < ActiveRecord::Base
   scope :not_expired, lambda { where('expiry_date > ?', Date.today) }
   scope :expired, lambda { where('expiry_date < ?', Date.today) }
   scope :with_questions, lambda {joins(:questions)}
+  #scope :midline, lambda{where(:parent_id  && :finalized => true)}
   scope :drafts, lambda {where(:finalized => false)}
   scope :archived, lambda {where(:archived => true)}
   scope :unarchived, lambda {where(:archived => false)}
@@ -36,6 +37,10 @@ class Survey < ActiveRecord::Base
 
   def self.active
     where(active_arel)
+  end
+  
+  def self.midline
+   where(midline_arel)
   end
 
   def self.active_plus(extras)
@@ -228,7 +233,18 @@ class Survey < ActiveRecord::Base
     (
       survey[:expiry_date].gteq(Date.today).
       and(survey[:finalized].eq(true)).
-      and(survey[:archived].eq(false))
+      and(survey[:archived].eq(false)).
+      and(survey[:parent_id].eq(nil))
+    )
+  end
+  
+  def self.midline_arel
+    survey = Survey.arel_table
+    (
+      survey[:expiry_date].gteq(Date.today).
+      and(survey[:finalized].eq(true)).
+      and(survey[:archived].eq(false)).
+      and(survey[:parent_id].not_eq(nil))
     )
   end
 

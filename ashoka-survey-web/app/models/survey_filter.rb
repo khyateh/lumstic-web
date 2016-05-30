@@ -9,6 +9,8 @@ class SurveyFilter
     case survey_filter
     when "drafts"
       surveys.drafts
+    when "midline"
+      surveys.midline
     when "archived"
       surveys.archived
     when "expired"
