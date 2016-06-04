@@ -5,13 +5,22 @@ class Reports::Excel::Job < Struct.new(:excel_data)
   end
 
   def perform
+       #Zip::Archive.open(f.path, Zip::CREATE) do |ar|
+    
     Tempfile.open('excel', Rails.root.join('tmp')) do |f|
-      Zip::Archive.open(f.path, Zip::CREATE) do |ar|
-        ar.add_io(excel_data.file_name + ".xlsx", package.to_stream)
+      Zip::File.open(f.path, Zip::File::CREATE) do |ar|
+        ar.add_io(excel_data.file_name + ".xlsx", package.to_stream.read)
         ar.encrypt(excel_data.password)
-      end
+       end
+      #Tempfile.open(excel_data.file_name + ".xlsx", Rails.root.join('tmp')) do |f|
+        #f.binmode
+        #f.write package.to_stream.read
+        #f.rewind
+        #f.close        
+            
+      
       directory = aws_excel_directory
-      directory.files.create(:key => excel_data.file_name + ".zip", :body => f.open, :public => true)
+      directory.files.create(:key => excel_data.file_name + ".xlsx", :body => f.open, :public => true)
     end
   end
 
@@ -41,7 +50,7 @@ class Reports::Excel::Job < Struct.new(:excel_data)
           answers_row << excel_data.metadata.for(response)
           sheet.add_row answers_row.to_a, style: border
         end
-      end
+       end
     end
   end
 
@@ -50,7 +59,8 @@ class Reports::Excel::Job < Struct.new(:excel_data)
   end
 
   def error(job, exception)
-    Airbrake.notify(exception)
+    puts exception
+    #Airbrake.notify(exception)
   end
 
   private
@@ -59,6 +69,7 @@ class Reports::Excel::Job < Struct.new(:excel_data)
     connection = Fog::Storage.new(:provider => "AWS",
                                   :aws_secret_access_key => ENV['S3_SECRET'],
                                   :aws_access_key_id => ENV['S3_ACCESS_KEY'])
-    connection.directories.get('surveywebexcel')
+    connection.directories.get('surveywebdevelopmentassets')
+    #TODO - Replace with surveywebexcel for prod
   end
 end

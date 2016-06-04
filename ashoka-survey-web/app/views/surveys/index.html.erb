@@ -11,8 +11,8 @@
       <ul class="filters tab-links">
         <li><%= link_to t(".active"), surveys_path, :class => "#{'selected' unless params[:filter]}"%></li>
         <li><%= link_to t(".midline"), surveys_path(:filter => "midline"), :class => "#{'selected' if params[:filter] == "midline"}"%></li>
-        <li><%= link_to t(".expired"), surveys_path(:filter => "expired"), :class => "#{'selected' if params[:filter] == "expired"}" %></li>
         <li><%= link_to t(".drafts"), surveys_path(:filter => "drafts"), :class => "#{'selected' if params[:filter] == "drafts"}"%></li>
+        <li><%= link_to t(".expired"), surveys_path(:filter => "expired"), :class => "#{'selected' if params[:filter] == "expired"}" %></li>        
         <li><%= link_to t(".archived"), surveys_path(:filter => "archived"), :class => "#{'selected' if params[:filter] == "archived"}"%></li>
       </ul>
     </div>

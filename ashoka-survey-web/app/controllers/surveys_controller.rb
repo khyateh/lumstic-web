@@ -18,7 +18,7 @@ class SurveysController < ApplicationController
     paginated_surveys = filtered_surveys.most_recent.paginate(:page => params[:page], :per_page => 10)
     @surveys = paginated_surveys.decorate
     @paginated_surveys = paginated_surveys
-    @organizations = Organization.all(access_token)
+    @organizations = Organization.all(access_token)    
   end
 
   def destroy
@@ -31,7 +31,7 @@ class SurveysController < ApplicationController
   def create
     @survey = Survey.new(params[:survey])
     @survey.organization_id = current_user_org
-
+    @ismidline = false
     @survey.name ||= I18n.t('js.untitled_survey')
     @survey.expiry_date ||= 5.days.from_now
     @survey.description ||= "Description goes here"
@@ -41,13 +41,12 @@ class SurveysController < ApplicationController
     redirect_to survey_build_path(:survey_id => @survey.id)
   end
 
-  def build
-  logger.debug 'In Build : ' + params[:survey_id]
+  def build  
     @survey = SurveyDecorator.find(params[:survey_id])
+    @ismidline = @survey.parent_id ? true : false
   end
 
-  def finalize
-  logger.debug 'In Finalize : ' + params[:survey_id] 
+  def finalize   
     @survey = Survey.find(params[:survey_id])
     @survey.finalize
     flash[:notice] = t "flash.survey_finalized", :survey_name => @survey.name
@@ -88,7 +87,7 @@ class SurveysController < ApplicationController
    @survey = Survey.find(params[:survey_id])
    flash[:notice] = t "flash.midline_created"
    job = @survey.delay(:queue => 'survey_duplication').duplicate(:organization_id => current_user_org, :parent_id => @survey.id, :retainName => true)
-   delay 10
+   sleep 5
    redirect_to surveys_path + '?filter=drafts'
   end
  

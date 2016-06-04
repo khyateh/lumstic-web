@@ -6,12 +6,15 @@ class SurveyBuilder.Models.SurveyModel extends Backbone.RelationalModel
     @urlRoot = "/api/surveys"
     @set('id', survey_id)
     @update_question_count()
+    @lockFlag = false
 
   add_new_question_model: (type, element_attrs={}) =>
     question_model = SurveyBuilder.Views.QuestionFactory.model_for(_(element_attrs).extend({ type: type, survey_id: @survey_id }))
+    @getLock()
     @set_order_number_for_question(question_model)
-    @question_models.push question_model
-    @set_question_number_for_question(question_model)
+    @unlock()
+    @question_models.push question_model    
+    @set_question_number_for_question(question_model)    
     question_model.on('destroy', @delete_question_model, this)
     @update_question_count()
     question_model
@@ -21,7 +24,7 @@ class SurveyBuilder.Models.SurveyModel extends Backbone.RelationalModel
     _.max(@question_models, (question_model) =>
       question_model.get "order_number"
     ).get('order_number') + @ORDER_NUMBER_STEP
-
+    
   set_order_number_for_question: (question_model) =>
     question_model.set('order_number' : @next_order_number())
 
@@ -62,12 +65,22 @@ class SurveyBuilder.Models.SurveyModel extends Backbone.RelationalModel
     $(".clsass_main_questions").html(@question_models.length)
 
   finalize: =>
-    console.log('In finalize :')
     this.finalized = true
-    console.log(this)
     this.save_model()
   
   attr_accessible: =>
     [ "name", "description", "expiry_date", "organization_logo_url", "finalized"]
 
+  getLock: =>
+    while @lockFlag == true      
+      setTimeout {}, 2000  
+    @lock()
+    return true 
+  
+  unlock: =>
+    @lockFlag = false
+  
+  lock: =>    
+    @lockFlag = true
+         
 SurveyBuilder.Models.SurveyModel.setup()
