@@ -19,15 +19,15 @@ class Response < ActiveRecord::Base
   validates_presence_of :survey_id
   validates_presence_of :organization_id, :user_id, :unless => :survey_public?
   validates_associated :answers
-  before_save :geocode, :reverse_geocode, :on => :create
+#  before_save :geocode, :reverse_geocode, :on => :create
 
   delegate :to_json_with_answers_and_choices, :to => :response_serializer
   delegate :questions, :to => :survey
   delegate :public?, :to => :survey, :prefix => true, :allow_nil => true
 
-  reverse_geocoded_by :latitude, :longitude, :address => :location
-  geocoded_by :ip_address, :latitude => :latitude, :longitude => :longitude
-  acts_as_gmappable :lat => :latitude, :lng => :longitude, :check_process => false, :process_geocoding => false
+#reverse_geocoded_by :latitude, :longitude, :address => :location
+#geocoded_by :ip_address, :latitude => :latitude, :longitude => :longitude
+#acts_as_gmappable :lat => :latitude, :lng => :longitude, :check_process => false, :process_geocoding => false
 
   scope :earliest_first, lambda{order('updated_at')}
   scope :completed, lambda{where(:status => Status::COMPLETE)}
@@ -92,7 +92,8 @@ class Response < ActiveRecord::Base
         true
       end
     rescue ActiveRecord::RecordInvalid
-      false
+      puts $!
+	false
     end
   end
 

@@ -12,7 +12,7 @@ module Api::V1
         require 'json'
         @@body =  JSON.parse(request.body.read)
 	@@resp = @@body["response"]
-        @@resp["ip_address"]  = "0.0.0.0"
+        @@resp["ip_address"]  = request.remote_ip
     end
 
     def count
