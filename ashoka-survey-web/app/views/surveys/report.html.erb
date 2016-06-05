@@ -19,7 +19,7 @@
     function drawChart() {
       <% @survey.ordered_question_tree.each do |question| %>
         <%
-          # report_data = @survey.report_data_for(question)
+          #report_data = @survey.report_data_for(question)
           report_data = @survey.report_data_for_in_range(question , @date_range_start, @date_range_end)
           next if report_data.empty?
         %>
@@ -121,10 +121,10 @@
       to_date = $('#report_end_range').datepicker({ dateFormat: date_format });
 
       $('.go_btn').click(function(){
-        window.location = "http://www.lumstic.com/surveys/<%= @survey.id %>/report?from=" + from_date.val() + "&to=" + to_date.val();
+       window.location = "http://localhost:3000/surveys/<%= @survey.id %>/report?from=" + from_date.val() + "&to=" + to_date.val();
       });
       $('#show_all').click(function(){
-        window.location = "http://www.lumstic.com/surveys/<%= @survey.id %>/report";
+        window.location = "http://localhost:3000/surveys/<%= @survey.id %>/report?from=<%= -1000.days.from_now.strftime("%Y-%m-%d") %>&to=<%= 100.days.from_now.strftime("%Y-%m-%d") %>";
       });
 
 

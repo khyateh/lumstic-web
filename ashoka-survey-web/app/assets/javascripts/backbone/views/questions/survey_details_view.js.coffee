@@ -13,7 +13,6 @@ class SurveyBuilder.Views.Questions.SurveyDetailsView extends Backbone.View
   initialize:(options) =>
     this.options = options
     this.model.actual_view = this
-    console.log(this)
     @template = this.options.template
     this.model.on('change', this.render, this)
 

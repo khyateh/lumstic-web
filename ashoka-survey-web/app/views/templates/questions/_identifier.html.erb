@@ -1,7 +1,7 @@
 {{#allow_identifier}}
   <div class="checkbox">
     {{#identifier}}
-      <input type="checkbox" name="identifier" value="{{identifier}}" checked id="identifier{{id}}" class="regular-checkbox"></input>      
+      <input type="checkbox" name="identifier" value="{{identifier}}" checked id="identifier{{id}}" class="regular-checkbox" readonly=<%= @ismidline %>></input>      
     {{/identifier}}
     {{^identifier}}
       <input type="checkbox" name="identifier" value="{{identifier}}" id="identifier{{id}}" class="regular-checkbox"></input>

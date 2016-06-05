@@ -18,15 +18,16 @@ class Survey < ActiveRecord::Base
   has_many :respondents, ->{ where("user_id = ?", Thread.current[:survey_current_user]) }
 
   scope :finalized, lambda { where(:finalized => true)}
-  #scope :none, lambda { limit(0) }
+  # scope :none, lambda { limit(0) }
   scope :not_expired, lambda { where('expiry_date > ?', Date.today) }
   scope :expired, lambda { where('expiry_date < ?', Date.today) }
   scope :with_questions, lambda {joins(:questions)}
+  # scope :midline, lambda{where(:parent_id  && :finalized => true)}
   scope :drafts, lambda {where(:finalized => false)}
   scope :archived, lambda {where(:archived => true)}
   scope :unarchived, lambda {where(:archived => false)}
   scope :most_recent, lambda {order('published_on DESC NULLS LAST, created_at DESC')}
-  #scope :with_participating_organizations, lambda  {|org_Id| includes(:participating_organizations).where(:participating_organizations => {organization_id: org_Id})}
+  # scope :with_participating_organizations, lambda  {|org_Id| includes(:participating_organizations).where(:participating_organizations => {organization_id: org_Id})}
   scope :with_participating_organizations, lambda  { |orgId| joins(:participating_organizations).where(:participating_organizations => { organization_id: orgId } )}
 
   before_save :generate_auth_key, :if => Proc.new { |s| s.public? && s.auth_key.blank? }
@@ -37,9 +38,13 @@ class Survey < ActiveRecord::Base
   def self.active
     where(active_arel)
   end
+  
+  def self.midline
+   where(midline_arel)
+  end
 
   def self.active_plus(extras)
-    where(active_arel.or(extra_arel(extras)))
+    where(active_arel_mobile.or(extra_arel(extras)))
   end
 
   def finalize
@@ -228,7 +233,27 @@ class Survey < ActiveRecord::Base
     (
       survey[:expiry_date].gteq(Date.today).
       and(survey[:finalized].eq(true)).
+      and(survey[:archived].eq(false)).
+      and(survey[:parent_id].eq(nil))
+    )
+  end
+    
+  def self.active_arel_mobile
+  survey = Survey.arel_table
+    (
+      survey[:expiry_date].gteq(Date.today).
+      and(survey[:finalized].eq(true)).
       and(survey[:archived].eq(false))
+    )
+  end
+  
+  def self.midline_arel
+    survey = Survey.arel_table
+    (
+      survey[:expiry_date].gteq(Date.today).
+      and(survey[:finalized].eq(true)).
+      and(survey[:archived].eq(false)).
+      and(survey[:parent_id].not_eq(nil))
     )
   end
 

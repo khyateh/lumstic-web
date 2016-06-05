@@ -112,7 +112,8 @@ en:
       archived: "Archived"
       drafts: "Drafts"
       all: "All"
-      active: "Active"
+      active: "Baseline"
+      midline: "Midline"
       expired: "Expired"
       create_survey: "Create survey"
       delete: "Delete"
@@ -147,8 +148,7 @@ en:
       reports: Reports
       status: Status
       users: Users
-      end_date: End date
-      midline: "Midline Survey"
+      end_date: End date     
 
       survey_dashboard: "Dashboard"
     share:

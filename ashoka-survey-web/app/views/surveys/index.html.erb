@@ -10,8 +10,9 @@
     <div class="blue_tabs">
       <ul class="filters tab-links">
         <li><%= link_to t(".active"), surveys_path, :class => "#{'selected' unless params[:filter]}"%></li>
-        <li><%= link_to t(".expired"), surveys_path(:filter => "expired"), :class => "#{'selected' if params[:filter] == "expired"}" %></li>
+        <li><%= link_to t(".midline"), surveys_path(:filter => "midline"), :class => "#{'selected' if params[:filter] == "midline"}"%></li>
         <li><%= link_to t(".drafts"), surveys_path(:filter => "drafts"), :class => "#{'selected' if params[:filter] == "drafts"}"%></li>
+        <li><%= link_to t(".expired"), surveys_path(:filter => "expired"), :class => "#{'selected' if params[:filter] == "expired"}" %></li>        
         <li><%= link_to t(".archived"), surveys_path(:filter => "archived"), :class => "#{'selected' if params[:filter] == "archived"}"%></li>
       </ul>
     </div>
@@ -75,7 +76,7 @@
                 <div class="clear"></div>
                  <div class='survey-info'>
             <% survey.midline_surveys.each do |midline| %>
-            <div><%= link_to midline.name, surveys_path(:filter => "drafts"), :class => "survey_name" %></div>
+            <div style="background-color:#dddddd;">&nbsp;&nbsp;&nbsp;<%= link_to midline.name, surveys_path(:filter => "midline"), :class => "survey_name" %></div>
             <% end %>
                </div>
               </div>

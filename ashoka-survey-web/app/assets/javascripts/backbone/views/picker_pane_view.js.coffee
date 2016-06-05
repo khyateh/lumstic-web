@@ -15,7 +15,6 @@ class SurveyBuilder.Views.PickerPaneView extends Backbone.View
     'click #add_multi_record_category': 'add_multi_record_category'
 
   initialize: (@survey_frozen) =>
-  console.log('Pickerpane : Is Frozen ' + @survey_frozen)
   add_radio_question: =>
     $(this.el).trigger('new_question', { type: 'RadioQuestion' }) if @confirm_if_frozen()
 

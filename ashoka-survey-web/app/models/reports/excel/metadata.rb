@@ -27,7 +27,8 @@ class Reports::Excel::Metadata
   end
 
   def disable_filtering?
-    ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@options[:disable_filtering])
+    #ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@options[:disable_filtering])
+    ActiveRecord::Type::Boolean.new.type_cast_from_database(@options[:disable_filtering])
   end
 
   def user_name_for(id)

@@ -14,7 +14,8 @@ class Reports::Excel::Questions
   end
 
   def filter_private_questions(options = {})
-    disable_filtering = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(options[:disable_filtering])
+    #disable_filtering = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(options[:disable_filtering])
+    disable_filtering = ActiveRecord::Type::Boolean.new.type_cast_from_database(options[:disable_filtering])
     if disable_filtering
       @ability.authorize!(:change_excel_filters, @survey)
     else

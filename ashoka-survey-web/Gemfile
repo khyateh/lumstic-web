@@ -46,6 +46,8 @@ gem 'minitest'
 gem 'test-unit'
 gem 'responders', '~> 2.2.0'
 gem 'best_in_place', '~> 3.0.1'
+gem 'rubyzip', '~> 1.0.0'
+gem 'zip-zip' 
 
 group :production do
   gem 'ey_config', '~> 0.0.6'

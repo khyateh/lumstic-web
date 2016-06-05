@@ -16,12 +16,11 @@
   		<%= t("activerecord.attributes.question.mandatory") %> 
   	</label>
 </div>
-
 <div>
 	<label>
 		<%= t("activerecord.attributes.question.max_length") %> 
-	</label>
-	<input type="number" name="max_length" value="{{max_length}}"></input>
+	</label>	
+	<input type="number" name="max_length" value="{{max_length}}" readonly="<%=@ismidline %>" ></input>
 </div>
 
 <%= render "templates/questions/question_finalized_message" %>
