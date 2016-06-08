@@ -75,28 +75,32 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
     $("#sidebar").tabs('select', 1)
 
   finalize: =>
+    console.log('In Finalize')
     if confirm(I18n.t('surveys.confirm_finalize'))
+      @save_all_questions()
+      $("#finalize_hidden").click() unless this.survey.has_errors()
+    # else  
       $(this.el).bind "ajaxStop.finalize", =>
         $(this.el).unbind "ajaxStop.finalize"
-        $("#finalize_hidden").click() unless this.survey.has_errors()
-      @save_all_questions()
+        
+      
 
   save_all_questions: =>
     $(this.el).find("#save input").prop('disabled', true)
-    #console.log('Save not start')
+    # console.log('Save not start')
     window.loading_overlay.show_overlay()    
 
     # Delay so that the UI doesn't hang.
     _.delay(=>
-    #console.log('Save start')
+    # console.log('Save start')
     $(this.el).bind('ajaxStop.save', this.handle_save_finished)
     this.survey.save()
     this.survey.save_all_questions()   
-    console.log('Save done')
+    # console.log('Save done')
     , 10)
 
   handle_save_finished: =>
-    console.log('Save complete')
+    # console.log('Save complete')
     $(this.el).unbind('ajaxStart.save')
     $(this.el).unbind('ajaxStop.save')
     $(this.el).find("#save input").prop('disabled', false)

@@ -35,9 +35,12 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
       readOnly: true,
       number: @model.get('max_length') || 5
     })
-
-    $(@el).find('input[type=text]').bind('keyup',@handle_textbox_keyup)      
-    $(@el).find('input[type=number]').bind('keyup',@handle_textbox_keyup)
+    
+    console.log('Binding events')
+    # $(@el).children(".dummy_question_content").find('input[type=text]').bind('keydown',@handle_survey_events)      
+    # $(@el).children(".dummy_question_content").find('input[type=number]').bind('keydown',@handle_survey_events)
+    $(@el).find('input[type=text]').bind('keyup',@handle_survey_events)      
+    $(@el).find('input[type=number]').bind('keyup',@handle_survey_events)    
     $(@el).find('input[type=number]').bind('mousewheel',@handle_element_mouseout)
     $(@el).find('input[type=number]').bind('change',@handle_element_mouseout)
     $(@el).find('input[type=number]').bind('blur',@handle_survey_events)
@@ -155,6 +158,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
 
   typingTimer = undefined
   doneTypingInterval = 500
+  
   handle_textbox_keyup: (event) =>
     eventInside = event
     clearTimeout typingTimer

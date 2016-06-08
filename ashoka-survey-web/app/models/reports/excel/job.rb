@@ -7,16 +7,16 @@ class Reports::Excel::Job < Struct.new(:excel_data)
   def perform
        #Zip::Archive.open(f.path, Zip::CREATE) do |ar|
     
-    Tempfile.open('excel', Rails.root.join('tmp')) do |f|
-      Zip::File.open(f.path, Zip::File::CREATE) do |ar|
-        ar.add_io(excel_data.file_name + ".xlsx", package.to_stream.read)
-        ar.encrypt(excel_data.password)
-       end
-      #Tempfile.open(excel_data.file_name + ".xlsx", Rails.root.join('tmp')) do |f|
-        #f.binmode
-        #f.write package.to_stream.read
-        #f.rewind
-        #f.close        
+    # Tempfile.open('excel', Rails.root.join('tmp')) do |f|
+    #  Zip::File.open(f.path, Zip::File::CREATE) do |ar|
+    #    ar.add_io(excel_data.file_name + ".xlsx", package.to_stream.read)
+    #    ar.encrypt(excel_data.password)
+    #   end
+      Tempfile.open(excel_data.file_name + ".xlsx", Rails.root.join('tmp')) do |f|
+       f.binmode
+       f.write package.to_stream.read
+       f.rewind
+       f.close        
             
       
       directory = aws_excel_directory
