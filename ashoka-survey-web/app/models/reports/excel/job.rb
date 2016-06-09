@@ -1,3 +1,5 @@
+require 'zip'
+
 class Reports::Excel::Job < Struct.new(:excel_data)
 
   def start
@@ -5,22 +7,22 @@ class Reports::Excel::Job < Struct.new(:excel_data)
   end
 
   def perform
-       #Zip::Archive.open(f.path, Zip::CREATE) do |ar|
+    Zip.default_compression = ::Zlib::DEFAULT_COMPRESSION
+    Tempfile.open(excel_data.file_name + ".zip", Rails.root.join('tmp')) do |f|
+    f.binmode
     
-    # Tempfile.open('excel', Rails.root.join('tmp')) do |f|
-    #  Zip::File.open(f.path, Zip::File::CREATE) do |ar|
-    #    ar.add_io(excel_data.file_name + ".xlsx", package.to_stream.read)
-    #    ar.encrypt(excel_data.password)
-    #   end
-      Tempfile.open(excel_data.file_name + ".xlsx", Rails.root.join('tmp')) do |f|
-       f.binmode
-       f.write package.to_stream.read
-       f.rewind
-       f.close        
+    buffer = Zip::OutputStream.write_buffer(::StringIO.new(''),  Zip::TraditionalEncrypter.new(excel_data.password)) do |zos|
+   
+       zos.put_next_entry(excel_data.file_name + ".xlsx")
+       zos.write package.to_stream.read
+     end.string
+     
+      f.write buffer 
+      f.rewind
+      f.close
             
-      
       directory = aws_excel_directory
-      directory.files.create(:key => excel_data.file_name + ".xlsx", :body => f.open, :public => true)
+      directory.files.create(:key => excel_data.file_name + ".zip", :body => f.open, :public => true)
     end
   end
 

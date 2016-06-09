@@ -36,7 +36,6 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
       number: @model.get('max_length') || 5
     })
     
-    console.log('Binding events')
     # $(@el).children(".dummy_question_content").find('input[type=text]').bind('keydown',@handle_survey_events)      
     # $(@el).children(".dummy_question_content").find('input[type=number]').bind('keydown',@handle_survey_events)
     $(@el).find('input[type=text]').bind('keyup',@handle_survey_events)      
