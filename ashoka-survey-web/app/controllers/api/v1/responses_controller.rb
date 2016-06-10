@@ -5,6 +5,8 @@ module Api::V1
  #   load_resource :through => :survey, :only => [:show, :count]
     authorize_resource
 
+    skip_before_action :verify_authenticity_token, only: [:create, :update]
+
     before_filter :read_params, :decode_base64_images, :convert_to_datetime, :only => [:create, :update]
     before_filter :require_response_to_not_exist, :only => :create
 
