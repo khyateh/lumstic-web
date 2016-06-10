@@ -1,6 +1,6 @@
 class SurveyApp.URLShortener
   shorten: (url, success, failure) =>
-    $.getJSON "http://api.bitly.com/v3/shorten",
+    $.getJSON "https://api-ssl.bitly.com/v3/shorten",
       format: 'json'
       apiKey: SurveyApp.Settings.BITLY_API_KEY
       longUrl: url
