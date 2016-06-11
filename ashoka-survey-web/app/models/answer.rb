@@ -74,9 +74,18 @@ class Answer < ActiveRecord::Base
   end
 
   def photo_in_base64
-    file = File.read("#{photo.root}/#{photo.cache_dir}/#{photo_tmp}") if photo_tmp
-    file = photo.file.read if photo.file.try(:exists?)
-    return Base64.encode64(file) if file
+    return ""
+    # puts 'PHOTO DEBUG'
+    # puts photo_tmp
+    # puts "#{photo.root}/#{photo.cache_dir}/#{photo_tmp}"
+    # puts photo.file
+    # if photo_tmp
+    #  fl = File.open("#{photo.root}/#{photo.cache_dir}/#{photo_tmp}")
+    # end 
+    # if photo.file.try(:exists?)
+    #  fl = photo.file
+    # end 
+    # return Base64.encode64(fl.read) if fl
   end
 
 

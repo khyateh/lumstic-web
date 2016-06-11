@@ -12,8 +12,8 @@ module Api::V1
 
     def read_params
         require 'json'
-        @@body =  JSON.parse(request.body.read)
-	@@resp = @@body["response"]
+        @@body =  JSON.parse(request.body.read)        
+	      @@resp = @@body["response"]        
         @@resp["ip_address"]  = request.remote_ip
     end
 
@@ -58,7 +58,7 @@ module Api::V1
     private
 
     def decode_base64_images
-      answers_attributes = @@resp[:answers_attributes] || []
+      answers_attributes = @@resp['answers_attributes'] || []
       answers_attributes.each do |_, answer|
         if answer.has_key? 'photo'
           sio = StringIO.new(Base64.decode64(answer['photo']))
