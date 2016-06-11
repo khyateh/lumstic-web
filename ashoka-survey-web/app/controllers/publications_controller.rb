@@ -87,11 +87,29 @@ class PublicationsController < ApplicationController
     ( select array_to_json(array_agg(row_to_json(t))) 
     from
     (select q.id as Question_id,  q.type as Question_type,
-    r.location as Location, a.content as Answer_content
+    r.location as Location, a.content as Answer_content , cho.Option
     from surveys s 
     inner join questions q on q.survey_id = s.id    
     inner join responses r on s.parent_id = r.survey_id
     inner join answers a on a.question_id = q.original_question_id and a.response_id = r.id
+    left outer join 
+    (select id, question_id,
+    (select row_to_json(OptionId)  from
+    (select array_to_json(array_agg(row_to_json(t))) as Choices from
+    (
+    select om.id as Option_Id 
+    from options om 
+    where om.content in
+    (select o.content from options o 
+    inner join choices c on c.option_id = o.id
+    inner join answers an on  an.id = am.id --an.question_id = q.original_question_id and
+    where c.answer_id = am.id
+    ) 
+    and question_id=am.question_id
+    ) 
+    as t) as OptionId) as Option
+    from answers am)  cho on cho.id = a.id and cho.question_id = q.original_question_id
+
     where
     q.identifier = true and r.status='complete' and
     r.organization_id =res.organization_id and s.id=sur.id and r.id = res.id
