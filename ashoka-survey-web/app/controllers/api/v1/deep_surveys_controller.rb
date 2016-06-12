@@ -14,9 +14,11 @@ module Api
           render :json => surveys, include: [ 'questions', 'categories', :respondents], :each_serializer => DeepSurveySerializer        
           
           # update status of Allocated respondents to Downloaded
-          @respondents = surveys.respondents.where(:status => 'Allocated')
-          @respondents.each do |respondent|
-              Respondent.update_attribute(:status => 'Downloaded')
+          surveys.each do |survey|
+            @respondents = Respondent.where(:survey_id => survey.id).where(:user_id => current_user_info[:user_id]).where(:status => 'Allocated')
+            @respondents.each do |respondent|
+                respondent.update_attribute(:status, 'Downloaded')
+            end
           end
          
          #clear the user_id
