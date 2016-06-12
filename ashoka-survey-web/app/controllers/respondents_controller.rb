@@ -3,7 +3,7 @@ require 'json'
 
 
 class RespondentsController < ApplicationController
-  before_action :set_respondent, only: [:show, :edit, :update, :destroy]
+  #before_action :set_respondent, only: [:show, :edit, :update, :destroy, :search]
 
   # GET /respondents
   def index
@@ -12,9 +12,12 @@ class RespondentsController < ApplicationController
    # @surveys = paginated_surveys.decorate
    # @paginated_surveys = paginated_surveys
     
+    @survey_id = params[:survey_id]
+    filter = params[:filter] || 'Allocated'
     
-    @respondents = Respondent.where(:survey_id => params[:survey_id])
-    if @respondents.count > 0
+    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(:status => filter).search(params[:search_param]) #.paginate(:per_page => 5, :page => params[:page])
+    
+    # if @respondents.count > 0
     @survey = Survey.find(params[:survey_id]).decorate
     
     authorize! :midline, @survey
@@ -22,7 +25,14 @@ class RespondentsController < ApplicationController
     #@survey.users_for_organization(access_token, current_user_org)
   
     #@published_users = publishable_users[:published]
-    end
+    #end
+  end
+  
+  def search
+   @survey_id = params[:survey_id]
+    @survey = Survey.find(params[:survey_id]).decorate
+    @respondents = Respondent.where('respondent_json like ?', '%' + params[:search_param] + '%')
+    render :index, :survey_id => params[:survey_id], :search_param => params[:search_param]
   end
 
   # GET /respondents/1

@@ -6,4 +6,11 @@ class Respondent < ActiveRecord::Base
     opt ||= {}
     return JSON.parse(respondent_json)
   end
+  
+  def self.search(search)
+    where('respondent_json LIKE ?', "%#{search}%")
+    # else
+    #  scoped
+  end
+
 end

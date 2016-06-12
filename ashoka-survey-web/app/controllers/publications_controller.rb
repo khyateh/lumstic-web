@@ -81,8 +81,8 @@ class PublicationsController < ApplicationController
   end
   
   def create_respondents_list_sql
-   "insert into respondents (survey_id, response_id, organization_id, user_id, location, created_at,updated_at, respondent_json)
-    (select t1.survey_id, t1.id, t1.organization_id as organization_id, t1.user_id, t1.location, current_timestamp,current_timestamp, row_to_json(t1)
+   "insert into respondents (survey_id, response_id, organization_id, user_id, location, created_at,updated_at,status, respondent_json)
+    (select t1.survey_id, t1.id, t1.organization_id as organization_id, t1.user_id, t1.location, current_timestamp,current_timestamp, 'Allocated', row_to_json(t1)
     from (  select sur.id as survey_id, res.id as id, res.organization_id as organization_id, res.user_id, res.location,
     ( select array_to_json(array_agg(row_to_json(t))) 
     from

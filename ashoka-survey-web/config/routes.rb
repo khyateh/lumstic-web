@@ -1,5 +1,7 @@
 SurveyWeb::Application.routes.draw do
-  resources :respondents
+  resources :respondents, :only => [:index, :update] #, :search] do
+    #get 'search', :on => :collection
+   #end
   get "corporate_webs/index"
   get "/about-us" => "corporate_webs#about"
   get "/partners" => "corporate_webs#partners"

@@ -12,18 +12,42 @@ text-decoration:none;
 }
 </style>
 <div class="container">
+<%= form_tag respondents_path, :method => 'get', :id => "respondents_search" do %>
+
 <div class="survey_publish_heading">Respondents for <b><%= @survey.name %></b></div>
 <br />
+<div class="survey_publish_heading">Below is a list of responses that were collected as a part of the baseline survey</div>
 <div class="survey_publish_heading">
+  
+<div class="blue_tabs">
+      <ul class="filters tab-links">
+        <li><%= link_to t(".allocated"), respondents_path(:survey_id => @survey_id, :filter => "Allocated"), :class => "#{'selected' if params[:filter] == "Allocated" || !params[:filter]}"%></li>
+        <li><%= link_to t(".downloaded"), respondents_path(:survey_id => @survey_id, :filter => "Downloaded"),:class => "#{'selected' if params[:filter] == "Downloaded"}"%></li>        
+      </ul>
+    </div>
+    <div>
+    <p>Please enter search term: </p>
+  <p>
+    <%= text_field_tag :survey_id, params[:survey_id], :style =>'display: none;'  %>
+    <%= text_field_tag :filter, params[:filter], :style =>'display: none;'  %>
+    <%= text_field_tag :search_param, params[:search_param] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+    </div>
+</div>
+<div class="survey_publish_heading">
+<p>Previous survey responses with allocation available</p>
 <table >
   <thead >
     <tr >
+      <th>Select</th>
       <th>Answers for identifier questions</th>
       <th>Location</th>
+      <th>Status</th>
       <th>Users - Click on User to modify </th>      
     </tr>
   </thead>
-
+<br />
   <tbody>
   
     <% @respondents.find_each do |respondent| 
@@ -34,6 +58,7 @@ text-decoration:none;
      %>      
           
       <tr align="center">
+        <td><%= check_box_tag(respondent.id) %> </td>
         <td> <%if identifiers  
         identifiers.each do |i| %>
         <%= i["answer_content"]%>
@@ -41,10 +66,12 @@ text-decoration:none;
         end
         %>
         </td>
+        
         <td>
         <%= j["location"] %>
        
         </td>
+        <td><%= respondent.status %></td>
         <td class="mousetoHand">        
         <!-- %= @user1.map(&:name) % -->
          <!-- %= best_in_place respondent, :id, :as => :hidden % -->
@@ -54,13 +81,21 @@ text-decoration:none;
     <% end %>
   </tbody>
 </table>
-
+<hr />
 <br>
 
+<div>
+<p>Bulk allocate selected responses to user</p>
+<%= collection_select(:respondent, :user_id, @publishable_users, :id, :name ) %>&nbsp;&nbsp;
+<%= button_to  'Bulk Assign', edit_survey_publication_path(survey_id: @survey_id), class: 'unpublish-survey-button', method: :get %>
 </div>
+</div>
+<% end %>
+<br /><br />
 <div class="unpublish-survey-button">
-<%= button_to  'Back to Publish', edit_survey_publication_path(survey_id: @survey.id), class: 'unpublish-survey-button', method: :get %>
+<%= button_to  'Back to Publish', edit_survey_publication_path(survey_id: @survey_id), class: 'unpublish-survey-button', method: :get %>
 </div>
+
 </div>
 
 <script language="javascript">
@@ -68,6 +103,5 @@ $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
 }); 
-
 
 </script>

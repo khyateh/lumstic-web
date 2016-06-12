@@ -89,6 +89,8 @@ fr:
       active: "Baseline"
       midline: "Midline"
       expired: "Expired"
+      allocated: "Allocated"
+      downloaded: "Downloaded"
       create: "Créer sondage"
       delete: "Effacer"
       publish: "Publier"

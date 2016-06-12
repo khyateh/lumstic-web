@@ -121,6 +121,8 @@ en:
       unpublish: "Unpublish"
       archive: "Archive"
       share: "Share"
+      allocated: "Allocated"
+      downloaded: "Downloaded"
       add_response: "Add Response"
       edit: "Edit"
       operations: "Operations"
