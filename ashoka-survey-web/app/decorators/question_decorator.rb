@@ -13,6 +13,8 @@ class QuestionDecorator < Draper::Decorator
   end
 
   def label
-    question_number + ")  " + content
+    mandatory = model.mandatory ? ' * ' : ' '
+    identifier = model.identifier ? ' &#10789; ' : ' '
+    question_number + ")  " + content + mandatory + identifier
   end
 end

@@ -30,7 +30,8 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     data.allow_identifier = @allow_identifier()
     $(@el).children('.dummy_question_content').children(".top_level_content").html(Mustache.render(@template, data))
     $(@el).addClass("dummy_question")
-    $(@el).find('abbr').show() if @model.get('mandatory')
+    $(@el).find('abbr[name="mandatory"]').show() if @model.get('mandatory')
+    $(@el).find('abbr[name="identifier"]').show() if @model.get('identifier')
     $(@el).find('.star').raty({
       readOnly: true,
       number: @model.get('max_length') || 5
