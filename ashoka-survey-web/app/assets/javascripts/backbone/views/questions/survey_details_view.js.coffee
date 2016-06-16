@@ -22,7 +22,6 @@ class SurveyBuilder.Views.Questions.SurveyDetailsView extends Backbone.View
     return this
 
   handle_textbox_keyup: (event) =>
-    console.log('Keyup')
     this.model.off('change', this.render)
     input = $(event.target)
     propertyHash = {}
