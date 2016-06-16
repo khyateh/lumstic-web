@@ -16,7 +16,7 @@ text-decoration:none;
 
 <div class="survey_publish_heading">Respondents for <b><%= @survey.name %></b></div>
 <br />
-<div class="survey_publish_heading">Below is a list of responses that were collected as a part of the baseline survey</div>
+<div class="survey_publish_heading"><%= t("respondents.index.respondent_list") %></div>
 <div class="survey_publish_heading">
   
 <div class="blue_tabs">
@@ -26,7 +26,7 @@ text-decoration:none;
       </ul>
     </div>
     <div>
-    <p>Please enter search term: </p>
+    <p><%= t(".search_title")%> </p>
   <p>
     <%= text_field_tag :survey_id, params[:survey_id], :style =>'display: none;'  %>
     <%= text_field_tag :filter, params[:filter], :style =>'display: none;'  %>
@@ -36,17 +36,17 @@ text-decoration:none;
     </div>
 </div>
 <div class="survey_publish_heading">
-<p>Previous survey responses with allocation available</p>
+<p><%= t(".previous_responses") %></p>
 <div id="respondent">
 
 <table >
   <thead >
     <tr >
-      <th>Select</th>
-      <th>Answers for identifier questions</th>
-      <th>Location</th>
-      <th>Status</th>
-      <th>Users - Click on User to modify </th>      
+      <th><%= t(".Select") %></th>
+      <th><%= t(".Answers") %></th>
+      <th><%= t(".Location") %></th>
+      <th><%= t(".Status") %></th>
+      <th><%= t(".Users") %></th>      
     </tr>
   </thead>
 <br />
@@ -91,16 +91,15 @@ text-decoration:none;
 <br>
 
 <div>
-<p>Bulk allocate selected responses to user</p>
+<p><%= t(".bulk_allocate_text") %></p>
 <%= collection_select(:respondent, :user_id, @publishable_users, :id, :name ) %>&nbsp;&nbsp;
-<!-- %= button_to  'Bulk Assign', update_bulk_respondents_path(survey_id: @survey_id), class: 'bulk-allocate-button', :method => :post, data: { confirm: "Are you sure?"} % -->
-<input type='button' value='Bulk Assign' id='bulk_Assign' class='btn-bulk-Assign' />
+<input type='button' value='<%= t(".bulk_allocate") %>' id='bulk_Assign' class='btn-bulk-Assign' />
 </div>
 </div>
 <% end %>
 <br /><br />
 <div class="unpublish-survey-button">
-<%= button_to  'Back to Publish', edit_survey_publication_path(survey_id: @survey_id), class: 'unpublish-survey-button', method: :get %>
+<%= button_to  t('.back_to_publish'), edit_survey_publication_path(survey_id: @survey_id), class: 'unpublish-survey-button', method: :get %>
 </div>
 
 </div>
@@ -112,7 +111,10 @@ $(document).ready(function() {
 });
 
  $("#bulk_Assign").click(function(){
-
+ 
+  if(!confirm('<%= t("respondents.index.confirm_bulk_assign") %>'))
+    return;
+  
   var ids = [];
    
    $("input[type=checkbox]").each(function(index, el){

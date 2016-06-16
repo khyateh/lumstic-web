@@ -41,6 +41,7 @@ en:
     category_duplication_failed : "Category duplication failed"
     survey_archived: "%{survey_name} has been archived."
     mr_duplicated: "Multi-Record Duplicated successfully!"
+    atleast_one_identifier_required: "Survey should contain at least one identifier question!"
 
   publication:
     edit:
@@ -194,8 +195,7 @@ en:
       share_survey: "Share Survey and continue"
 
     publish_to_users:
-      publish_survey: "Publish and continue"
-
+      publish_survey: "Publish and continue"    
 
     report:
       location: Location Map
@@ -308,7 +308,23 @@ en:
           incomplete_to_complete_error: "A completed response cannot be marked incomplete."
 
   add_option: "Add single"
-
+  
+  respondents:
+      index:
+        respondent_list: "Below is a list of responses that were collected as a part of the baseline survey"
+        search_title: "Please enter search term:"
+        previous_responses: "Previous survey responses with allocation available"
+        bulk_allocate_text: "Bulk allocate selected responses to user"
+        bulk_allocate: "Bulk Assign"
+        back_to_publish: "Back to Publish"
+        search: "Search"
+        confirm_bulk_assign: "Are you sure you that you want to assign the set of responses to the selected user?"
+        Select: "Select"
+        Answers: "Answers for identifier questions"
+        Location: "Location"
+        Status: "Status"
+        Users: "Users - Click on User to modify"
+        
   privacy_mailer:
     deactivation_mail:
       subject: "The organization %{organization_name} has been de-registered"

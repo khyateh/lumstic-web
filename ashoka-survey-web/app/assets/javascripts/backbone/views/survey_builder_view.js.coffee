@@ -75,7 +75,6 @@ class SurveyBuilder.Views.SurveyBuilderView extends Backbone.View
     $("#sidebar").tabs('select', 1)
 
   finalize: =>
-    console.log('In Finalize')
     if confirm(I18n.t('surveys.confirm_finalize'))
       @save_all_questions()
       $("#finalize_hidden").click() unless this.survey.has_errors()

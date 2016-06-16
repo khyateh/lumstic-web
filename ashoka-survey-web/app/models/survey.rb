@@ -48,7 +48,6 @@ class Survey < ActiveRecord::Base
   end
 
   def finalize
-    puts 'In Finalize'
     if check_atleast_one_identifier
       self.finalized = true
       questions.update_all(:finalized => true)
@@ -56,9 +55,8 @@ class Survey < ActiveRecord::Base
       options.update_all(:finalized => true)
       self.save
      else
-        errors.add(:question, 'Survey should contain at least one identifier question')
-        return false
-        
+        errors.add(:question, "#{I18n.t('flash.atleast_one_identifier_required')})")
+        return false        
     end
   end
 
@@ -236,7 +234,6 @@ class Survey < ActiveRecord::Base
   private
    
   def check_atleast_one_identifier
-   puts 'In validate'
     identifier_exists = false
     puts questions
     questions.each do |question|

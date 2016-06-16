@@ -47,13 +47,11 @@ class SurveysController < ApplicationController
   end
 
   def finalize   
-    puts 'In finalize'
     @survey = Survey.find(params[:survey_id])
     if !@survey.finalize
       flash[:error] = @survey.errors.messages 
       redirect_to survey_build_path      
     else      
-      puts 'Survey.finalize called'
       flash[:notice] = t "flash.survey_finalized", :survey_name => @survey.name
       redirect_to edit_survey_publication_path(@survey.id)
      end
