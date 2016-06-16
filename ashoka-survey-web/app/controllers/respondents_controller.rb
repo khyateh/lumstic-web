@@ -7,31 +7,24 @@ class RespondentsController < ApplicationController
 
   # GET /respondents
   def index
-   #filtered_surveys = SurveyFilter.new(@surveys, params[:filter]).filter
-   # paginated_surveys = filtered_surveys.most_recent.paginate(:page => params[:page], :per_page => 10)
-   # @surveys = paginated_surveys.decorate
-   # @paginated_surveys = paginated_surveys
     
     @survey_id = params[:survey_id]
-    filter = params[:filter] || 'Allocated'
-    
-    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(:status => filter).search(params[:search_param]) #.paginate(:per_page => 5, :page => params[:page])
-    
-    # if @respondents.count > 0
+    filter = params[:filter]
+    if (filter == nil || filter == '')      
+      filter = 'Allocated'
+    end
     @survey = Survey.find(params[:survey_id]).decorate
-    
-    authorize! :midline, @survey
-    @publishable_users = User.find_by_organization(access_token,@survey.organization_id) 
-    #@survey.users_for_organization(access_token, current_user_org)
-  
-    #@published_users = publishable_users[:published]
-    #end
+    authorize! :midline, @survey   
+    puts params
+    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(:status => filter).search(params[:search_param]).paginate(:page => params[:page] || 1, :per_page => 5)
+    puts @respondents
+    @publishable_users = User.find_by_organization(access_token,@survey.organization_id)
   end
   
   def search
-   @survey_id = params[:survey_id]
+    @survey_id = params[:survey_id]
     @survey = Survey.find(params[:survey_id]).decorate
-    @respondents = Respondent.where('respondent_json like ?', '%' + params[:search_param] + '%')
+    @respondents = Respondent.where('respondent_json like ?', '%' + params[:search_param] + '%').paginate(:page => params[:page], :per_page => 2)
     render :index, :survey_id => params[:survey_id], :search_param => params[:search_param]
   end
 
@@ -62,13 +55,43 @@ class RespondentsController < ApplicationController
   # PATCH/PUT /respondents/1
   respond_to :html, :json
   def update
+  puts params
+  if (params[:respondent_ids])
+   puts params[:respondent_ids]
+  else 
     @respondent = Respondent.find(params[:id])
-    #respond_with @respondent    
+    # respond_with @respondent    
     @respondent.update_attributes(params[:respondent])     
-    #redirect_to @respondent #, notice: 'Respondent was successfully updated.'
+    # redirect_to @respondent #, notice: 'Respondent was successfully updated.'
     respond_with @respondent, :notice => 'User allocation successful' 
-    
+   end 
   end
+
+  # PATCH/PUT /respondents/
+  respond_to :html, :json
+  def update_bulk
+    response_ids = params['response_ids']
+    selected_user_id = params['sel_user_id']
+    @survey_id = params['survey_id']     
+    @survey = Survey.find(@survey_id) #.decorate
+    authorize! :midline, @survey   
+    
+    if response_ids
+    response_ids.each do |res_id|
+      puts selected_user_id
+      resp = Respondent.find(res_id)
+      resp.update_attribute(:user_id, selected_user_id) if resp
+    end
+    end
+    
+    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(:status => 'Allocated').paginate(:page => params[:page] || 1, :per_page => 5)
+    @publishable_users = User.find_by_organization(access_token,@survey.organization_id)
+    render :index, :survey_id => @survey_id
+    flash[:notice] = 'User allocation successfully completed'
+    # redirect_to respondents_url(:survey_id => @survey_id)
+    # respond_with @respondents,:controller => 'respondents', :survey_id => @survey_id
+  end
+
 
   # DELETE /respondents/1
   def destroy
