@@ -1,3 +1,12 @@
+<style>
+.rcorner {
+    border-radius: 5px;
+    background: #EEEEEE;
+    padding: 5px; 
+    height: 10px;
+    width: 95% 
+}
+</style>
 <% if user_currently_logged_in? %>
   <div class="container">
     <header id="backBtnContainer">
@@ -76,7 +85,7 @@
                 <div class="clear"></div>
                  <div class='survey-info'>
             <% survey.midline_surveys.each do |midline| %>
-            <div style="background-color:#dddddd;">&nbsp;&nbsp;&nbsp;<%= link_to midline.name, surveys_path(:filter => "midline"), :class => "survey_name" %></div>
+            <div>&#10141; &nbsp;&nbsp;&nbsp;<%= link_to midline.name, surveys_path(:filter => "midline"), :class => "rcorner" %></div>
             <% end %>
                </div>
               </div>
@@ -110,7 +119,7 @@
     <% end %>
     <%= render "surveys/public_link_dialog" %>
     <%= render "surveys/duplicate_dialog" %>
-    <script type="text/javascript">
+    <script type="text/javascript">     
       $(document).ready(function(){
           $('a.disabled').click(function(){
               return false;

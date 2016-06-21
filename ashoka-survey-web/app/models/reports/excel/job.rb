@@ -61,8 +61,8 @@ class Reports::Excel::Job < Struct.new(:excel_data)
   end
 
   def error(job, exception)
-    puts exception
-    #Airbrake.notify(exception)
+    #puts exception
+    Airbrake.notify(exception)
   end
 
   private

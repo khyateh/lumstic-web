@@ -27,7 +27,7 @@ module Api::V1
 	render :json => response.to_json_with_answers_and_choices
       else
         render :json => response.to_json_with_answers_and_choices, :status => :bad_request
-#        Airbrake.notify(ActiveRecord::RecordInvalid.new(response))
+        Airbrake.notify(ActiveRecord::RecordInvalid.new(response))
       end
     end
 

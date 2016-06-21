@@ -153,23 +153,23 @@ div#flash-messages{padding: 0 20px; font-weight: bold;}
 
 .Btn {
     text-transform: uppercase;
-    color: $peacockGreen-color;
+    color: $orange-title-color;
     padding: 10px 20px;
     text-decoration: none;
     display: inline-block;
 }
 .nrmlBtn {
-    color: $peacockGreen-color;
+    color: $peacockGreen-hover-color;
     font-weight: 500;
     &:active, &:hover {
         background: #dddddd;
-        color: $peacockGreen-color;
+        color: $peacockGreen-hover-color;
     }
 }
 
 .nrmlBtn.active{
         background: #dddddd;
-        color: $peacockGreen-color;
+        color: $orange-title-color;
     }
 
 .nrmlBtn.disabled {
@@ -178,7 +178,7 @@ div#flash-messages{padding: 0 20px; font-weight: bold;}
 }
 .colrBtn {
     color: $white-color;
-    background: $peacockGreen-color;
+    background: $orange-title-color;
     @include border-radius(2px);
     /* @include box-shadow (2px , 2px , 2px , $gray-body-color);*/
     
@@ -187,7 +187,7 @@ div#flash-messages{padding: 0 20px; font-weight: bold;}
     -ms-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     &:active, &:hover {
-        background: $peacockGreen-hover-color;
+        background: $orange-title-color;
         color: $white-color;
     }
 }

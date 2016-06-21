@@ -47,6 +47,7 @@ gem 'responders', '~> 2.2.0'
 gem 'best_in_place', '~> 3.0.1'
 gem 'zip-zip'
 gem 'rubyzip', '~> 1.1.7'
+gem "intercom-rails"
 
 
 group :production do
