@@ -32,17 +32,16 @@ module Api::V1
     end
 
     def update
-      response = Response.find_by_id(@@resp[:id])
-      return render :nothing => true, :status => :gone if response.nil?
-      response.update_response_with_conflict_resolution(@@resp)
-      response.update_records # TODO: Refactor this into the model method, if possible
 
-      if response.invalid?
-        render :json => response.to_json_with_answers_and_choices, :status => :bad_request
-        Airbrake.notify(ActiveRecord::RecordInvalid.new(response))
-      else
+      response = Response.new
+      if response.create_response(@@resp.except("access_token"))
+	Response.find_by_id(@@resp['server_id']).destroy
         render :json => response.to_json_with_answers_and_choices
+      else
+        render :json => response.to_json_with_answers_and_choices, :status => :bad_request
+#        Airbrake.notify(ActiveRecord::RecordInvalid.new(response))
       end
+
     end
 
     def incomplete
