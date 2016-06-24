@@ -1,7 +1,7 @@
 SurveyWeb::Application.routes.draw do
-  resources :respondents, :only => [:index, :update] #, :search] do
-    #get 'search', :on => :collection
-   #end
+  resources :respondents, :only => [:index, :update, :update_bulk] do
+    post 'update_bulk', :on => :collection
+  end
   get "corporate_webs/index"
   get "/about-us" => "corporate_webs#about"
   get "/partners" => "corporate_webs#partners"
@@ -35,6 +35,7 @@ SurveyWeb::Application.routes.draw do
     put 'archive'
     get 'midline'
     get  "public_response" => "responses#create"
+    post  "public_response" => "responses#create"
     resources :responses, :only => [:new, :create, :index, :edit, :show, :update, :destroy] do
       collection { get "generate_excel" }
       member do

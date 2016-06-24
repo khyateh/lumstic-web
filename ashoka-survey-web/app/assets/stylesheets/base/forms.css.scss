@@ -35,13 +35,13 @@ button , input[type="submit"] , input[type="reset"] , input[type="button"] {text
     color: $white-color;
     text-shadow:none;
     font-weight: 400;
-    background: $peacockGreen-color;
+    background: $orange-title-color;
     -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
       -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
        -ms-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 
-     &:active , &:hover {background: $peacockGreen-hover-color ;}
+     &:active , &:hover {background: $orange-title-color ;}
      &:focus {box-shadow:none;}
      &:disabled  {color: #a1a1a1;
      background: #dbdbdb;};

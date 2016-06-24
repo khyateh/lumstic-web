@@ -39,7 +39,7 @@ a.log
 # Ignore application configuration
 # /config/application.yml
 /public/uploads
-
+/public/assets
 # Mac OS Metadata
 .DS_Store
 .rbenv-version

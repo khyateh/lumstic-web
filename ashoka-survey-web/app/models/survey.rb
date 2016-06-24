@@ -6,7 +6,7 @@ class Survey < ActiveRecord::Base
   validate :ensure_survey_to_be_archivable
   validates :description, :length => { :maximum => 1024 }
   validates :name, :length => { :maximum => 255 }
-
+    
   has_many :questions, :dependent => :destroy
   has_many :categories, :dependent => :destroy
   has_many :responses, :dependent => :destroy
@@ -48,11 +48,16 @@ class Survey < ActiveRecord::Base
   end
 
   def finalize
-    self.finalized = true
-    questions.update_all(:finalized => true)
-    categories.update_all(:finalized => true)
-    options.update_all(:finalized => true)
-    self.save
+    if check_atleast_one_identifier
+      self.finalized = true
+      questions.update_all(:finalized => true)
+      categories.update_all(:finalized => true)
+      options.update_all(:finalized => true)
+      self.save
+     else
+        errors.add(:question, "#{I18n.t('flash.atleast_one_identifier_required')})")
+        return false        
+    end
   end
 
   def archive
@@ -227,6 +232,18 @@ class Survey < ActiveRecord::Base
   end
 
   private
+   
+  def check_atleast_one_identifier
+    identifier_exists = false
+    puts questions
+    questions.each do |question|
+      if question.identifier
+        identifier_exists = true
+        break
+      end
+    end     
+    identifier_exists    
+  end
 
   def self.active_arel
     survey = Survey.arel_table

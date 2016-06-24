@@ -36,7 +36,6 @@ class SurveyBuilder.Models.QuestionModel extends Backbone.RelationalModel
     @unset('image_updated_at', {silent: true})
 
   success_callback: (model, response) =>
-    console.log('Saved question')
     @make_clean()
     @remove_image_attributes()
     @errors = []

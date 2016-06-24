@@ -39,6 +39,7 @@ fr:
     no_finalized_surveys: "Impossible d'effectuer une opération sur une enquête archivés"
     survey_archived: "%{survey_name} a été archivé."
     mr_duplicated: "Multi-enregistrement dupliqué avec succès!"
+    atleast_one_identifier_required: "Enquête doit contenir au moins une question d'identifiant!"
 
   publication:
     edit:
@@ -246,7 +247,23 @@ fr:
 
   add_option: "Ajouter une option"
 # Library strings
-
+  
+  respondents:
+      index:
+        respondent_list: "fr Below is a list of responses that were collected as a part of the baseline survey"
+        search_title: "fr Please enter search term:"
+        previous_responses: "fr Previous survey responses with allocation available"
+        bulk_allocate_text: "fr Bulk allocate selected responses to user"
+        bulk_allocate: "fr Bulk Assign"
+        back_to_publish: "fr Back to Publish"
+        search: "fr Search"
+        confirm_bulk_assign: "fr Are you sure you that you want to assign the set of responses to the selected user?"
+        Select: "fr Select"
+        Answers: "fr Answers for identifier questions"
+        Location: "fr Location"
+        Status: "fr Status"
+        Users: "fr Users - Click on User to modify"
+        
   formtastic:
     actions:
       create: "Créer %{model}"
