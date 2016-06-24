@@ -9,9 +9,6 @@
     <title> <%= page_title %> </title>
 
 	<%= stylesheet_link_tag "corporate_webs", :media => "all" %>
-	
-	
-	
 	<!--% if extra_style %>
     	<%#= stylesheet_link_tag "corp/baze.css", :media => "all" %>
     	<%#= stylesheet_link_tag "corp/agency.css", :media => "all" %>
@@ -75,7 +72,8 @@
 			$(this).parent().siblings().andSelf().not(".heading").removeClass("active");
 			$(this).parent().addClass("active"); 
 		})
-	});
+	});	
+	
 	</script>
 
 
@@ -83,14 +81,13 @@
 <%= javascript_include_tag "corporate" %>
   </head>
   <body>
-
+			
   <header class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="col-md-4 col-xs-4 logo">	
 						<a href="/"><%= image_tag 'corp/logo-lumstic.png', :class => "hidden-xs img-responsive" %><%= image_tag 'corp/logo-lumstic-m.png', :class => "visible-xs img-responsive" %></a>
 			</div>
-			
-			
+
 			<div class="col-md-3 col-xs-7 col-sm-5 pull-right">
 				<div class="sml">
 					<a class="ls hidden-xs" href="http://india.ashoka.org/" target="_blank"><%= image_tag 'corp/ashoka-logo.png' %></a>
@@ -159,7 +156,7 @@
 
 		<div class="container">
 			<p class="pull-left copy">&copy; 2015-16. All rights reserved.</p>
-			<p class="pull-right ashoka hidden-xs">LumStic | Ashoka - Innovators for the Public | 54 1st Cross | Domlur Layout | Bangalore 560 071 | India | <a href="mailto:abiswas@ashoka.org">abiswas@ashoka.org</a> | +91 9480 826 556</p>
+			<p class="pull-right ashoka hidden-xs">LumStic | Ashoka - Innovators for the Public | 54 1st Cross | Domlur Layout | Bangalore 560 071 | India</p>			
 		</div>	
 	</footer>
 	
@@ -171,4 +168,5 @@
     <![endif]-->
 	
   </body>
+ 
 </html>

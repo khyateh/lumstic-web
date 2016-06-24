@@ -48,6 +48,8 @@ gem 'best_in_place', '~> 3.0.1'
 gem 'zip-zip'
 gem 'rubyzip', '~> 1.1.7'
 gem "intercom-rails"
+# gem "meta_request"
+gem 'scout_apm', '~> 2.0.x'
 
 
 group :production do

@@ -12,8 +12,9 @@ class OrganizationDashboardsController < ApplicationController
       authorize! :view_dashboard, organization.id
 
       @decorated_organization = organization.decorate(:context => { :access_token => access_token , :organization_id => params[:id]})
-      @surveys ||= Survey.none
+      @surveys ||= Survey.all      
       filtered_surveys = SurveyFilter.new(@surveys, "all").filter
+      # puts Survey.all
       @drafts_surveys_count = Survey.drafts.count
       @active_surveys_count = Survey.active.count
       paginated_surveys = filtered_surveys.most_recent.paginate(:page => params[:page], :per_page => 5)

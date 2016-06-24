@@ -42,7 +42,6 @@
 //= require excel_password_dialog
 //= require flash_hash
 //= require_tree ./gmaps4rails
-//= require help
 //= require language_selection
 //= require pages
 //= require public_link_dialog
@@ -60,5 +59,8 @@
 
 //= require best_in_place
 //= require best_in_place.jquery-ui
+//= require trip.min
+//= require help_trip
 
 var SurveyApp = {};
+

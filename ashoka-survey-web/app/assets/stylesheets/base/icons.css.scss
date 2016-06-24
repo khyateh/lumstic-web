@@ -40,6 +40,23 @@ a.copy_question {
     background-size: 19px;
   }; 
 }
+a.help {
+ display: block;
+  position: relative;
+  float: right;
+  width: 30px;
+  height: 30px;  
+  @include border-radius(2px);
+  background: transparent image-url('help.png') no-repeat center center;
+  overflow: hidden;
+  background-size: 30px;
+  margin-left: 5px;
+  padding: 5px;   
+  &:hover{
+    background: #fff image-url('help.png') no-repeat center center;
+    background-size: 40px;  
+  }; 
+}
 a.setting {
   display: block;
   position: relative;
