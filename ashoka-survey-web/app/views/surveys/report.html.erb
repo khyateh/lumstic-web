@@ -69,8 +69,11 @@
             <%= @survey.name %>
         </span>
       </span>
+     
     </h2>
+    <a href="#" class="help" onclick="javascript:help('report_help')"></a>
     <%= link_to icon_for('icon-table', t('.download_excel')), 'javascript:void(0);', :class => 'download_excel Btn colrBtn right' if @complete_responses_count > 0 && can?(:generate_excel, @survey) %>
+     
   </header>
   <div class="blue_tabs">
     <ul class="tab-links">
