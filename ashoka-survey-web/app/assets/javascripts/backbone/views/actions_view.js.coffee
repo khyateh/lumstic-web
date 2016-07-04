@@ -6,3 +6,4 @@ class SurveyBuilder.Views.ActionsView extends Backbone.View
 
   limit_edit: =>
     $(this.el).find(".delete-survey").remove()
+    $("body").find(".delete-survey").remove()

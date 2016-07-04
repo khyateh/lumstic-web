@@ -15,8 +15,18 @@ class RespondentsController < ApplicationController
     end
     @survey = Survey.find(params[:survey_id]).decorate
     authorize! :midline, @survey   
-    puts params
-    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(:status => filter).search(params[:search_param]).paginate(:page => params[:page] || 1, :per_page => 5)
+    
+    user_param = ' 1=1 '
+    if params[:user_filter]
+      if  params[:user_filter][:user_id] 
+        user_param = ' user_id in (' + params[:user_filter][:user_id] + ')'      
+      end
+    end
+    if params[:user_filter]
+      @user_selected = params[:user_filter][:user_id]
+    end
+    
+    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(user_param).where(:status => filter).search(params[:search_param]).paginate(:page => params[:page] || 1, :per_page => 5)
     puts @respondents
     @publishable_users = User.find_by_organization(access_token,@survey.organization_id)
   end
@@ -77,8 +87,7 @@ class RespondentsController < ApplicationController
     authorize! :midline, @survey   
     
     if response_ids
-    response_ids.each do |res_id|
-      puts selected_user_id
+    response_ids.each do |res_id|      
       resp = Respondent.find(res_id)
       resp.update_attribute(:user_id, selected_user_id) if resp
     end
