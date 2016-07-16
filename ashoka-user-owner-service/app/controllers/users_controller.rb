@@ -41,5 +41,6 @@ class UsersController < ApplicationController
       flash[:error] = @user.errors.full_messages
       render :edit
     end
-  end
+  end	
+  
 end

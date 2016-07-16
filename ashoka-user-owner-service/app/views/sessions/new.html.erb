@@ -24,6 +24,7 @@
           <%= t("sign_in")%>
         </h2>
       </header>
+	
       <%= semantic_form_for @user, :url => sessions_path do |f| %>
         <%= f.inputs do %>
           <%= f.input :email, :required => true, :label => false, :placeholder => t(".email") %>
@@ -37,5 +38,16 @@
         <% end %>
       <% end %>
     <% end %>
+	<!-- div style="margin-left:1em;">
+			
+				<b>To log in as Survey Designer, use the credentials below</b><br />
+				Email : <b>designer@foo.com</b><br />				
+				Password: <b>foo</b><br /><br />
+
+				<b>To log in as Field Agent/ Survey Conductor, use the credentials below</b><br />
+				Email : <b>field_agent@foo.com</b><br />
+				Password: <b>foo </b> <br /><br />
+		</div -->
+<!-- %= link_to 'Download Android APK', download_path % -->
   </div>
 </div>

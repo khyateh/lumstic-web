@@ -87,6 +87,11 @@
 </div>
    
    <section class="main">
+   <div class="jcarousel"> 
+   <ul class="carousel-root">
+        
+    </ul>
+   </div>
    			<ul>
 			<div id="dialogModal_ex1"
 				<a id="dialog_content1" href="#">
@@ -137,6 +142,7 @@
 	<%#= javascript_include_tag "corp/jquery-2.1.3.js" %>
 	<%#= javascript_include_tag "corp/bootstrap.min.js" %>
 	<%#= javascript_include_tag "corp/popModal.js" %>
+	
 	<script>
 	$(function(){
 		$('#dialogModal_ex1').click(function(){
@@ -157,9 +163,59 @@
 			});
 		});	
 	});
-	</script>
 	
-	<script>
+	// Create the XHR object.
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+    // XHR for Chrome/Firefox/Opera/Safari.
+    xhr.open(method, url, true);
+  } else if (typeof XDomainRequest != "undefined") {
+    // XDomainRequest for IE.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // CORS not supported.
+    xhr = null;
+  }
+  return xhr;
+}
+	
+	$(function() {
+    	$('.jcarousel').jcarousel().jcarouselAutoscroll({
+            interval: 3000,
+            target: '+=1',
+            autostart: true
+        });
+		
+		//Get images from user service
+	var url = "<%= ENV['OAUTH_SERVER_URL'] %>/org_images.json";
+  	
+	$.ajax({
+    url: url,
+ 
+    // The name of the callback parameter, as specified by the YQL service
+    jsonp: "callback",
+ 
+    // Tell jQuery we're expecting JSONP
+    dataType: "jsonp",    
+ 
+    // Work with the response
+    success: function( response ) {        
+		$.each(response, function(index, org){			
+			console.log(org.logo.thumb);
+			var url = org.logo.thumb.url;
+			if(url.endsWith(".jpg")|| url.endsWith(".jpeg")||url.endsWith(".png")||url.endsWith(".gif"))
+			$(".carousel-root").append("<li><img src="+url+" style='width:100px;height:100px;'/></li>");
+		});
+    },
+	error: function(response){
+	console.log('Error :' +response);
+	}
+});	
+	
+	});
+	
 	$(function(){
 		$('#dialogModal_ex2').click(function(){
 			$('#dialog_content2').dialogModal({

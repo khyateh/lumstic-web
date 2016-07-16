@@ -12,10 +12,11 @@
 # Configure Using Gemfile
 # gem 'pg'
 #
+#user_service_development
 development:
   adapter: postgresql
   encoding: unicode
-  database: user_service_development
+  database: survey_web_test
   pool: 5
   host: localhost
   username: postgres
@@ -42,15 +43,15 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: user_service_test
+  database: survey_web_test
   pool: 5
-  username: 
-  password: 
+  username:
+  password:
 
 production:
   adapter: postgresql
   encoding: unicode
   database: user_service_production
   pool: 5
-  username: 
+  username:
   password:

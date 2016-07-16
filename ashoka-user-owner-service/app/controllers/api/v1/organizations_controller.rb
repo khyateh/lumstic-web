@@ -9,7 +9,7 @@ module Api
       def index
         organizations = Organization.active_organizations
         # organizations = Organization.all
-        respond_with organizations.to_json(:only => [:id, :name])
+        respond_with organizations.to_json(:only => [:id, :name, :logo])
         # puts organizations.to_json(:only => [:id, :name, :logo,:status]).inspect
         # respond_with organizations.to_json
       end

@@ -24,6 +24,11 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to root_path
   end
+  def download
+  	send_data "#{Rails.root}/public/LumsticDemo.apk",
+    :filename => "LumsticDemo.apk",
+    :type => "application/octet-stream"
+  end
 
   private
 

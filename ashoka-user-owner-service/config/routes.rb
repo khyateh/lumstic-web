@@ -1,6 +1,6 @@
 UserService::Application.routes.draw do
   use_doorkeeper
-  # do 
+  # do
   #skip_controllers :applications
   #controllers :applications => 'apps'
   #end
@@ -17,6 +17,7 @@ UserService::Application.routes.draw do
     get 'login', :to => 'sessions#new', :as => 'login'
     get 'logout', :to => 'sessions#destroy', :as => 'logout'
 
+
     # bug fix
     # get '/organizations/:id/users', :to => 'organizations#edit'
 
@@ -28,10 +29,12 @@ UserService::Application.routes.draw do
       resources :users, :except => [:destroy]
       put 'activate', 'deactivate'
     end
-
+    get 'org_images' => 'organizations#org_images'
+    
     resources :documents, :only => [:new, :create, :index,:dummy ]
 
     root :to => 'sessions#new'
+	get 'download', :to => 'sessions#download', :as => 'download'
   #end
 
   namespace :api, :defaults => { :format => 'json' } do

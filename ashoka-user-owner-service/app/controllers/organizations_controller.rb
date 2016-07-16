@@ -1,6 +1,9 @@
 class OrganizationsController < ApplicationController
-  load_and_authorize_resource :except => :create
+  load_and_authorize_resource :except => [:create, :org_images]
+  #doorkeeper_for :all,:unless => [:create, :org_images]
   require_password_confirmation_for :destroy
+  protect_from_forgery
+  skip_before_action :verify_authenticity_token, if: :org_images
 
   def new
     @organization = Organization.new.decorate
@@ -72,5 +75,15 @@ class OrganizationsController < ApplicationController
     reset_session
     flash[:notice] = I18n.t("organizations.destroy.organization_to_be_deleted")
     redirect_to root_path
+  end
+
+  def org_images
+    organizations = Organization.active_organizations
+    # organizations = Organization.all
+
+    respond_to do |format|
+      format.json {render :json => organizations.to_json(:only => [:id, :name, :logo]), :callback => params[:callback]}
+    end
+
   end
 end

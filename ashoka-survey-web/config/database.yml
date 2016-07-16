@@ -6,7 +6,7 @@
 development:
   adapter: postgresql
   encoding: utf8
-  database: survey_web_dev
+  database: survey_web_test
   pool: 5
   username: pguser
   password: khyateh@123
