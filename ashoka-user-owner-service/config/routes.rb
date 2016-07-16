@@ -29,8 +29,8 @@ UserService::Application.routes.draw do
       resources :users, :except => [:destroy]
       put 'activate', 'deactivate'
     end
-    get 'org_images' => 'organizations#org_images'
-    
+    # get 'org_images' => 'organizations#org_images'
+
     resources :documents, :only => [:new, :create, :index,:dummy ]
 
     root :to => 'sessions#new'
