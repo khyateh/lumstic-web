@@ -18,6 +18,7 @@
 //= require corp/agency.js
 //= require corp/baze.js
 //= require corporate_webs
+//= require jssor.slider.mini
 //= require jquery.jcarousel.min
 
 

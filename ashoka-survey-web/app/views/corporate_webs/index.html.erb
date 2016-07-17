@@ -87,10 +87,11 @@
 </div>
    
    <section class="main">
-   <div class="jcarousel"> 
-   <ul class="carousel-root">
-        
-    </ul>
+      
+    <div id="jssor_1" style="position: relative; margin: 0 auto;width: 809px; height: 150px; overflow: hidden; visibility: visible;">
+        <!-- Loading Screen -->        
+        <div data-u="slides" class="slides" ></div>
+   		 
    </div>
    			<ul>
 			<div id="dialogModal_ex1"
@@ -165,12 +166,7 @@
 	});
 
 	$(function() {
-    	$('.jcarousel').jcarousel().jcarouselAutoscroll({
-            interval: 3000,
-            target: '+=1',
-            autostart: true
-        });
-		
+    	
 		//Get images from user service
 	var url = "<%= ENV['OAUTH_SERVER_URL'] %>/organizations.json";
   	
@@ -186,18 +182,49 @@
     // Work with the response
     success: function( response ) {        
 		$.each(response, function(index, org){			
-			console.log(org.logo.thumb);
+			console.log(org);
+			var name = org.name;
 			var url = org.logo.thumb.url;
 			if(url.endsWith(".jpg")|| url.endsWith(".jpeg")||url.endsWith(".png")||url.endsWith(".gif"))
-			$(".carousel-root").append("<li><img src="+url+" style='width:100px;height:100px;'/></li>");
+			{
+			 $(".slides").append('<div style="display: inline-block;"><img data-u="image" title="'+name+'" src="'+url+'" /></div>');
+			
+			}
 		});
     },
 	error: function(response){
 	console.log('Error :' +response);
 	}
 });	
-	
 	});
+	
+	var jssor_1_options = {
+              $AutoPlay: true,
+              $AutoPlaySteps: 4,
+              $SlideDuration: 160,
+              $SlideWidth: 200,
+              $SlideSpacing: 3,
+              $Cols: 4
+			  /*,
+              $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$,
+                $Steps: 4
+              },
+              $BulletNavigatorOptions: {
+                $Class: $JssorBulletNavigator$,
+                $SpacingX: 1,
+                $SpacingY: 1
+              }*/
+            };            
+            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);         
+        
+	
+	/*$('.jcarousel').jcarousel().jcarouselAutoscroll({
+            interval: 3000,
+            target: '+=1',
+            autostart: true
+        });
+	*/
 	
 	$(function(){
 		$('#dialogModal_ex2').click(function(){
