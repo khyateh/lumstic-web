@@ -420,8 +420,8 @@ class @Gmaps4Rails
     #distance in meters between 0 and max_random_distance (positive or negative)
     dx = @markers_conf.max_random_distance * @random()
     dy = @markers_conf.max_random_distance * @random()
-    Lat = parseFloat(Lat0) + (180/Math.PI)*(dy/6378137)
-    Lng = parseFloat(Lng0) + ( 90/Math.PI)*(dx/6378137)/Math.cos(Lat0)
+    Lat = parseFloat(Lat0) + (180/ Math.PI)*(dy/ 6378137)
+    Lng = parseFloat(Lng0) + ( 90/ Math.PI)*(dx/ 6378137)/ Math.cos(Lat0)
     return [Lat, Lng]
 
   mergeObjectWithDefault : (object1, object2) ->

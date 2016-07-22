@@ -58,7 +58,15 @@ class ResponsesController < ApplicationController
     @survey = Survey.find(params[:survey_id])
     @response = ResponseDecorator.find(params[:id])
     @disabled = true
-    @marker = @response.to_gmaps4rails
+        
+    if @response.latitude     
+    @hash = Gmaps4rails.build_markers(@response) do |response, marker|
+      marker.lat response.latitude
+      marker.lng response.longitude
+    end
+    end 
+
+    # @marker = @response.to_gmaps4rails
     @answers = @response.answers
     render :edit
   end

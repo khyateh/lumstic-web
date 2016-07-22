@@ -84,7 +84,18 @@ class SurveysController < ApplicationController
     # responses = Response.accessible_by(current_ability).first
     # @complete_responses_count = responses.where(:status => 'complete',:blank => false).count
     @complete_responses_count = @survey.complete_responses_count(current_ability)
-    @markers = @survey.responses.where(:status => "complete").to_gmaps4rails
+    # @markers = @survey.responses.where(:status => "complete").to_gmaps4rails
+    
+    @response = @survey.responses.where(:status => "complete").where.not(:latitude => nil)
+    if @response
+      @hash = Gmaps4rails.build_markers(@response) do |response, marker|
+      marker.lat response.latitude
+      marker.lng response.longitude
+    end    
+    end
+    
+    
+    
   end
   
   def midline

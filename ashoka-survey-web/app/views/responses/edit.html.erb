@@ -1,5 +1,5 @@
 <%# render "layouts/status_bar", :status => "collect" %>
-
+<%= stylesheet_link_tag "gmaps4rails" %>
 <% if @disabled %>
   <style type="text/css" rel="stylesheet">
   .inline-hints {display: none;}
@@ -107,11 +107,11 @@
 <% end %>
 </div>
 
-<% if @disabled && JSON.parse(@marker).any? %>
-  <div id="location_map">
-    <p><%= t('.location') %></p>
-    <%= gmaps4rails(@marker) %>
-  </div>
+<% if @disabled && @hash %>
+<div style='width: 800px;' id="location_map">
+  <p><%= t('.location') %></p>      
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>  
 <% else %>
   <div id="location_map">
     <p><%= t('.location_unavailable') %></p>
@@ -129,6 +129,8 @@
 </div>
 <div class="clear"></div>
 </div>
+
+<script src="//maps.google.com/maps/api/js?key=AIzaSyC35OMgvRyHPu1dXVg_-sy8pbZvrz7PGbA&v=3.23&amp;libraries=geometry" type="text/javascript"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -176,5 +178,16 @@
     prepare_multi_record(<%= @response.records.order('records.id').map { |r| [r.id, r.category_id] } %>, <%= @disabled %>)
     organize_sub_questions()
     $.datepicker.setDefaults($.datepicker.regional['<%= locale %>']);
+    
+    <% if @disabled && @hash %>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();      
+    });
+    <% end %>
+     
+
   });
 </script>

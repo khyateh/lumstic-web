@@ -1,3 +1,4 @@
+require 'will_paginate/array'
 class SurveyDashboardController < ApplicationController
   def index
     @survey = Survey.find(params[:survey_id])

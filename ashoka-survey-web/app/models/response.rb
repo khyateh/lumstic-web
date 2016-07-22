@@ -27,8 +27,8 @@ class Response < ActiveRecord::Base
   delegate :public?, :to => :survey, :prefix => true, :allow_nil => true
 
 reverse_geocoded_by :latitude, :longitude, :address => :location
-#geocoded_by :ip_address, :latitude => :latitude, :longitude => :longitude
-acts_as_gmappable :lat => :latitude, :lng => :longitude, :check_process => false, :process_geocoding => false
+geocoded_by :ip_address, :latitude => :latitude, :longitude => :longitude
+#acts_as_gmappable :lat => :latitude, :lng => :longitude, :check_process => false, :process_geocoding => false
 
   scope :earliest_first, lambda{order('updated_at')}
   scope :completed, lambda{where(:status => Status::COMPLETE)}
