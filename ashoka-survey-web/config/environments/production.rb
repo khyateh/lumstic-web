@@ -92,15 +92,15 @@ SurveyWeb::Application.configure do
   #   :user_name => EY::Config.get(:sendgrid, 'devendra_uwtech'),
   #   :password => EY::Config.get(:sendgrid, 'devendra@123#')
   # }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
-    :port           => '587',
-    :authentication => :plain,
-    :user_name      => ENV['SENDGRID_USERNAME'],
-    :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => 'heroku.com'
-  }
+#  config.action_mailer.delivery_method = :smtp
+#  config.action_mailer.smtp_settings = {
+#    :address        => 'smtp.sendgrid.net',
+#    :port           => '587',
+#    :authentication => :plain,
+#    :user_name      => ENV['SENDGRID_USERNAME'],
+#    :password       => ENV['SENDGRID_PASSWORD'],
+#    :domain         => 'heroku.com'
+#  }
   
 end
 

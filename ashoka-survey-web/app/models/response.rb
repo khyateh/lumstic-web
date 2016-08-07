@@ -32,7 +32,7 @@ geocoded_by :ip_address, :latitude => :latitude, :longitude => :longitude
 
   scope :earliest_first, lambda{order('updated_at')}
   scope :completed, lambda{where(:status => Status::COMPLETE)}
-
+  scope :shared_response, -> { joins(Survey.shared(user_info[:user_id])) }
   before_save(:set_completed_date)
 
   validate :completed_response_cannot_be_marked_incomplete

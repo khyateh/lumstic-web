@@ -17,6 +17,7 @@ class Survey < ActiveRecord::Base
 
   has_many :respondents, ->{ where("user_id = ?", Thread.current[:survey_current_user]) }
 
+  scope :shared, -> user_id { includes(:survey_users).where('survey_users.user_id' => user_id) }
   scope :finalized, lambda { where(:finalized => true)}
   # scope :none, lambda { limit(0) }
   scope :not_expired, lambda { where('expiry_date > ?', Date.today) }
@@ -106,9 +107,7 @@ class Survey < ActiveRecord::Base
       else
         survey.name = "#{name}  #{I18n.t('activerecord.attributes.survey.copied')}"
       end
-      survey.organization_id = options[:organization_id] if options[:organization_id]
-      puts 'Parent Id'
-      puts options[:parent_id]
+      survey.organization_id = options[:organization_id] if options[:organization_id]      
       survey.parent_id = options[:parent_id] if options[:parent_id]
       survey.public = false
       survey.auth_key = nil

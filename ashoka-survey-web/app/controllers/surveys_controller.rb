@@ -15,9 +15,11 @@ class SurveysController < ApplicationController
     #  sur.midline_surveys.all      
     #end
     filtered_surveys = SurveyFilter.new(@surveys, params[:filter]).filter
-    paginated_surveys = filtered_surveys.most_recent.paginate(:page => params[:page], :per_page => 10)
+    paginated_surveys = filtered_surveys.most_recent.paginate(:page => params[:page], :per_page => 10)    
     @surveys = paginated_surveys.decorate
-    @paginated_surveys = paginated_surveys
+    puts 'Surveys'
+   # puts paginated_surveys
+    @paginated_surveys = paginated_surveys    
     @organizations = Organization.all(access_token)    
   end
 

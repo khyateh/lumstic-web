@@ -18,7 +18,7 @@ class CorporateWebsController < ApplicationController
       else
         @enquiry = BrochureEnquiry.create!(params[:enquiry].merge(:count => 1))
       end
-        PrivacyMailer.lumstic_brochure(@enquiry.email).deliver 
+        # PrivacyMailer.lumstic_brochure(@enquiry.email).deliver 
         redirect_to :action => "about"
     rescue => e  
       flash[:error] = e.message

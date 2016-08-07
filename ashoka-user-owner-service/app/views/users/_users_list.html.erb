@@ -10,7 +10,7 @@
     </div>
     <div class="tabBox">
       <div class="tabContainer active" id="tab01">
-      
+
         <% if users.count > 0 %>
 
         <div id="pager1" class="pager">
@@ -23,18 +23,18 @@
               <option  value="40">40</option>
             </select>
             <input type="text" class="pagedisplay"/>
-            
+
             <%= image_tag "prev.svg" , class: "prev"  %>
             <%= image_tag "next.svg" , class: "next"  %>
             <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>
             <img src="../addons/pager/icons/next.png" class="next"/>
             <img src="../addons/pager/icons/last.png" class="last"/> -->
-            
+
           </form>
       </div>
-      
+
           <table class="table_list tablesorter" id="table1">
-          <thead>                    
+          <thead>
              <tr>
               <th width="20%" class="rightBorder"><%= t"name" %></th>
               <th width="45%" class="rightBorder"><%= t"email" %></th>
@@ -44,7 +44,9 @@
             </tr>
             </thead>
             <tbody>
-            <% users.each do |user|%>
+            <% users.each do |user|
+              if current_user.available_roles.include?(user.role)
+            %>
               <tr>
                 <td><%= user.name.titleize %></td>
                 <td><%= mail_to user.email %></td>
@@ -64,18 +66,20 @@
                   <%= link_to " ", edit_organization_user_path(user.organization_id, user.id) , class: "user_edit edit" %>
                 </td>
               </tr>
-            <% end %>
+            <% end
+          end
+            %>
             </tbody>
           </table>
 
 
 
-          
+
         <% else  %>
           <div class="noRecords"><%= t "no_users_in_this_category" %></div>
         <% end %>
 
-        
+
 
       </div>
       <div class="tabContainer" id="tab02">
@@ -92,9 +96,9 @@
             <input type="text" class="pagedisplay"/>
             <%= image_tag "prev.svg" , class: "prev"  %>
             <%= image_tag "next.svg" , class: "next"  %>
-            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>            
+            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>
             <img src="../addons/pager/icons/next.png" class="next"/>
-              <img src="../addons/pager/icons/last.png" class="last"/> -->              
+              <img src="../addons/pager/icons/last.png" class="last"/> -->
             </form>
           </div>
 
@@ -140,9 +144,9 @@
             <input type="text" class="pagedisplay"/>
             <%= image_tag "prev.svg" , class: "prev"  %>
             <%= image_tag "next.svg" , class: "next"  %>
-            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>            
+            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>
             <img src="../addons/pager/icons/next.png" class="next"/>
-            <img src="../addons/pager/icons/last.png" class="last"/> -->            
+            <img src="../addons/pager/icons/last.png" class="last"/> -->
           </form>
           </div>
 
@@ -187,9 +191,9 @@
             <input type="text" class="pagedisplay"/>
             <%= image_tag "prev.svg" , class: "prev"  %>
             <%= image_tag "next.svg" , class: "next"  %>
-            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>            
+            <!-- <img src="../addons/pager/icons/prev.png" class="prev"/>
             <img src="../addons/pager/icons/next.png" class="next"/>
-            <img src="../addons/pager/icons/last.png" class="last"/> -->            
+            <img src="../addons/pager/icons/last.png" class="last"/> -->
           </form>
           </div>
           <table class="table_list tablesorter" id="table4">

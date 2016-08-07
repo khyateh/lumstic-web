@@ -85,10 +85,16 @@ class User < ActiveRecord::Base
   end
 
   def available_roles
+    puts role
     if role == "super_admin"
       ROLES
     else
-      ROLES.reject { |role| role == 'super_admin' }
+      if role == 'manager'
+        puts 'Here'
+        ROLES.reject { |role|  role == 'cso_admin' || role == 'super_admin' }        
+      else
+        ROLES.reject { |role| role == 'super_admin' }
+      end
     end
   end
 

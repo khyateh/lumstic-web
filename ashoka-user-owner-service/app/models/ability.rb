@@ -14,6 +14,10 @@ class Ability
       can :read, Organization, :id => user.organization_id
       can :update, Organization, :id => user.organization_id
       can :destroy, Organization, :id => user.organization_id
+    when 'manager'
+      can :manage, User, :organization_id => user.organization_id
+      can :read, Organization, :id => user.organization_id
+      can :update, Organization, :id => user.organization_id
     when nil
       can :create, Organization
     else

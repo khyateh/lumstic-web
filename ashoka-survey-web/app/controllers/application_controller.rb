@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   end
 
   def signed_in_as_cso_admin?
-    session[:user_info][:role] == "cso_admin" if user_currently_logged_in?
+    session[:user_info][:role] == "cso_admin" || session[:user_info][:role] == "manager" if user_currently_logged_in?
   end
 
   def current_user_org

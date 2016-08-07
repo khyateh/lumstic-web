@@ -2,13 +2,16 @@ class SupervisorAbility < Ability
   def initialize(user_info)
     @user_info = user_info
 
-    can :read, Survey, surveys_published_to_me
-    can :report, Survey, surveys_published_to_me
-    can :archive, Survey, surveys_published_to_me
-    can :generate_excel, Survey, surveys_published_to_me
-    can :view_survey_dashboard, Survey, surveys_published_to_me
+    can :read, Survey.shared(@user_info[:user_id]) #,  :survey_users => { :user_id => user_info[:user_id] }
+    can :read, Survey, :organization_id => @user_info[:org_id]
+    can :read, Survey.with_participating_organizations(@user_info[:org_id])
+    can :report, Survey.shared(@user_info[:user_id]) # SurveyUser , :survey_users => { :user_id => user_info[:user_id] } #Survey, surveys_published_to_me
+    can :archive, Survey.shared(@user_info[:user_id])  #, :survey_users => { :user_id => user_info[:user_id] } 
+    can :generate_excel, Survey.shared(user_info[:user_id]) #Survey, surveys_published_to_me
+    can :view_survey_dashboard, Survey.shared(@user_info[:user_id]) # SurveyUser , :survey_users => { :user_id => user_info[:user_id] }#Survey, surveys_published_to_me
 
     can_perform_on_responses_of_surveys_published_to_me(:manage)
+    
   end
   
   private
