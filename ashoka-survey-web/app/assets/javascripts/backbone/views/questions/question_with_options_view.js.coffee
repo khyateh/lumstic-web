@@ -5,6 +5,7 @@ SurveyBuilder.Views.Questions ||= {}
 class SurveyBuilder.Views.Questions.QuestionWithOptionsView extends SurveyBuilder.Views.Questions.QuestionView
 
   events:
+    'blur  input[type=text]': 'handle_textbox_keyup'
     'keyup  input[type=text]': 'handle_textbox_keyup'
     'change input[type=checkbox]': 'handle_checkbox_change'
     'click button.add_option': 'add_new_option_model'
@@ -17,7 +18,7 @@ class SurveyBuilder.Views.Questions.QuestionWithOptionsView extends SurveyBuilde
     this.model.on('add:options', this.add_new_option, this)
     this.model.get('options').on('destroy', this.delete_option_view, this)
     this.model.on('preload_options', this.preload_options, this)
-    this.model.on('change', this.render, this)
+    this.model.on('change', this.render, this)    
 
   preload_options: (collection) =>
     collection.each( (model) =>

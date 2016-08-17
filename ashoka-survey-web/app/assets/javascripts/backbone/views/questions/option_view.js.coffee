@@ -19,7 +19,7 @@ class SurveyBuilder.Views.Questions.OptionView extends Backbone.View
     $(this.el).children('div').children('.add_sub_question').bind('click', this.add_sub_question_model)
     $(this.el).children('div').children('.add_sub_category').bind('click', this.add_sub_category_model)
     $(this.el).children('div').children('.add_sub_multi_record').bind('click', this.add_sub_category_model)
-    $(this.el).children('div').children('.delete_option').bind('click', this.delete)
+    $(this.el).children('div').children('.delete_option').bind('click', this.delete)    
     $(this.el).children('input').bind('keyup', this.update_model)
     @limit_edit() if @survey_frozen
     return this

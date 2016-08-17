@@ -5,14 +5,16 @@ SurveyBuilder.Views.Dummies ||= {}
 class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.Views.Dummies.QuestionView
 
   events:
-    'keyup input.nestes-question[type=text]': 'handle_textbox_keyup_new'
-    'keyup input.nestes-question[type=number]': 'handle_textbox_keyup_new'
+    'blur input.nested-question[type=text]': 'handle_textbox_keyup_new'
+    'keyup input.nested-question[type=text]': 'handle_textbox_keyup_new'
+    'keyup input.nested-question[type=number]': 'handle_textbox_keyup_new'
     'change input[type=checkbox]': 'handle_checkbox_change_new'
     'click button.add_option': 'add_new_option_model'
     # 'click button.add_options_in_bulk': 'add_options_in_bulk'
 
   handle_textbox_keyup_new: (event) =>
     this.model.off('change', this.render)
+    console.log('In Dummy View')
     input = $(event.target)
     propertyHash = {}
     propertyHash[input.attr('name')] = input.val()
