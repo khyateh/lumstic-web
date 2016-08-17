@@ -2,7 +2,7 @@ class SurveyApp.ExcelDownloader
   constructor: (@container, download_button, @survey_id) ->
     download_button.click(@initialize)
     @container.find(".polling").hide()
-    @date_range = new SurveyApp.DateRangePicker(@container.find(".pick-date-range"))
+    @date_range = new SurveyApp.DateRangePicker(@container.find(".pick-date-range"))    
     @container.find(".cancel-button").click(@close_dialog)
     @container.find(".generate-button").click(@start)
     @error_message_container = @container.find(".error-message")

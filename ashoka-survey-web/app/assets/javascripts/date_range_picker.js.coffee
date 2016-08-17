@@ -2,23 +2,28 @@ class SurveyApp.DateRangePicker
   constructor: (@container) ->
     @errors = []
     date_format = "yy-mm-dd"
+    @pickers = @container.find(".date-picker")    
     @from = @container.find(".from-date").datepicker({ dateFormat: date_format })
     @to = @container.find(".to-date").datepicker({ dateFormat: date_format })
     @toggle = @container.find("#date-range-checkbox")
     @toggle.click(@toggle_date_pickers)
-    @pickers = @container.find(".date-picker")
-
-  toggle_date_pickers:  =>
-    if @toggle.attr('checked')
-      @pickers.removeAttr('disabled')
-    else
+    
+        
+  toggle_date_pickers:  =>    
+    if @toggle[0].getAttribute('checked')      
       @pickers.attr('disabled', 'disabled')
+      @toggle[0].removeAttribute('checked')
+    else    
+      @pickers.removeAttr('disabled')
+      @toggle[0].setAttribute('checked', 'checked')
+      
+      
 
   prepare_params: =>
-    if @toggle.attr('checked')
+    if @toggle[0].getAttribute('checked')      
       from: @from.val()
       to: @to.val()
-    else
+    else      
       {}
 
   both_dates_present: =>
