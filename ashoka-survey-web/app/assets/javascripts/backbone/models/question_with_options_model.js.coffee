@@ -15,6 +15,9 @@ class SurveyBuilder.Models.QuestionWithOptionsModel extends SurveyBuilder.Models
       }
     }
   ]
+  
+  #initialize: =>
+  @lockFlag = false
 
   has_errors: =>
     !_.isEmpty(@errors) || @get('options').has_errors()
@@ -34,6 +37,12 @@ class SurveyBuilder.Models.QuestionWithOptionsModel extends SurveyBuilder.Models
   first_order_number: =>
     @get('options').first().get('order_number')
 
+  generate_order_number: =>
+    @getLock()
+    num = @get_order_counter()
+    @unlock()
+    num
+    
   get_order_counter: =>
     return 0 if @get('options').isEmpty()
     prev_order_counter = @get('options').last().get('order_number')
@@ -51,7 +60,7 @@ class SurveyBuilder.Models.QuestionWithOptionsModel extends SurveyBuilder.Models
 
   create_new_option: (content) =>
     content = "Another Option" unless _(content).isString()
-    @get('options').create({content: content, order_number: @get_order_counter(), question_id: @get('id') })
+    @get('options').create({content: content, order_number: @generate_order_number(), question_id: @get('id') })
 
   has_drop_down_options: =>
     @get('type') == "DropDownQuestion" && @get('options').first()
@@ -62,5 +71,17 @@ class SurveyBuilder.Models.QuestionWithOptionsModel extends SurveyBuilder.Models
   destroy_options: =>
     collection = @get('options')
     model.destroy() while model = collection.pop()
+    
+  getLock: =>    
+    while @lockFlag == true      
+      setTimeout {}, 200  
+    @lock()
+    return true 
+  
+  unlock: =>
+    @lockFlag = false
+  
+  lock: =>    
+    @lockFlag = true
 
 SurveyBuilder.Models.QuestionWithOptionsModel.setup()
