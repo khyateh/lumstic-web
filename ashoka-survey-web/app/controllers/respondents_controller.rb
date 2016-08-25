@@ -18,7 +18,7 @@ class RespondentsController < ApplicationController
     
     user_param = ' 1=1 '
     if params[:user_filter]
-      if  params[:user_filter][:user_id] 
+      if  params[:user_filter][:user_id] && params[:user_filter][:user_id].strip != '' 
         user_param = ' user_id in (' + params[:user_filter][:user_id] + ')'      
       end
     end
