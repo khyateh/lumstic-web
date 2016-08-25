@@ -93,7 +93,7 @@ class RespondentsController < ApplicationController
     end
     end
     
-    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(:status => 'Allocated').paginate(:page => params[:page] || 1, :per_page => 5)
+    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(:status => 'Allocated').paginate(:page => params[:page] || 1, :per_page => 25)
     @publishable_users = User.find_by_organization(access_token,@survey.organization_id)
     render :index, :survey_id => @survey_id
     flash[:notice] = 'User allocation successfully completed'

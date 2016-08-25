@@ -85,5 +85,6 @@ module SurveyWeb
     
     #Setting Queue Adapter => delayed_job
     config.active_job.queue_adapter = :delayed_job
+    Delayed::Worker.destroy_failed_jobs = false  
   end
 end

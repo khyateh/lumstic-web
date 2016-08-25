@@ -85,5 +85,8 @@ UserService::Application.configure do
     :domain         => 'heroku.com'
   }
   config.action_mailer.delivery_method = :smtp
-end
 
+  config.after_initialize do
+   Delayed::Backend::ActiveRecord::Job.table_name='delayed_jobs_user'
+  end
+end

@@ -4,7 +4,7 @@ SurveyBuilder.Views.Questions ||= {}
 class SurveyBuilder.Views.Questions.QuestionView extends Backbone.View
 
   events:
-    'blur input[type=text]': 'handle_textbox_keyup'
+    #'blur input[type=text]': 'handle_textbox_keyup'
     'keyup input[type=text]': 'handle_textbox_keyup'
     'change input[type=number]': 'handle_textbox_keyup'
     'change input[type=checkbox]': 'handle_checkbox_change'
@@ -16,7 +16,7 @@ class SurveyBuilder.Views.Questions.QuestionView extends Backbone.View
     this.model.on('change', this.render, this)
     this.model.on('change:id', this.render, this)
 
-  render:(template) =>
+  render:(template) =>    
     json = this.model.toJSON().question
     json.allow_identifier = @allow_identifier()
     $(this.el).html(Mustache.render(this.template, json))

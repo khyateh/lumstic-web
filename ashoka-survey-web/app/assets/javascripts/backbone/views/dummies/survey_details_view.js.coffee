@@ -10,7 +10,7 @@ class SurveyBuilder.Views.Dummies.SurveyDetailsView extends Backbone.View
     this.model.on('change:errors', this.render, this)
     
   render: =>
-    data = _.extend(this.model.toJSON(), {errors: this.model.errors})
+    data = _.extend(this.model.toJSON(), {errors: this.model.errors})    
     $(this.el).html(Mustache.render(@template, data))
     return this
 

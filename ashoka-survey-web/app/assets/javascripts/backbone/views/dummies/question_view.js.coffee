@@ -17,8 +17,9 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     @model.on('save:completed', @renderImageUploader, this)
     @model.on('save:completed', @render, this)
     @model.on('change:id', @render, this)
-
-  render: =>
+   
+  render: =>    
+    console.log('Question render')
     $(@el).html('<div class="dummy_question_content"><div class="top_level_content"></div></div>') if $(@el).is(':empty')
     @model.set('content', I18n.t('js.untitled_question')) if _.isEmpty(@model.get('content'))
     json = _.extend(@model.toJSON())
@@ -43,8 +44,8 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     #$(@el).find('input[type=number]').bind('keyup',@handle_survey_events)    
     $(@el).find('input[type=number]').bind('mousewheel',@handle_element_mouseout)
     $(@el).find('input[type=number]').bind('change',@handle_element_mouseout)
-    $(@el).find('input[type=number]').bind('blur',@handle_survey_events)
-    $(@el).find('input[type=text]').bind('blur',@handle_survey_events)
+    #$(@el).find('input[type=number]').bind('blur',@handle_survey_events)
+    #$(@el).find('input[type=text]').bind('blur',@handle_survey_events)
     $(@el).find('input[type=checkbox]').bind('change',@handle_checkbox_change)
     
     $(@el).children(".dummy_question_content").click (e) =>
@@ -77,6 +78,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     !(this.model.get('parent_id') || this.model.get('has_multi_record_ancestor'))
 
   handle_textbox_blur: (event) =>
+    console.log('textbox blur')
     input = $(event.target)
     try
       current_element = $(event.target).closest('div.dummy_question') 
@@ -168,17 +170,18 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     return
 
   handle_element_blur: (event) =>
-    clearTimeout typingTimer
+    clearTimeout typingTimer    
     @handle_survey_events(event)
 
   handle_element_mouseout: (event) =>
-    eventInside = event
+    eventInside = event    
     setTimeout(((eventInside)=>
       @handle_survey_events(event)
     ),500)
     return
 
   handle_survey_events: (event) =>    
+    console.log(event)
     input = $(event.target)    
     current_ele = $(event.target).closest('div.dummy_question') 
     current_cat = $(event.target).closest('div.dummy_category')
@@ -187,18 +190,21 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     is_inside_option = $(current_ele).closest('.option')
     question_type = $(current_ele).attr('type') || $(current_cat).attr('type')
     if ( current_ele && ( has_category_id == undefined )  && is_inside_option  && ( has_parent_id == undefined ) )      
+      console.log('Here')  
       propertyHash = {}
       propertyHash[input.attr('name')] = input.val()
       this.model.off('change', this.render)
       @update_model(propertyHash) 
       event.stopImmediatePropagation()
     else if ( current_ele && ( has_category_id == undefined )  && ( has_parent_id == undefined ) )      
+      console.log('Here2')  
       propertyHash = {}
       propertyHash[input.attr('name')] = input.val()
       this.model.off('change', this.render)
       @update_model(propertyHash) 
       event.stopImmediatePropagation()
-    else if ( has_category_id )      
+    else if ( has_category_id )  
+      console.log('Here3')  
       cur_element = $(event.target).closest('surveyquestionchild')
       models = window.questions_models      
       if (typeof cur_element[0] != "undefined")        
@@ -225,6 +231,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
               )                                          
         )            
       else        
+        console.log('Here4')  
         cur_element = $(event.target).closest('surveyquestion')
         id__ = cur_element[0]['id']
         getOptions = false        
@@ -246,22 +253,69 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
                   @update_model(propertyHash,curr_model)
                   event.stopImmediatePropagation()
         )
-    else if ( has_parent_id )      
-      models = window.questions_models
-      cur_element = $(event.target).closest('surveyquestion')
-      if (typeof cur_element == "undefined")        
-        cur_element = $(event.target).closest('surveyquestionchild')        
-      if cur_element[0]?
+    else if ( has_parent_id )   
+      console.log('Here again')   
+      #models = window.questions_models
+      #cur_element = $(event.target).closest('surveyquestion')
+      #if (typeof cur_element == "undefined")        
+      #  cur_element = $(event.target).closest('surveyquestionchild')        
+      #if cur_element[0]?
+      #  id__ = cur_element[0]['id']
+      #_.each(models, (num,index) =>
+      #  if (parseInt(num.id) == parseInt(id__))
+      #    curr_model = num
+      #    propertyHash = {}
+      #    propertyHash[input.attr('name')] = input.val()
+      #    this.model.off('change', this.render)
+      #    @update_model(propertyHash,curr_model)
+      #    event.stopImmediatePropagation()
+      cur_element = $(event.target).closest('surveyquestionchild')
+      models = window.questions_models      
+      if (typeof cur_element[0] != "undefined")        
+        #question is part of a category with choices
+        id__ = $(cur_element[0]).attr('id')
+        sel_models = []
+        el_parent_id = $(cur_element[0]).attr('data-parentid')
+        executed = false                        
+        _.each(window.questions_models, (mod,index) => 
+            #console.log(mod.id)
+            if (parseInt(mod.id) == parseInt(el_parent_id))
+              option_models = mod.attributes['options']
+              option_models.each( (opt, idx) =>
+                  if(parseInt(opt.id) == parseInt(id__))
+                      if (executed is false)                
+                        executed = true
+                        propertyHash = {}
+                        #If option, set the content field
+                        propertyHash['content'] = input.val()
+                        this.model.off('change', this.render)
+                        @update_model(propertyHash,opt)
+                        event.stopImmediatePropagation()                      
+              )                                          
+        )            
+      else        
+        console.log('Here5')  
+        cur_element = $(event.target).closest('surveyquestion')
         id__ = cur_element[0]['id']
-      _.each(models, (num,index) =>
-        if (parseInt(num.id) == parseInt(id__))
-          curr_model = num
-          propertyHash = {}
-          propertyHash[input.attr('name')] = input.val()
-          this.model.off('change', this.render)
-          @update_model(propertyHash,curr_model)
-          event.stopImmediatePropagation()
-      )
+        getOptions = false        
+        #--
+        executed = false    
+        #console.log(models)  
+        _.each(models, (num,index) =>              
+              if (parseInt(num.id) == parseInt(id__))              
+                if (executed is false)                
+                  curr_model = num
+                  executed = true
+                  propertyHash = {}
+                  #If option, set the content field                                 
+                  if (getOptions)
+                    propertyHash['content'] = input.val()
+                  else
+                    propertyHash[input.attr('name')] = input.val()
+                  this.model.off('change', this.render)                                 
+                  @update_model(propertyHash,curr_model)
+                  event.stopImmediatePropagation()
+        )      
     return
     
   update_model: (propertyHash,curr_model) =>

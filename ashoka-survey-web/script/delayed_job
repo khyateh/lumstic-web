@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
-require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
-require 'delayed/command'
-Delayed::Command.new(ARGV).daemonize
+#require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
+#require 'delayed/command'
+#Delayed::Command.new(ARGV).daemonize
+run "RAILS_ENV=#{environment} #{current_path}/script/delayed_job --queues=survey_duplication,generate_excel,mixpanel -n 3 start"
+

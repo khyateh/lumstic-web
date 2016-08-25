@@ -1,17 +1,18 @@
 ##= require ./question_view
 SurveyBuilder.Views.Dummies ||= {}
 
+
 # Represents a dummy category on the DOM
 class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummies.QuestionView
   ORDER_NUMBER_STEP: 2
 
   events:
+    #'blur input[type=text]': 'handle_survey_events'
     'keyup input[type=text]': 'handle_textbox_keyup'
     'keyup input[type=number]': 'handle_textbox_keyup'
     'mousewheel input[type=number]': 'handle_element_mouseout'
-    'blur input[type=text]': 'handle_survey_events'
-    'blur input[type=number]': 'handle_survey_events'
     'change input[type=checkbox]': 'handle_checkbox_change'
+    #'blur input[type=number]': 'handle_survey_events'
     'click a.copy_question':'clear_focus'
 
   initialize: (@model, @template, @survey_frozen) =>
@@ -26,7 +27,7 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     @model.on('add:sub_question', @add_sub_question, this)
     @on('destroy:sub_question', @reorder_questions, this)
 
-  render: =>
+  render: =>    
     data = @model.toJSON().category
     data = _(data).extend({ question_number: @model.question_number })
     data = _(data).extend({ has_multi_record_ancestor: @model.get('has_multi_record_ancestor') })
@@ -61,6 +62,7 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     $(this.el).find('.add_sub_multi_record').bind('click', this.add_sub_category_model)
 
     $(this.el).find('.add-question-btn').bind('click',this.you_clicked_me)
+    
     $(this.el).find('.question-types a').bind('click',this.seleted_a_question)
 
     $(@el).find('abbr').show() if @model.get('mandatory')
@@ -73,7 +75,7 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
           window.loading_overlay.show_overlay("Reordering Questions")
           _.delay(=>
             @reorder_questions(event,ui)
-          , 10)
+          , 200)
         )
       })
       group.append(sub_question.render().el)
@@ -88,6 +90,7 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     this.model.add_sub_question(type)
 
   you_clicked_me: (event) =>
+    console.log('here click')
     $(event.target).prev('.question-types').toggleClass('show')
     return false
 

@@ -29,6 +29,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
 
   initialize: (model, template, @survey_frozen) =>
     super
+    @lockFlag = false
     @options = []
     @can_have_sub_questions = true
     @model.get('options').on('destroy', @delete_option_view, this)
@@ -114,6 +115,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
     window.loading_overlay.hide_overlay() if event
 
   reset_sub_question_numbers: =>
+    @getLock()
     for option in @options
       for sub_question in option.sub_questions
         index = $(sub_question.el).index()
@@ -121,6 +123,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
         sub_question.model.question_number = '' + parent_question_number + @parent_option_character(option) + '.' + index
 
         sub_question.reset_sub_question_numbers() if sub_question.can_have_sub_questions
+    @unlock()
     @render()
 
   parent_is_multichoice: (option) =>
@@ -171,3 +174,15 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
       $(this.el).find(".delete_option").hide()
       $(this.el).find(".add_options_in_bulk").hide()
       $(this.el).find(".textarea.add_options_in_bulk").hide()
+      
+  getLock: =>    
+   while @lockFlag == true      
+      setTimeout {}, 200  
+   @lock()
+   return true 
+  
+  unlock: =>
+    @lockFlag = false
+  
+  lock: =>    
+    @lockFlag = true

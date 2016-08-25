@@ -5,6 +5,7 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
   ORDER_NUMBER_STEP: 2
 
   initialize: (@model, @template, @survey_frozen) =>
+    @lockFlag = false
     this.sub_questions = []
     this.model.on('change:errors', this.render, this)
     this.model.on('change:id', this.render, this)
@@ -16,7 +17,7 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
     data = _.extend(this.model.toJSON().option, {errors: this.model.errors})
     data = _.extend(data, { finalized: @model.get('finalized') })
     $(this.el).html(Mustache.render(@template, data))
-    $(this.el).addClass('option')
+    $(this.el).addClass('option')    
     $(this.el).find('.add_sub_question').bind('click', this.add_sub_question_model)
     $(this.el).children('div').children('.add_sub_category').bind('click', this.add_sub_category_model)
     $(this.el).children('div').children('.add_sub_multi_record').bind('click', this.add_sub_category_model)
@@ -27,6 +28,7 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
 
     $(this.el).find('.delete_option').bind('click', this.delete)
     $(this.el).find('input').bind('keyup', this.update_model)
+    #console.log($(this.el).toJSON())
     @limit_edit() if @survey_frozen
 
     group = $("<div class='sub_question_group' style='border:0px solid orange;margin:10px;'>")
@@ -53,7 +55,7 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
     type = event.target.id
     this.model.add_sub_question(type)
 
-  you_clicked_me: (event) =>
+  you_clicked_me: (event) =>    
     $(event.target).prev('.question-types').toggleClass('show')
     return false
 
@@ -113,10 +115,12 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
       .max().value()
 
   set_sub_question_order_numbers: =>
+    @getLock()
     last_order_number = @last_sub_question_order_number()
     for sub_question in @sub_questions
       index = sub_question.set_order_number(last_order_number)
       @model.sub_question_order_counter = last_order_number + (index * @ORDER_NUMBER_STEP)
+    @unlock()
 
   has_no_sub_questions: =>
     @sub_questions.length == 0
@@ -127,4 +131,15 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
       $(this.el).find(".add_option").attr("disabled", false)
       $(this.el).find(".add_options_in_bulk").hide()
       $(this.el).find(".textarea.add_options_in_bulk").hide()
-      
+  
+  getLock: =>    
+    while @lockFlag == true      
+      setTimeout {}, 200  
+    @lock()
+    return true 
+  
+  unlock: =>
+    @lockFlag = false
+  
+  lock: =>    
+    @lockFlag = true

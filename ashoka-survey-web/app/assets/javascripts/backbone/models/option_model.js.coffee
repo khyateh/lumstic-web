@@ -64,6 +64,8 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
     this.trigger('add:sub_question', sub_question_model)
 
   set_question_number_for_sub_question: (sub_question_model) =>
+    console.log(this.get('order_number'))
+    console.log(parent_question.first_order_number())
     parent_question = this.get('question')
     multichoice_parent = parent_question.get('type') == "MultiChoiceQuestion"
     option_order_number = this.get('order_number') - parent_question.first_order_number()
@@ -90,6 +92,7 @@ class SurveyBuilder.Models.OptionModel extends Backbone.RelationalModel
     @save_model()
 
   preload_sub_elements: =>
+    console.log('Preload options')
     return unless @has_sub_questions()
     elements = @get('elements')
     _.each elements, (question) =>
