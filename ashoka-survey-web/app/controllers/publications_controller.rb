@@ -97,15 +97,15 @@ class PublicationsController < ApplicationController
     (select row_to_json(OptionId)  from
     (select array_to_json(array_agg(row_to_json(t))) as Choices from
     (
-    select om.id as Option_Id 
+   select om.id as Option_Id 
     from options om 
-    where om.content in
-    (select o.content from options o 
-    inner join choices c on c.option_id = o.id
-    inner join answers an on  an.id = am.id --an.question_id = q.original_question_id and
-    where c.answer_id = am.id
+    where trim(om.content) in
+    (select ao.content from answers ao 
+        where ao.question_id=am.question_id
+        and ao.response_id=res.id
     ) 
-    and question_id=am.question_id
+    and question_id=(select id from questions where original_question_id = am.question_id)
+
     ) 
     as t) as OptionId) as Option
     from answers am)  cho on cho.id = a.id and cho.question_id = q.original_question_id

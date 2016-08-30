@@ -26,7 +26,7 @@ class RespondentsController < ApplicationController
       @user_selected = params[:user_filter][:user_id]
     end
     
-    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(user_param).where(:status => filter).search(params[:search_param]).paginate(:page => params[:page] || 1, :per_page => 5)
+    @respondents = Respondent.where(:survey_id => params[:survey_id]).where(user_param).where(:status => filter).search(params[:search_param]).paginate(:page => params[:page] || 1, :per_page => 25)
     puts @respondents
     @publishable_users = User.find_by_organization(access_token,@survey.organization_id)
   end
@@ -34,7 +34,7 @@ class RespondentsController < ApplicationController
   def search
     @survey_id = params[:survey_id]
     @survey = Survey.find(params[:survey_id]).decorate
-    @respondents = Respondent.where('respondent_json like ?', '%' + params[:search_param] + '%').paginate(:page => params[:page], :per_page => 2)
+    @respondents = Respondent.where('respondent_json like ?', '%' + params[:search_param] + '%').paginate(:page => params[:page], :per_page => 25)
     render :index, :survey_id => params[:survey_id], :search_param => params[:search_param]
   end
 
