@@ -90,8 +90,8 @@ class PublicationsController < ApplicationController
     r.location as Location, a.content as Answer_content , cho.Option
     from surveys s 
     inner join questions q on q.survey_id = s.id    
-    inner join responses r on s.parent_id = r.survey_id
-    inner join answers a on a.question_id = q.original_question_id and a.response_id = r.id
+    left outer join responses r on s.parent_id = r.survey_id
+    left outer join answers a on a.question_id = q.original_question_id and a.response_id = r.id
     left outer join 
       (select ao.id, ao.question_id, ao.response_id,
                 (select row_to_json(OptionId)  from
@@ -102,8 +102,8 @@ class PublicationsController < ApplicationController
                     where trim(om.content) in
                      (select a1.content from answers a1 
                         where a1.question_id=ao.question_id
-                        and a1.response_id=res.id )                         
-                   and a1.question_id=qm.id
+                        and a1.response_id=res.id  )                         
+                   and question_id=qm.id
                          ) 
                       as t)
              as OptionId) as Option
