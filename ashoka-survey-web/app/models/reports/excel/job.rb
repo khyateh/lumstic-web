@@ -12,9 +12,10 @@ class Reports::Excel::Job < Struct.new(:excel_data)
     f.binmode
     
     buffer = Zip::OutputStream.write_buffer(::StringIO.new(''),  Zip::TraditionalEncrypter.new(excel_data.password)) do |zos|
-   
        zos.put_next_entry(excel_data.file_name + ".xlsx")
-       zos.write package.to_stream.read
+       if excel_data.responses.count > 0
+        zos.write package.to_stream.read
+       end 
      end.string
      
       f.write buffer 

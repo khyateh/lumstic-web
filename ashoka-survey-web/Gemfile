@@ -95,6 +95,8 @@ group :development do
   gem 'rails-erd'
   gem 'railroady'
   gem 'byebug'
+  gem 'derailed'
+  gem 'stackprof'
 end
 
 

@@ -19,7 +19,7 @@ class SurveyApp.DateRangePicker
       
       
 
-  prepare_params: =>
+  prepare_params: =>    
     if @toggle[0].getAttribute('checked')      
       from: @from.val()
       to: @to.val()

@@ -36,12 +36,11 @@ module SurveyWeb
 
     # cache store for dalli store
     config.cache_store = :dalli_store,
-                        (ENV["MEMCACHIER_SERVERS"] || "").split(","),
-                        {:username => ENV["MEMCACHIER_USERNAME"],
-                         :password => ENV["MEMCACHIER_PASSWORD"],
-                         :failover => true,
+                        nil,
+                        {:failover => true,
                          :socket_timeout => 1.5,
-                         :socket_failure_delay => 0.2
+                         :socket_failure_delay => 0.2,
+                         :compress => true                         
                         }
 
     # Configure the default encoding used in templates for Ruby 1.9.

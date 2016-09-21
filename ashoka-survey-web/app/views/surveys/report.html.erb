@@ -95,11 +95,11 @@
   <div class="test report_container" style="padding:2em;">
   <div class="h3">Please select the report date range</div>
     <div class="select_report_date_range">
-    From Date: <input type="text" id="report_start_range">
-    To Date: <input type="text" id="report_end_range">
+    From Date: <input type="text" id="report_start_range" value=<%= params[:from] %> >
+    To Date: <input type="text" id="report_end_range" value=<%= params[:to] %> >
 
-      <span class="go_btn Btn colrBtn" style="margin-left:1em;">Apply</span> 
-      <span id="show_all" class="show_all Btn colrBtn" style="margin-left:1em;">Show All</span> 
+      <span class="go_btn Btn colrBtn" style="margin-left:1em;cursor: pointer;">Apply</span> 
+      <span id="show_all" class="show_all Btn colrBtn" style="margin-left:1em;cursor: pointer;">Show All</span> 
     </div>
     
   </div>
@@ -117,8 +117,8 @@
   <% end %>
   
   <script src="//maps.google.com/maps/api/js?key=AIzaSyC35OMgvRyHPu1dXVg_-sy8pbZvrz7PGbA&v=3.23&amp;libraries=geometry" type="text/javascript"></script>
-  <script>
-    $(document).ready(function() {
+  <script>    
+    $(document).ready(function() {      
       new SurveyApp.ExcelDownloader($("#excel-dialog"), $(".download_excel"), <%= @survey.id %>)
       date_format =  'yy-mm-dd' 
       from_date = $('#report_start_range').datepicker({ dateFormat: date_format });
@@ -126,10 +126,10 @@
       to_date = $('#report_end_range').datepicker({ dateFormat: date_format });
 
       $('.go_btn').click(function(){
-       window.location = "http://localhost:3000/surveys/<%= @survey.id %>/report?from=" + from_date.val() + "&to=" + to_date.val();
+       window.location.assign("http://localhost:3000/surveys/<%= @survey.id %>/report?from=" + from_date.val() + "&to=" + to_date.val());       
       });
       $('#show_all').click(function(){
-        window.location = "http://localhost:3000/surveys/<%= @survey.id %>/report?from=<%= -1000.days.from_now.strftime("%Y-%m-%d") %>&to=<%= 100.days.from_now.strftime("%Y-%m-%d") %>";
+        window.location.assign("http://localhost:3000/surveys/<%= @survey.id %>/report?from=<%= -1000.days.from_now.strftime("%Y-%m-%d") %>&to=<%= 100.days.from_now.strftime("%Y-%m-%d") %>");
       });
 
 
