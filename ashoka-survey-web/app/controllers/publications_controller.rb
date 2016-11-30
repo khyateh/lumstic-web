@@ -110,7 +110,7 @@ class PublicationsController < ApplicationController
     from answers ao
     inner join 
     questions qm on qm.original_question_id = ao.question_id 
-    and ao.response_id=res.id     
+    and ao.response_id=res.id and qm.survey_id = sur.id     
 )  cho on cho.id = a.id and cho.question_id = q.original_question_id and cho.response_id=res.id
 
     where

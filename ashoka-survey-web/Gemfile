@@ -2,7 +2,8 @@ source 'http://rubygems.org'
 #gem rails 3.2.22.2
 gem 'rails', '4.2.4'
 gem 'date_validator', '~> 0.6.3'
-gem 'unicorn', '~> 4.5.0'
+# gem 'unicorn', '~> 4.5.0'
+gem "passenger"
 gem 'pg'
 gem 'formtastic', '~> 2.2.1'
 gem 'will_paginate', '~> 3.0.3'

@@ -135,7 +135,11 @@ class Question < ActiveRecord::Base
   end
 
   def find_or_initialize_answers_for_response(response, options={})
-    Answer.where(:response_id => response.id, :question_id => self.id, :record_id => options[:record_id]).first_or_initialize
+    if (options[:record_id] || options[:record_id] == nil)
+      Answer.where(:response_id => response.id, :question_id => self.id).first_or_initialize
+    else
+      Answer.where(:response_id => response.id, :question_id => self.id, :record_id => options[:record_id]).first_or_initialize
+    end
   end
 
   protected
