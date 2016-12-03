@@ -65,7 +65,6 @@ class SurveyBuilder.Models.CategoryModel extends Backbone.RelationalModel
     @sub_question_models = _(@sub_question_models).without(sub_question_model)
 
   preload_sub_elements: =>
-    console.log('preload category')
     elements = @get('elements')
     _.each elements, (question, counter) =>
       _(question).extend({category_id: this.get('id')})

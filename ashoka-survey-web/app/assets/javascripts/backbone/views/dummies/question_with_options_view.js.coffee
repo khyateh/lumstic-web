@@ -9,12 +9,11 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
     'keyup input.nested-question[type=text]': 'handle_textbox_keyup_new'
     'keyup input.nested-question[type=number]': 'handle_textbox_keyup_new'
     'change input[type=checkbox]': 'handle_checkbox_change_new'
-    'click button.add_option': 'add_new_option_model'
-    # 'click button.add_options_in_bulk': 'add_options_in_bulk'
+    #'click button.add_option': 'add_new_option_model'
+    'click button.add_options_in_bulk': 'add_options_in_bulk'
 
   handle_textbox_keyup_new: (event) =>
-    this.model.off('change', this.render)
-    console.log('In Dummy View')
+    this.model.off('change', this.render)    
     input = $(event.target)
     propertyHash = {}
     propertyHash[input.attr('name')] = input.val()
@@ -43,14 +42,21 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
       @show_actual(e)
     $(@el).children(".sub_question_group").html('')
     $(@el).find('button.add_options_in_bulk').bind('click',@add_options_in_bulk)
-    $(@el).find('a.add-question-btn').bind('click',@clear_focus)
+    $(@el).find('button.add_option').bind('click',@add_new_option_model)
+    #$(@el).find('a.add-question-btn').bind('click','@clear_focus')
+    #$(this.el).find('.add-question-btn-opt').bind('click', view.you_clicked_me_option)
 
-    _(@options).each (option) =>
+    _(@options).each (option) => 
+      option.render()    
       # console.dir  option
     @render_dropdown()
 
     @limit_edit() if @survey_frozen
     return this
+
+  add_click : (event) =>
+    $(event.target).prev('.question-types').toggleClass('show')
+    return false
 
   preload_options: (collection) =>
     collection.each( (model) =>
@@ -78,12 +84,12 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
         template = $('#dummy_multi_choice_option_template').html()
       when 'DropDownQuestion'
         template = $('#dummy_drop_down_option_template').html()
-    view = new SurveyBuilder.Views.Dummies.OptionView(model, template, @survey_frozen)
+    view = new SurveyBuilder.Views.Dummies.OptionView(model, template, @survey_frozen)    
     @options.push view
     view.on('render_preloaded_sub_questions', @render, this)
     view.on('render_added_sub_question', @render, this)
-    view.on('destroy:sub_question', @reorder_questions, this)
-    $(@el).children('.dummy_question_content').children('.children_content').append(view.render().el)
+    view.on('destroy:sub_question', @reorder_questions, this)    
+    $(@el).children('.dummy_question_content').children('.children_content').append(view.render().el)   
     @render_dropdown()
     return view
 
@@ -142,6 +148,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
       true
 
   add_new_option_model: (content) =>
+    console.log('Option Add')
     this.model.create_new_option(content) if @confirm_if_frozen()
 
   add_options_in_bulk: =>

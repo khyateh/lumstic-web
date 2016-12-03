@@ -89,8 +89,7 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     type = event.target.id
     this.model.add_sub_question(type)
 
-  you_clicked_me: (event) =>
-    console.log('here click')
+  you_clicked_me: (event) =>    
     $(event.target).prev('.question-types').toggleClass('show')
     return false
 

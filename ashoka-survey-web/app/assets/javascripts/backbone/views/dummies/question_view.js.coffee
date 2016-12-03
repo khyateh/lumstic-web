@@ -18,8 +18,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     @model.on('save:completed', @render, this)
     @model.on('change:id', @render, this)
    
-  render: =>    
-    console.log('Question render')
+  render: =>
     $(@el).html('<div class="dummy_question_content"><div class="top_level_content"></div></div>') if $(@el).is(':empty')
     @model.set('content', I18n.t('js.untitled_question')) if _.isEmpty(@model.get('content'))
     json = _.extend(@model.toJSON())
@@ -77,8 +76,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
   allow_identifier: =>
     !(this.model.get('parent_id') || this.model.get('has_multi_record_ancestor'))
 
-  handle_textbox_blur: (event) =>
-    console.log('textbox blur')
+  handle_textbox_blur: (event) =>    
     input = $(event.target)
     try
       current_element = $(event.target).closest('div.dummy_question') 
@@ -180,8 +178,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     ),500)
     return
 
-  handle_survey_events: (event) =>    
-    console.log(event)
+  handle_survey_events: (event) =>
     input = $(event.target)    
     current_ele = $(event.target).closest('div.dummy_question') 
     current_cat = $(event.target).closest('div.dummy_category')
@@ -190,21 +187,18 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
     is_inside_option = $(current_ele).closest('.option')
     question_type = $(current_ele).attr('type') || $(current_cat).attr('type')
     if ( current_ele && ( has_category_id == undefined )  && is_inside_option  && ( has_parent_id == undefined ) )      
-      console.log('Here')  
       propertyHash = {}
       propertyHash[input.attr('name')] = input.val()
       this.model.off('change', this.render)
       @update_model(propertyHash) 
       event.stopImmediatePropagation()
     else if ( current_ele && ( has_category_id == undefined )  && ( has_parent_id == undefined ) )      
-      console.log('Here2')  
       propertyHash = {}
       propertyHash[input.attr('name')] = input.val()
       this.model.off('change', this.render)
       @update_model(propertyHash) 
       event.stopImmediatePropagation()
     else if ( has_category_id )  
-      console.log('Here3')  
       cur_element = $(event.target).closest('surveyquestionchild')
       models = window.questions_models      
       if (typeof cur_element[0] != "undefined")        
@@ -231,7 +225,6 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
               )                                          
         )            
       else        
-        console.log('Here4')  
         cur_element = $(event.target).closest('surveyquestion')
         id__ = cur_element[0]['id']
         getOptions = false        
@@ -254,7 +247,6 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
                   event.stopImmediatePropagation()
         )
     else if ( has_parent_id )   
-      console.log('Here again')   
       #models = window.questions_models
       #cur_element = $(event.target).closest('surveyquestion')
       #if (typeof cur_element == "undefined")        
@@ -294,7 +286,6 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
               )                                          
         )            
       else        
-        console.log('Here5')  
         cur_element = $(event.target).closest('surveyquestion')
         id__ = cur_element[0]['id']
         getOptions = false        

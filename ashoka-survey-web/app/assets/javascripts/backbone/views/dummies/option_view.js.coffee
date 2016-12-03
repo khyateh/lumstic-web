@@ -5,7 +5,7 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
   ORDER_NUMBER_STEP: 2
 
   initialize: (@model, @template, @survey_frozen) =>
-    @lockFlag = false
+    @lockFlag = false    
     this.sub_questions = []
     this.model.on('change:errors', this.render, this)
     this.model.on('change:id', this.render, this)
@@ -13,22 +13,28 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
     this.model.on('change:preload_sub_questions', this.preload_sub_questions, this)
     this.model.on('destroy', this.remove, this)
 
+  bind_click: =>    
+    $(this.el).find('.add-question-btn').bind('click',this.you_clicked_me_option)
+
   render: =>
     data = _.extend(this.model.toJSON().option, {errors: this.model.errors})
     data = _.extend(data, { finalized: @model.get('finalized') })
+    
     $(this.el).html(Mustache.render(@template, data))
-    $(this.el).addClass('option')    
-    $(this.el).find('.add_sub_question').bind('click', this.add_sub_question_model)
-    $(this.el).children('div').children('.add_sub_category').bind('click', this.add_sub_category_model)
-    $(this.el).children('div').children('.add_sub_multi_record').bind('click', this.add_sub_category_model)
-
-    $(this.el).find('.add-question-btn').bind('click',this.you_clicked_me)
-    $(this.el).find('.question-types a').bind('click',this.seleted_a_question)
-    $(@el).find('a.add-question-btn').bind('click',@clear_focus)
+    $(this.el).addClass('option')
+    #console.log($(this.el).html())    
+    
+    $(this.el).find('.add_sub_question').on('click', this.add_sub_question_model)    
+    $(this.el).children('div').children('.add_sub_category').on('click', this.add_sub_category_model)
+    $(this.el).children('div').children('.add_sub_multi_record').on('click', this.add_sub_category_model)
+    $(this.el).find('.question-types a').on('click', this.seleted_a_question)    
+    $(this.el).find('.add-question-btn-opt').on('click', this.you_clicked_me_option)
+    #console.log($(this.el).children('surveyquestionchild').children('span').children('div').find('.add-question-btn-opt'))
+    #$(@el).find('a.add-question-btn').bind('click',@clear_focus)
+    
 
     $(this.el).find('.delete_option').bind('click', this.delete)
-    $(this.el).find('input').bind('keyup', this.update_model)
-    #console.log($(this.el).toJSON())
+    $(this.el).find('input').bind('keyup', this.update_model)    
     @limit_edit() if @survey_frozen
 
     group = $("<div class='sub_question_group' style='border:0px solid orange;margin:10px;'>")
@@ -48,15 +54,15 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
       $(x).find('input[type=number]').addClass('nested-question')
       group.append(x)
     
-    $(@el).append(group) unless _(this.sub_questions).isEmpty()
+    $(@el).append(group) unless _(this.sub_questions).isEmpty()        
     return this
 
   seleted_a_question: (event) =>
     type = event.target.id
     this.model.add_sub_question(type)
 
-  you_clicked_me: (event) =>    
-    $(event.target).prev('.question-types').toggleClass('show')
+  you_clicked_me_option: (event) =>    
+    $(event.target).prev('.question-types').toggleClass('show')    
     return false
 
   update_model: (event) =>
@@ -73,7 +79,7 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
     $(".clsass_sub_questions").html(window.conditional_ques_count)
 
   add_sub_question_model: (event) =>
-    type = $(event.target).prev().val()
+    type = $(event.target).prev().val()    
     this.model.add_sub_question(type)
 
   add_sub_category_model: (event) =>
@@ -98,7 +104,7 @@ class SurveyBuilder.Views.Dummies.OptionView extends SurveyBuilder.Views.Dummies
   preload_sub_questions: (sub_question_models) =>
     _.each(sub_question_models, (sub_question_model) =>
       this.add_sub_question(sub_question_model)
-    )
+    )    
     this.trigger('render_preloaded_sub_questions')
 
   delete_sub_question: (sub_question_model) =>
