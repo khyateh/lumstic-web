@@ -22,7 +22,9 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     propertyHash = {}
     propertyHash[input.attr('name')] = input.val()
     this.update_model(propertyHash)
+    #event.stopImmediatePropagation()
     event.stopPropagation()
+
 
   initialize: (@model, @template, @survey_frozen) =>
     @sub_questions = []
