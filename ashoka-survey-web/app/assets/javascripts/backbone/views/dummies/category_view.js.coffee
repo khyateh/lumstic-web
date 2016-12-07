@@ -15,6 +15,14 @@ class SurveyBuilder.Views.Dummies.CategoryView extends SurveyBuilder.Views.Dummi
     #'blur input[type=number]': 'handle_survey_events'
     'click a.copy_question':'clear_focus'
 
+  handle_textbox_keyup: (event) =>
+    console.log('Textbox blur inside question Category: ' + event.target)
+    this.model.off('change', this.render)
+    input = $(event.target)
+    propertyHash = {}
+    propertyHash[input.attr('name')] = input.val()
+    this.update_model(propertyHash)
+
   initialize: (@model, @template, @survey_frozen) =>
     @sub_questions = []
     @model.dummy_view = this
