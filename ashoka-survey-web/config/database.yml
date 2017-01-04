@@ -6,9 +6,9 @@
 development:
   adapter: postgresql
   encoding: utf8
-  database: survey_web_test
+  database: survey_web_test 
   pool: 5
-  username: pguser
+  username: postgres
   password: khyateh@123
   host: localhost
 
@@ -20,7 +20,7 @@ test:
   encoding: utf8
   database: survey_web_test
   pool: 5
-  username: pguser
+  username: postgres
   password: khyateh@123
   host: localhost
 
@@ -29,6 +29,6 @@ production:
   encoding: utf8
   database: survey_web_test
   pool: 5
-  username: pguser
+  username: postgres
   password: khyateh@123
   host: localhost

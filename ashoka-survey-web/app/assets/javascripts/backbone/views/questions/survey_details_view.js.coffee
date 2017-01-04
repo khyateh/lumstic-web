@@ -22,6 +22,7 @@ class SurveyBuilder.Views.Questions.SurveyDetailsView extends Backbone.View
     return this
 
   handle_textbox_keyup: (event) =>
+    #console.log('Textbox blur inside survey details: ' + event.target)
     this.model.off('change', this.render)
     input = $(event.target)
     propertyHash = {}

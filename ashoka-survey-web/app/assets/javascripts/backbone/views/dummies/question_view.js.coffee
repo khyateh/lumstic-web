@@ -76,7 +76,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
   allow_identifier: =>
     !(this.model.get('parent_id') || this.model.get('has_multi_record_ancestor'))
 
-  handle_textbox_blur: (event) =>    
+  handle_textbox_blur: (event) =>       
     input = $(event.target)
     try
       current_element = $(event.target).closest('div.dummy_question') 
@@ -159,7 +159,7 @@ class SurveyBuilder.Views.Dummies.QuestionView extends Backbone.View
   typingTimer = undefined
   doneTypingInterval = 500
   
-  handle_textbox_keyup: (event) =>
+  handle_textbox_keyup: (event) =>    
     eventInside = event
     clearTimeout typingTimer
     typingTimer = setTimeout(((eventInside)=>

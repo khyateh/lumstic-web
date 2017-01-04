@@ -166,7 +166,7 @@ class Answer < ActiveRecord::Base
     if min_value && content.to_i < min_value
       errors.add(:content, I18n.t("answers.validations.exceeded_lower_limit"))
     elsif max_value && content.to_i > max_value
-      errors.add(:content, I18n.t("answers.validations.exceeded_higher_limit"))
+      errors.add(:question_id, I18n.t("answers.validations.exceeded_higher_limit"))
     end
   end
 

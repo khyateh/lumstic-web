@@ -28,7 +28,7 @@ class SurveyBuilder.Views.Questions.QuestionView extends Backbone.View
     !(this.model.get('parent_id') || this.model.get('has_multi_record_ancestor'))
 
   handle_textbox_keyup: (event) =>
-    console.log('In Question View')
+    #console.log('Textbox blur inside question view: ' + event.target)
     this.model.off('change', this.render)
     input = $(event.target)
     propertyHash = {}

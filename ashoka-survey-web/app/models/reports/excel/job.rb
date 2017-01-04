@@ -32,10 +32,12 @@ class Reports::Excel::Job < Struct.new(:excel_data)
   def package
     return if excel_data.responses.empty?
     Axlsx::Package.new do |p|
+      @categories = nil
       wb = p.workbook
       bold_style = wb.styles.add_style sz: 12, b: true, alignment: { horizontal: :center }
       border = wb.styles.add_style border: { style: :thin, color: '000000' }
       questions = excel_data.questions.map(&:reporter)
+      hasMultiRecord = SurveyHasMultiRecord excel_data.survey.id      
       wb.add_worksheet(name: "Responses") do |sheet|
         headers = Reports::Excel::Row.new("Response No.")
         headers << questions.map(&:header)
@@ -45,6 +47,30 @@ class Reports::Excel::Job < Struct.new(:excel_data)
           response_answers =  Answer.where(:response_id => response[:id])
           .order('answers.record_id')
           .includes(:choices => :option).all
+          # Check for multiple category ids and duplicate question ids in the response -> map to new rows
+          #multi_answers = response_answers.group(:question_id).having("count(id) > 1")          
+          #multi_rec_questions = Question.where(:survey_id => excel_data.survey.id).includes('categories').where(:type => "MultiRecordCategory")
+          record_ids = Array.new
+          if hasMultiRecord
+            @categories.each do |cat| 
+              @records = Record.where(:response_id => response[:id], :category_id => cat.id)            
+            end
+            if (@records)
+              first_record = @records.first
+              @records.reject {@records.first}
+            end
+            
+            @multi_rec_answers = Answer.new
+            @records.each do |record|
+              record_ids.push record.id
+             
+             # Rails.logger.debug response_answers.where(:record_id => record.id).count == 0? nil : response_answers.where(:record_id => record.id)  
+              #@multi_rec_answers.concat response_answers.where(:record_id => record.id) 
+              # Remove the answers that have record_ids after the first record_id; include those answers in next lines
+              response_answers.reject{ |a| a.record_id == record.id}            
+            end
+            @multi_rec_answers = Answer.where(:response_id => response[:id], :record_id => record_ids)            
+          end
           answers_row = Reports::Excel::Row.new(i + 1)
           answers_row << questions.map do |question|
             question_answers = response_answers.find_all { |a| a.question_id == question.id }
@@ -52,6 +78,18 @@ class Reports::Excel::Job < Struct.new(:excel_data)
           end
           answers_row << excel_data.metadata.for(response)
           sheet.add_row answers_row.to_a, style: border
+
+          if (hasMultiRecord && @multi_rec_answers) # && @multi_rec_answers.count > 0)
+            record_ids.each do |rec|
+              multi_answers_row = Reports::Excel::Row.new(i + 1)
+              multi_answers_row << questions.map do |question|
+                question_answers = @multi_rec_answers.find_all { |a| a.question_id == question.id && a.record_id == rec }
+                question.formatted_answers_for(question_answers, :server_url => excel_data.server_url)
+              end
+              multi_answers_row << excel_data.metadata.for(response)
+              sheet.add_row multi_answers_row.to_a, style: border
+            end
+          end
         end
        end
     end
@@ -64,6 +102,11 @@ class Reports::Excel::Job < Struct.new(:excel_data)
   def error(job, exception)
     #puts exception
     Airbrake.notify(exception)
+  end
+
+  def SurveyHasMultiRecord(surveyId)
+    @categories = Category.where(:survey_id => surveyId, :type => "MultiRecordCategory")
+    return (@categories.count > 0)
   end
 
   private

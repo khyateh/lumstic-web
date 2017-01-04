@@ -29,6 +29,7 @@ class SurveyBuilder.Views.Questions.CategoryView extends Backbone.View
     return this
 
   handle_textbox_keyup: (event) =>
+    #console.log('Textbox blur inside question Category: ' + event.target)
     this.model.off('change', this.render)
     input = $(event.target)
     propertyHash = {}

@@ -13,6 +13,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
     'click button.add_options_in_bulk': 'add_options_in_bulk'
 
   handle_textbox_keyup_new: (event) =>
+    console.log('Inside Question with view')
     this.model.off('change', this.render)    
     input = $(event.target)
     propertyHash = {}
@@ -47,7 +48,7 @@ class SurveyBuilder.Views.Dummies.QuestionWithOptionsView extends SurveyBuilder.
     #$(this.el).find('.add-question-btn-opt').bind('click', view.you_clicked_me_option)
 
     _(@options).each (option) => 
-      option.render()    
+      #option.render()    
       # console.dir  option
     @render_dropdown()
 

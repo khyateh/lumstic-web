@@ -51,7 +51,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: user_service_production
+  database: survey_web_test
   pool: 5
   username:
   password:
