@@ -100,11 +100,12 @@ class Question < ActiveRecord::Base
   def answers_for_reports
     # Answer.joins(:response).where("answers.question_id = ? AND responses.status = 'complete' AND responses.state = 'clean'", id)
     # Answer.joins(:response).where("answers.question_id = ? AND responses.status = 'complete' AND responses.state = 'clean' AND responses.updated_at >= ?", id,(Date.today - 14) )
-    Answer.joins(:response).where("answers.question_id = ? AND responses.status = 'complete' AND responses.state = 'clean' AND responses.updated_at >= ? AND responses.updated_at <= ?", id,(Date.today - 14) , (Date.today - 13))
+    Answer.joins(:response).where("answers.question_id = ? AND responses.status = 'complete' AND responses.state = 'clean' AND responses.created_at >= ? AND responses.created_at <= ?", id,(Date.today - 14) , (Date.today - 13))
   end
 
   def answers_for_reports_in_range(date_range_start, date_range_end)
-    Answer.joins(:response).where("answers.question_id = ? AND responses.status = 'complete' AND responses.state = 'clean' AND responses.updated_at >= ? AND responses.updated_at <= ?", id,date_range_start,date_range_end)
+    # changed responses.updated_at to responses.created_at
+    Answer.joins(:response).where("answers.question_id = ? AND responses.status = 'complete' AND responses.state = 'clean' AND responses.created_at >= ? AND responses.created_at <= ?", id,date_range_start,date_range_end)
   end
 
   def nesting_level

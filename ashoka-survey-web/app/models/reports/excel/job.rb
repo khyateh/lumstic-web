@@ -70,6 +70,7 @@ class Reports::Excel::Job < Struct.new(:excel_data)
               response_answers.reject{ |a| a.record_id == record.id}            
             end
             @multi_rec_answers = Answer.where(:response_id => response[:id], :record_id => record_ids)            
+            id_answers = Answer.includes(:question).where(questions: { :identifier => true }, :response_id => response[:id])
           end
           answers_row = Reports::Excel::Row.new(i + 1)
           answers_row << questions.map do |question|
@@ -79,12 +80,15 @@ class Reports::Excel::Job < Struct.new(:excel_data)
           answers_row << excel_data.metadata.for(response)
           sheet.add_row answers_row.to_a, style: border
 
-          if (hasMultiRecord && @multi_rec_answers) # && @multi_rec_answers.count > 0)
+          if (hasMultiRecord && @multi_rec_answers && record_ids.length > 1) # && @multi_rec_answers.count > 0)
             record_ids.each do |rec|
               multi_answers_row = Reports::Excel::Row.new(i + 1)
               multi_answers_row << questions.map do |question|
-                question_answers = @multi_rec_answers.find_all { |a| a.question_id == question.id && a.record_id == rec }
-                question.formatted_answers_for(question_answers, :server_url => excel_data.server_url)
+                question_answers = id_answers.find_all { |a| a.question_id == question.id }
+                if (question_answers.length <= 0)
+                  question_answers = @multi_rec_answers.find_all { |a| a.question_id == question.id && a.record_id == rec }
+                end
+                question.formatted_answers_for(question_answers, :server_url => excel_data.server_url)                               
               end
               multi_answers_row << excel_data.metadata.for(response)
               sheet.add_row multi_answers_row.to_a, style: border
