@@ -4,7 +4,8 @@ module CorporateWebsHelper
 		title = {:index => "Welcome to LumStic",
 				 :about => "About us  | LumStic", 
 				 :partners => "Partners | LumStic",
-				 :contact => "Contact  us  | LumStic"}
+				 :contact => "Contact  us  | LumStic",
+				 :privacypolicy => "Privacy Policy | LumStic"}
 
 		if title.keys.include?(params[:action].to_sym)
 			title[params[:action].to_sym]
@@ -14,7 +15,7 @@ module CorporateWebsHelper
 	end
 
 	def extra_style
-		style = ["about","partners","contact"]
+		style = ["about","partners","contact","privacypolicy"]
 		if style.include?(params[:action])
 			true
 		else
@@ -30,7 +31,7 @@ module CorporateWebsHelper
 	end
 
 	def active_class(param)
-		arr = ["index","about","partners","contact"]
+		arr = ["index","about","partners","contact", "privacypolicy"]
 		"active" if params[:action] == param
 	end
 end

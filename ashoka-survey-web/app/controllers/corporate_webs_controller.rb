@@ -7,6 +7,9 @@ class CorporateWebsController < ApplicationController
   def about
   end
 
+  def privacypolicy
+  end
+
   def send_brochure
   #render :text => params[:enquiry] and return false
 

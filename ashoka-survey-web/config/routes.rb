@@ -6,7 +6,8 @@ SurveyWeb::Application.routes.draw do
   get "/about-us" => "corporate_webs#about"
   get "/partners" => "corporate_webs#partners"
   get "/contact-us" => "corporate_webs#contact"
-  get "/send_brochure" => "corporate_webs#send_brochure"  
+  get "/send_brochure" => "corporate_webs#send_brochure"
+  get "/privacypolicy" => "corporate_webs#privacypolicy"  
 
   get "/help" => "help#index" 
 
