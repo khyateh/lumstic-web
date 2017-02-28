@@ -100,7 +100,7 @@ geocoded_by :ip_address, :latitude => :latitude, :longitude => :longitude
 
   def update_response(response_params)
     update_response_in_transaction(response_params) do |response_params|
-      update_attribute(:status, response_params[:status]) if response_params[:status]
+      update_attribute(:status, response_params[status]) if response_params[status]
     end
   end
 
@@ -110,13 +110,13 @@ geocoded_by :ip_address, :latitude => :latitude, :longitude => :longitude
     update_response_in_transaction(response_params.except(:status)) { merge_status(response_params) }
   end
 
-  def update_response_in_transaction(response_params, &blk)
-    return unless response_params.present?
-    return unless blk.present?
+  def update_response_in_transaction(response_params, &blk)    
+    return unless response_params.present?    
+    return unless blk.present?    
     begin
       transaction do
         blk.call(response_params)
-        update_attributes!(response_params)
+        update_attributes!(response_params)        
       end
       true
     rescue ActiveRecord::RecordInvalid

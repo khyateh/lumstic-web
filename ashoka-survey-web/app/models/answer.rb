@@ -16,8 +16,8 @@ class Answer < ActiveRecord::Base
   validate :mandatory_questions_should_be_answered, :if => :response_complete?
   validate :content_should_not_exceed_max_length, :if => :max_length_and_content_present?
   validate :question_should_be_finalized
-  validate :maximum_photo_size, :if => :content_present?
-  validates_uniqueness_of :question_id, :scope => [:response_id, :record_id]
+  #validate :maximum_photo_size, :if => :content_present?
+  validates_uniqueness_of :question_id, :scope => [:response_id, :record_id], conditions: -> {where(:photo => "null") }
   validates_numericality_of :content, :if => :numeric_question?
 
   after_save :touch_multi_choice_answer

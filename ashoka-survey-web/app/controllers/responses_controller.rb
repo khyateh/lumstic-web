@@ -73,7 +73,7 @@ class ResponsesController < ApplicationController
 
   def update
     @response = ResponseDecorator.find(params[:id])
-    @response.update_column(:blank, false)
+    @response.update_column(:blank, false)   
     if @response.update_response(params[:response])
       send_to_mixpanel("Response updated", {:survey => @response.survey.name})
       if @response.public?
