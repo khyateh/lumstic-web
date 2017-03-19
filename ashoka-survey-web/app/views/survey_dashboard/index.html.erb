@@ -146,11 +146,14 @@
               <tr>
                 <td><%= user.name %></td>
                 <td><%= user.role.humanize.titleize %></td>
-                <% count =  @survey.reporter.response_counts_for(user.id).each_in_reverse_chronological_order.first %>
+                <% @survey.reporter.response_counts_for(user.id).each_in_reverse_chronological_order do |count|  %>
+                <tr>
+                <td /> <td />
                   <td><%= count.completes %></td>
                   <td><%= count.incompletes %></td>
                   <td><%= count.month %></td>
-                <%# end %>
+                  </tr>
+                <% end %>
               </tr>
             <% end %>
           </tbody>
